@@ -1,9 +1,8 @@
 
-#' Prettier command line user interface
+#' Prettier formatting of quantities
 #'
 #' @docType package
-#' @name pretty
-#' @importFrom crayon has_color
+#' @name prettyunits
 #' @importFrom magrittr %>%
 NULL
 
