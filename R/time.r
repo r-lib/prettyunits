@@ -6,16 +6,13 @@ parse_ms <- function(ms) {
     days = floor(ms / 86400000),
     hours = floor((ms / 3600000) %% 24),
     minutes = floor((ms / 60000) %% 60),
-    seconds = floor((ms / 1000) %% 60),
-    milliseconds = floor(ms %% 1000)
+    seconds = round((ms / 1000) %% 60, 1)
   )
 }
 
 first_positive <- function(x) which(x > 0)[1]
 
 trim <- function (x) gsub("^\\s+|\\s+$", "", x)
-
-squeeze <- function(x) gsub("\\s+", " ", x)
 
 #' Pretty formatting of milliseconds
 #'
@@ -36,12 +33,12 @@ pretty_ms <- function(ms, compact = FALSE) {
 
   stopifnot(is.numeric(ms))
 
-  units <- c("d", "h", "m", "s", "ms")
-
-  parsed <- parsed2 <- parse_ms(ms) %>% t()
-  parsed2[] <- paste0(parsed, units)
+  parsed <- parse_ms(ms) %>% t()
 
   if (compact) {
+    units <- c("d", "h", "m", "s")
+    parsed2 <- parsed
+    parsed2[] <- paste0(parsed, units)
     idx <- apply(parsed, 2, first_positive) %>%
       cbind(seq_len(length(ms)))
     parsed2[idx] %>%
@@ -49,16 +46,21 @@ pretty_ms <- function(ms, compact = FALSE) {
 
   } else {
 
-    ## Drop zeros
-    parsed2[ parsed == 0 ] <- ""
+    ## Exact for small ones
+    exact <- paste0(ceiling(ms), "ms")
 
-    ## Exact for real zeros
-    parsed2["milliseconds", ms == 0] <- "0ms"
+    ## Approximate for others, in seconds
+    merge_pieces <- function(pieces) {
+      (
+        (if (pieces[1]) pieces[1] %+% "d " else "") %+%
+        (if (pieces[2]) pieces[2] %+% "h " else "") %+%
+        (if (pieces[3]) pieces[3] %+% "m " else "") %+%
+        (if (pieces[4]) pieces[4] %+% "s " else "")
+      )
+    }
+    approx <- trim(apply(parsed, 2, merge_pieces))
 
-    ## Allright, paste together
-    apply( parsed2, 2, paste, collapse = " ") %>%
-      trim() %>%
-      squeeze()
+    ifelse(ms < 1000, exact, approx)
   }
 }
 

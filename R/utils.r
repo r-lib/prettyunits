@@ -8,6 +8,10 @@
     do.call(what = sprintf)
 }
 
+`%+%` <- function(lhs, rhs) {
+  paste0(lhs, rhs)
+}
+
 assert_diff_time <- function(x) {
   stopifnot(inherits(x, "difftime"))
 }
