@@ -1,7 +1,7 @@
 
 #' Bytes in a human readable string
 #'
-#' @param bytes Numeric vector.
+#' @param bytes Numeric vector, number of bytes.
 #' @return Character vector, the formatted sizes.
 #'
 #' @export
@@ -12,7 +12,7 @@ pretty_bytes <- function(bytes) {
 
   units <- c('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB')
 
-  neg <- bytes < 0
+  neg <- bytes < 0 & !is.na(bytes)
   bytes <- abs(bytes)
 
   exponent <- pmin(floor(log(bytes, 1000)), length(units) - 1)
@@ -23,5 +23,13 @@ pretty_bytes <- function(bytes) {
   res[bytes == 0] <- 0
   unit[bytes == 0] <- units[1]
 
-  paste0(ifelse(neg, '-', ''), res, ' ', unit)
+  ## NA and NaN bytes
+  res[is.na(bytes)] <- NA_real_
+  res[is.nan(bytes)] <- NaN
+  unit[is.na(bytes)] <- "B"            # Includes NaN as well
+
+  ## String
+  res <- format(ifelse(neg, -1, 1) * res, scientific = FALSE)
+
+  "%s %s" %s% list(res, unit)
 }

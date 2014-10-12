@@ -6,7 +6,7 @@
 pretty_bytes(bytes)
 }
 \arguments{
-\item{bytes}{Numeric vector.}
+\item{bytes}{Numeric vector, number of bytes.}
 }
 \value{
 Character vector, the formatted sizes.
