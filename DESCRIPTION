@@ -12,3 +12,5 @@ BugReports: https://github.com/gaborcsardi/prettyunits/issues
 Imports:
     magrittr,
     assertthat
+Suggests:
+    testthat
