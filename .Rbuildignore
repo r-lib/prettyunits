@@ -1,2 +1,4 @@
 ^\.travis\.yml$
 ^tags$
+^Makefile$
+^README.Rmd$
