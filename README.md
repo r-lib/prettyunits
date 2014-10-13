@@ -1,6 +1,10 @@
 
 
 
+[![Linux Build Status](https://travis-ci.org/gaborcsardi/prettyunits.png?branch=master)](https://travis-ci.org/gaborcsardi/prettyunits)
+[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/gaborcsardi/prettyunits)](https://ci.appveyor.com/project/gaborcsardi/prettyunits)
+
+
 # prettyunits
 
 The `prettyunits` package formats quantities in human readable form. Currently
@@ -87,17 +91,18 @@ uls()
 ```
 
 ```
-##>  d mode        user group    size            modified        name
-##>     644 gaborcsardi staff   512 B 2014-10-12 23:26:42 DESCRIPTION
-##>     644 gaborcsardi staff    42 B 2014-10-03 15:44:54     LICENSE
-##>     644 gaborcsardi staff   111 B 2014-10-12 23:07:32    Makefile
-##>  d  755 gaborcsardi staff         2014-10-12 16:51:06         man
-##>     644 gaborcsardi staff   259 B 2014-10-12 16:51:39   NAMESPACE
-##>  d  755 gaborcsardi staff         2014-10-12 16:47:25           R
-##>     644 gaborcsardi staff 2.87 kB 2014-10-12 23:47:32   README.md
-##>     644 gaborcsardi staff 2.53 kB 2014-10-12 23:51:25  README.Rmd
-##>     644 gaborcsardi staff   332 B 2014-10-12 23:06:24        tags
-##>  d  755 gaborcsardi staff         2014-10-12 15:15:48       tests
+##>  d mode        user group    size            modified         name
+##>     644 gaborcsardi staff   795 B 2014-10-13 09:00:43 appveyor.yml
+##>     644 gaborcsardi staff   512 B 2014-10-13 09:04:07  DESCRIPTION
+##>     644 gaborcsardi staff    42 B 2014-10-03 15:44:54      LICENSE
+##>     644 gaborcsardi staff   111 B 2014-10-12 23:07:32     Makefile
+##>  d  755 gaborcsardi staff         2014-10-12 16:51:06          man
+##>     644 gaborcsardi staff   259 B 2014-10-12 16:51:39    NAMESPACE
+##>  d  755 gaborcsardi staff         2014-10-12 16:47:25            R
+##>     644 gaborcsardi staff 4.08 kB 2014-10-12 23:51:28    README.md
+##>     644 gaborcsardi staff 2.83 kB 2014-10-13 09:03:08   README.Rmd
+##>     644 gaborcsardi staff 3.83 kB 2014-10-13 09:04:02         tags
+##>  d  755 gaborcsardi staff         2014-10-12 15:15:48        tests
 ```
 
 ## Time intervals
