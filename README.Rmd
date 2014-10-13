@@ -6,6 +6,10 @@ knitr::opts_chunk$set(
   error = FALSE)
 ```
 
+[![Linux Build Status](https://travis-ci.org/gaborcsardi/prettyunits.png?branch=master)](https://travis-ci.org/gaborcsardi/prettyunits)
+[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/gaborcsardi/prettyunits)](https://ci.appveyor.com/project/gaborcsardi/prettyunits)
+
+
 # prettyunits
 
 The `prettyunits` package formats quantities in human readable form. Currently
