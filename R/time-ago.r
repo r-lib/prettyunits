@@ -146,6 +146,9 @@ vague_dt <- function(dt, format = c("default", "short", "terse")) {
   units(dt) <- "secs"
   seconds <- as.vector(dt)
 
+  ## Simplest to quit here for empty input
+  if (!length(seconds)) return(character())
+
   pieces <- list(
     minutes = seconds / 60,
     hours = seconds / 60 / 60,
