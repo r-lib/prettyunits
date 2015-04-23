@@ -1,8 +1,9 @@
 
 
 
-[![Linux Build Status](https://travis-ci.org/gaborcsardi/prettyunits.png?branch=master)](https://travis-ci.org/gaborcsardi/prettyunits)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/gaborcsardi/prettyunits)](https://ci.appveyor.com/project/gaborcsardi/prettyunits)
+[![Linux Build Status](https://travis-ci.org/gaborcsardi/prettyunits.svg?branch=master)](https://travis-ci.org/gaborcsardi/prettyunits)
+[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/gaborcsardi/prettyunits?svg=true)](https://ci.appveyor.com/project/gaborcsardi/prettyunits)
+[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/prettyunits)](http://cran.r-project.org/web/packages/prettyunits/index.html)
 
 
 # prettyunits
@@ -91,18 +92,18 @@ uls()
 ```
 
 ```
-##>  d mode        user group    size            modified         name
-##>     644 gaborcsardi staff   795 B 2014-10-13 09:00:43 appveyor.yml
-##>     644 gaborcsardi staff   512 B 2014-10-13 09:04:07  DESCRIPTION
-##>     644 gaborcsardi staff    42 B 2014-10-03 15:44:54      LICENSE
-##>     644 gaborcsardi staff   111 B 2014-10-12 23:07:32     Makefile
-##>  d  755 gaborcsardi staff         2014-10-12 16:51:06          man
-##>     644 gaborcsardi staff   259 B 2014-10-12 16:51:39    NAMESPACE
-##>  d  755 gaborcsardi staff         2014-10-12 16:47:25            R
-##>     644 gaborcsardi staff 4.08 kB 2014-10-12 23:51:28    README.md
-##>     644 gaborcsardi staff 2.83 kB 2014-10-13 09:03:08   README.Rmd
-##>     644 gaborcsardi staff 3.83 kB 2014-10-13 09:04:02         tags
-##>  d  755 gaborcsardi staff         2014-10-12 15:15:48        tests
+##>  d mode        user group      size            modified         name
+##>     644 gaborcsardi staff  795.00 B 2014-10-13 09:00:43 appveyor.yml
+##>     644 gaborcsardi staff  561.00 B 2014-10-13 09:19:59  DESCRIPTION
+##>     644 gaborcsardi staff   42.00 B 2014-10-03 15:44:54      LICENSE
+##>     644 gaborcsardi staff  111.00 B 2014-10-12 23:07:32     Makefile
+##>  d  755 gaborcsardi staff           2014-10-12 16:51:06          man
+##>     644 gaborcsardi staff  259.00 B 2014-10-12 16:51:39    NAMESPACE
+##>  d  755 gaborcsardi staff           2014-10-12 16:47:25            R
+##>     644 gaborcsardi staff   4.46 kB 2014-10-13 09:04:42    README.md
+##>     644 gaborcsardi staff   2.98 kB 2015-04-23 15:18:17   README.Rmd
+##>     644 gaborcsardi staff   4.01 kB 2015-03-14 14:42:48         tags
+##>  d  755 gaborcsardi staff           2014-10-12 15:15:48        tests
 ```
 
 ## Time intervals
@@ -117,7 +118,7 @@ pretty_ms(c(1337, 13370, 133700, 1337000, 1337000000))
 ```
 
 ```
-##> [1] "1s 337ms"        "13s 370ms"       "2m 13s 700ms"    "22m 17s"        
+##> [1] "1.3s"            "13.4s"           "2m 13.7s"        "22m 17s"        
 ##> [5] "15d 11h 23m 20s"
 ```
 
@@ -127,7 +128,7 @@ pretty_ms(c(1337, 13370, 133700, 1337000, 1337000000),
 ```
 
 ```
-##> [1] "~1s"  "~13s" "~2m"  "~22m" "~15d"
+##> [1] "~1.3s"  "~13.4s" "~2m"    "~22m"   "~15d"
 ```
 
 ```r
