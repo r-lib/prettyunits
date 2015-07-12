@@ -1,6 +1,6 @@
 Package: prettyunits
 Title: Pretty, Human Readable Formatting of Quantities
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: "Gabor Csardi <csardi.gabor@gmail.com> [aut, cre]"
 Description: Pretty, human readable formatting of quantities.
     Time intervals: 1337000 -> 15d 11h 23m 20s.
