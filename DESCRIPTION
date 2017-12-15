@@ -1,6 +1,6 @@
 Package: prettyunits
 Title: Pretty, Human Readable Formatting of Quantities
-Version: 1.0.1
+Version: 1.0.2
 Author: Gabor Csardi
 Maintainer: Gabor Csardi <csardi.gabor@gmail.com>
 Description: Pretty, human readable formatting of quantities.

@@ -34,8 +34,12 @@ pretty_bytes <- function(bytes) {
   res[is.nan(bytes)] <- NaN
   unit[is.na(bytes)] <- "B"            # Includes NaN as well
 
-  ## String
-  res <- format(ifelse(neg, -1, 1) * res, scientific = FALSE)
+  ## String. For fractions we always show two fraction digits
+  res <- ifelse(
+    is.na(res) | res == as.integer(res),
+    format(ifelse(neg, -1, 1) * res, scientific = FALSE),
+    sprintf("%.2f", ifelse(neg, -1, 1) * res)
+  )
 
   "%s %s" %s% list(res, unit)
 }
