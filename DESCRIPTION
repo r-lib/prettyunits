@@ -15,4 +15,5 @@ Imports:
     assertthat,
     methods
 Suggests:
+    covr,
     testthat
