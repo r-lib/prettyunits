@@ -95,8 +95,7 @@ time_ago <- function(date, format = c("default", "short", "terse")) {
 
   if (length(date) > 1) return(sapply(date, time_ago, format = format))
 
-  seconds <- Sys.time() %>%
-    difftime(date, units = "secs")
+  seconds <- difftime(Sys.time(), date, units = "secs")
 
   vague_dt(seconds, format = format)
 }

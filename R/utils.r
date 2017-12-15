@@ -3,9 +3,10 @@
 
 `%s%` <- function(lhs, rhs) {
   assert_that(is.string(lhs))
-  list(lhs) %>%
-    c(as.list(rhs)) %>%
-    do.call(what = sprintf)
+  do.call(
+    sprintf,
+    c(list(lhs), as.list(rhs))
+  )
 }
 
 `%+%` <- function(lhs, rhs) {

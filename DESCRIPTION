@@ -12,7 +12,6 @@ LazyData: true
 URL: https://github.com/gaborcsardi/prettyunits
 BugReports: https://github.com/gaborcsardi/prettyunits/issues
 Imports:
-    magrittr,
     assertthat,
     methods
 Suggests:

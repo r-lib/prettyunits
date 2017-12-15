@@ -33,16 +33,17 @@ pretty_ms <- function(ms, compact = FALSE) {
 
   stopifnot(is.numeric(ms))
 
-  parsed <- parse_ms(ms) %>% t()
+  parsed <- t(parse_ms(ms))
 
   if (compact) {
     units <- c("d", "h", "m", "s")
     parsed2 <- parsed
     parsed2[] <- paste0(parsed, units)
-    idx <- apply(parsed, 2, first_positive) %>%
-      cbind(seq_len(length(ms)))
-    parsed2[idx] %>%
-      paste0("~", .)
+    idx <- cbind(
+      apply(parsed, 2, first_positive),
+      seq_len(length(ms))
+    )
+    paste0("~", parsed2[idx])
 
   } else {
 
@@ -102,6 +103,5 @@ pretty_dt <- function(dt, compact = FALSE) {
 
   units(dt) <- "secs"
 
-  as.vector(dt) %>%
-    pretty_sec(compact = compact)
+  pretty_sec(as.vector(dt), compact = compact)
 }
