@@ -43,15 +43,26 @@ pretty_ms <- function(ms, compact = FALSE) {
       apply(parsed, 2, first_positive),
       seq_len(length(ms))
     )
-    paste0("~", parsed2[idx])
+    tmp <- paste0("~", parsed2[idx])
+
+    # handle NAs
+    tmp[is.na(parsed2[idx])] <- NA_character_
+    tmp
 
   } else {
 
     ## Exact for small ones
-    exact <- paste0(ceiling(ms), "ms")
+    exact            <- paste0(ceiling(ms), "ms")
+    exact[is.na(ms)] <- NA_character_
 
     ## Approximate for others, in seconds
     merge_pieces <- function(pieces) {
+      ## handle NAs
+      if (all(is.na(pieces))) {
+        return(NA_character_)
+      }
+
+      ## handle non-NAs
       (
         (if (pieces[1]) pieces[1] %+% "d " else "") %+%
         (if (pieces[2]) pieces[2] %+% "h " else "") %+%
