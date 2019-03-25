@@ -1,6 +1,9 @@
 
 # dev
 
+* `pretty_dt()`, `pretty_ms()` and `pretty_sec()` now handle `NA` values
+  properly, and return `NA_character_` for them (#10, @petermeissner).
+
 # 1.0.2
 
 * `pretty_bytes()` always uses two fraction digits for non-integers.
