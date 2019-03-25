@@ -109,3 +109,16 @@ test_that("pretty_dt handles vectors", {
 
   expect_equal(pretty_dt(as.difftime(units = "secs", v)), v2)
 })
+
+
+test_that("pretty_dt works with NAs", {
+
+  stime <- Sys.time()
+  v  <- c(difftime(NA, NA), difftime(stime + 1, stime))
+  v2 <- c(NA_character_, "~1s")
+  v3 <- c(NA_character_, "1s")
+
+  expect_equal(pretty_dt(v, compact = TRUE), v2)
+  expect_equal(pretty_dt(v, compact = FALSE), v3)
+
+})
