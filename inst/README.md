@@ -13,12 +13,11 @@ time units and information (i.e. bytes) are supported.
 
 ## Installation
 
-You can install the package from github:
+You can install the package from CRAN:
 
 
 ```r
-library(devtools)
-install_github("gaborcsardi/prettyunits")
+install.packages("prettyunits")
 ```
 
 
@@ -92,18 +91,10 @@ uls()
 ```
 
 ```
-##>  d mode        user group      size            modified         name
-##>     644 gaborcsardi staff  795.00 B 2014-10-13 09:00:43 appveyor.yml
-##>     644 gaborcsardi staff  561.00 B 2014-10-13 09:19:59  DESCRIPTION
-##>     644 gaborcsardi staff   42.00 B 2014-10-03 15:44:54      LICENSE
-##>     644 gaborcsardi staff  111.00 B 2014-10-12 23:07:32     Makefile
-##>  d  755 gaborcsardi staff           2014-10-12 16:51:06          man
-##>     644 gaborcsardi staff  259.00 B 2014-10-12 16:51:39    NAMESPACE
-##>  d  755 gaborcsardi staff           2014-10-12 16:47:25            R
-##>     644 gaborcsardi staff   4.46 kB 2014-10-13 09:04:42    README.md
-##>     644 gaborcsardi staff   2.98 kB 2015-04-23 15:18:17   README.Rmd
-##>     644 gaborcsardi staff   4.01 kB 2015-03-14 14:42:48         tags
-##>  d  755 gaborcsardi staff           2014-10-12 15:15:48        tests
+##>  d mode        user group     size            modified       name
+##>     644 gaborcsardi staff 440.00 B 2019-03-25 10:25:08    NEWS.md
+##>     644 gaborcsardi staff  4.65 kB 2017-12-15 11:00:16  README.md
+##>     644 gaborcsardi staff  2.95 kB 2019-03-27 09:58:43 README.Rmd
 ```
 
 ## Time intervals

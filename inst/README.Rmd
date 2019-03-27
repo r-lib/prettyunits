@@ -18,11 +18,10 @@ time units and information (i.e. bytes) are supported.
 
 ## Installation
 
-You can install the package from github:
+You can install the package from CRAN:
 
 ```{r eval = FALSE}
-library(devtools)
-install_github("gaborcsardi/prettyunits")
+install.packages("prettyunits")
 ```
 
 ```{r}
