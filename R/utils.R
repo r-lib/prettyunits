@@ -1,8 +1,5 @@
-
-#' @importFrom assertthat assert_that is.string
-
 `%s%` <- function(lhs, rhs) {
-  assert_that(is.string(lhs))
+  assert_string(lhs)
   do.call(
     sprintf,
     c(list(lhs), as.list(rhs))
@@ -15,4 +12,8 @@
 
 assert_diff_time <- function(x) {
   stopifnot(inherits(x, "difftime"))
+}
+
+assert_string <- function(x) {
+  stopifnot(is.character(x), length(x) == 1L)
 }
