@@ -11,9 +11,8 @@ License: MIT + file LICENSE
 LazyData: true
 URL: https://github.com/gaborcsardi/prettyunits
 BugReports: https://github.com/gaborcsardi/prettyunits/issues
-Imports:
-    assertthat,
-    methods
 Suggests:
     covr,
     testthat
+RoxygenNote: 6.1.1
+Encoding: UTF-8

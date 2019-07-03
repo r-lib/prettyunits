@@ -103,14 +103,13 @@ pretty_sec <- function(sec, compact = FALSE) {
 #' @inheritParams pretty_ms
 #' @family time
 #' @export
-#' @importFrom methods is
 #' @examples
 #' pretty_dt(as.difftime(1000, units = "secs"))
 #' pretty_dt(as.difftime(0, units = "secs"))
 
 pretty_dt <- function(dt, compact = FALSE) {
 
-  stopifnot(is(dt, "difftime"))
+  assert_diff_time(dt)
 
   units(dt) <- "secs"
 
