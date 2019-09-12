@@ -249,3 +249,15 @@ pretty_round(1, digits=6)
 ```
 ##[1] "99.0" "1.00"
 ```
+## p-values
+
+`pretty_p_value` formats p-values as character strings showing small values like
+"<0.0001" (where small value is defined by the `minval` argument).
+
+```r
+pretty_p_value(0.0000001)
+```
+
+```
+##> [1] "<0.0001"
+```

@@ -5,6 +5,8 @@
   properly, and return `NA_character_` for them (#10, @petermeissner).
 * `pretty_round()` and `pretty_signif()` preserve the requested number of digits
   as character strings (#14, @billdenney).
+* Add `pretty_p_value()` to convert p-values to character strings where small
+  values are shown like "<0.0001" (#13, @billdenney)
 
 # 1.0.2
 

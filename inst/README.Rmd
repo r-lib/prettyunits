@@ -114,3 +114,12 @@ time_ago(now - as.difftime(25, units = "hours"))
 pretty_round(1, digits=6)
 pretty_signif(c(99, 0.9999), digits=3)
 ```
+
+## p-values
+
+`pretty_p_value()` rounds small p-values to indicate less than significance
+level for small values.
+
+```{r}
+pretty_p_value(c(0.05, 0.0000001, NA))
+```
