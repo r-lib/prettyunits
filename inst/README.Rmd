@@ -105,3 +105,12 @@ time_ago(now - as.difftime(14, units = "mins"))
 time_ago(now - as.difftime(5, units = "hours"))
 time_ago(now - as.difftime(25, units = "hours"))
 ```
+
+## Rounding
+
+`pretty_round()` and `pretty_signif()` preserve trailing zeros.
+
+```{r}
+pretty_round(1, digits=6)
+pretty_signif(c(99, 0.9999), digits=3)
+```

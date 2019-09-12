@@ -3,6 +3,8 @@
 
 * `pretty_dt()`, `pretty_ms()` and `pretty_sec()` now handle `NA` values
   properly, and return `NA_character_` for them (#10, @petermeissner).
+* `pretty_round()` and `pretty_signif()` preserve the requested number of digits
+  as character strings (#14, @billdenney).
 
 * `pretty_bytes()` now formats quantities just below the units better.
   E.g. 1MB - 1B is formatted as `"1 MB"` instead of `""1000 kB"` (#18).
