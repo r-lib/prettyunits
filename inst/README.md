@@ -109,7 +109,7 @@ pretty_ms(c(1337, 13370, 133700, 1337000, 1337000000))
 ```
 
 ```
-##> [1] "1.3s"            "13.4s"           "2m 13.7s"        "22m 17s"        
+##> [1] "1.3s"            "13.4s"           "2m 13.7s"        "22m 17s"
 ##> [5] "15d 11h 23m 20s"
 ```
 
@@ -127,7 +127,7 @@ pretty_sec(c(1337, 13370, 133700, 1337000, 13370000))
 ```
 
 ```
-##> [1] "22m 17s"          "3h 42m 50s"       "1d 13h 8m 20s"   
+##> [1] "22m 17s"          "3h 42m 50s"       "1d 13h 8m 20s"
 ##> [4] "15d 11h 23m 20s"  "154d 17h 53m 20s"
 ```
 
@@ -231,3 +231,15 @@ time_ago(now - as.difftime(25, units = "hours"))
 ```
 
 
+## p-values
+
+`pretty_p_value` formats p-values as character strings showing small values like
+"<0.0001" (where small value is defined by the `minval` argument).
+
+```r
+pretty_p_value(0.0000001)
+```
+
+```
+##> [1] "<0.0001"
+```

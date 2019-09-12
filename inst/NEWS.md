@@ -3,6 +3,8 @@
 
 * `pretty_dt()`, `pretty_ms()` and `pretty_sec()` now handle `NA` values
   properly, and return `NA_character_` for them (#10, @petermeissner).
+* Add `pretty_p_value()` to convert p-values to character strings where small
+  values are shown like "<0.0001"
 
 # 1.0.2
 

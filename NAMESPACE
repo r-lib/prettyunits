@@ -3,6 +3,7 @@
 export(pretty_bytes)
 export(pretty_dt)
 export(pretty_ms)
+export(pretty_p_value)
 export(pretty_sec)
 export(time_ago)
 export(vague_dt)
