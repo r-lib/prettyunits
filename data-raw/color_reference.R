@@ -1,6 +1,27 @@
 library(tidyverse)
 library(assertr)
 
+# From https://stackoverflow.com/a/57926144/3831096
+paste_missing <- function(..., sep=" ", collapse=NULL) {
+  ret <-
+    apply(
+      X=cbind(...),
+      MARGIN=1,
+      FUN=function(x) {
+        if (all(is.na(x))) {
+          NA_character_
+        } else {
+          paste(x[!is.na(x)], collapse = sep)
+        }
+      }
+    )
+  if (!is.null(collapse)) {
+    paste(ret, collapse=collapse)
+  } else {
+    ret
+  }
+}
+
 color_ref_files <- list.files(path="color_reference/", full.names=TRUE)
 color_ref_files <-
   setNames(
@@ -15,12 +36,12 @@ color_ref_files <-
   )
 color_reference_list <-
   lapply(
-    X=color_ref_files,
-    FUN=function(x) {
+    X=setNames(names(color_ref_files), nm=names(color_ref_files)),
+    FUN=function(source_name) {
       # Drop the variable naming from the beginning of the file and the brackets
       all_colors <-
         gsub(
-          x=paste(readLines(x), collapse=" "),
+          x=paste(readLines(color_ref_files[source_name]), collapse=" "),
           pattern="^.*\\[ *\\{ *(.*) *\\} *\\]$",
           replacement="\\1"
         )
@@ -28,7 +49,7 @@ color_reference_list <-
       all_colors_clean <-
         gsub(
           x=all_colors,
-          pattern="[^A-Za-z0-9 :'\"\\(\\),{}]",
+          pattern="[^A-Za-z0-9 :'\"\\(\\),{}/]",
           replacement=""
         )
       extract_color <-
@@ -37,125 +58,72 @@ color_reference_list <-
             color_def=strsplit(all_colors_clean, split=" *\\}, *\\{ *")[[1]]
           ),
           col="color_def",
-          into=c("name", "hex"),
+          into=c(source_name, "hex"),
           regex="^['\"]?name['\"]?: *['\"]([A-Za-z0-9'/ \\(\\)]+)['\"] *, *['\"]?hex['\"]?: *['\"]#?([A-Fa-f0-9]{6})['\"] *$"
         ) %>%
-        verify(!is.na(hex))
-      add_lab <-
-        bind_cols(
-          extract_color,
-          as.data.frame(
-            convertColor(
-              t(col2rgb(paste0("#", extract_color$hex))),
-              from="sRGB", to="Lab",
-              scale.in=256
-            )
-          )
-        )
-      add_lab
+        verify(!is.na(hex)) %>%
+        mutate(hex=tolower(hex))
+      extract_color
     }
   )
+# Add the standard R colors to the list
+color_reference_list$R <-
+  tibble(
+    R=grDevices::colors(),
+    hex=tolower(rgb(t(col2rgb(grDevices::colors())), maxColorValue=255))
+  )
+
+color_reference_name_hex_all <- Reduce(f=full_join, x=color_reference_list)
+
+# Preference order for choosing alternate names
+alt_name_order <- c("roygbiv", "basic", "html", "R", "pantone", "x11", "ntc")
+if (length(missing_names <- setdiff(names(color_reference_list), alt_name_order))) {
+  stop(
+    "alt_name_order needs additional names in it: ",
+    paste(missing_names, collapse=", ")
+  )
+}
+
+color_reference_prep <-
+  color_reference_name_hex_all %>%
+  # Ensure that priority order of the "name" is in the order of alt_name_order.
+  select_at(.vars=c("hex", alt_name_order)) %>%
+  mutate(hex=gsub(x=hex, pattern="#", replacement="", fixed=TRUE)) %>%
+  group_by(hex) %>%
+  nest() %>%
+  mutate(
+    # All available names
+    name_alt=
+      purrr::map(
+        .x=data,
+        .f=function(x) unique(na.omit(unlist(x)))
+      ),
+    # The preferred name
+    name=
+      purrr::map_chr(
+        .x=name_alt,
+        .f=function(x) x[1]
+      ),
+    # Which color sources have the name in them?
+    containing_set=
+      purrr::map(
+        .x=data,
+        .f=function(x) as.data.frame(lapply(X=x, FUN=function(y) any(!is.na(y))))
+      )
+  ) %>%
+  select(-data, hex, name, name_alt, containing_set) %>%
+  unnest(containing_set)
 
 color_reference <-
-  bind_rows(
-    lapply(
-      X=names(color_reference_list),
-      FUN=function(x) {
-        ret <- color_reference_list[[x]]
-        ret[[x]] <- TRUE
-        ret
-      }
+  color_reference_prep %>%
+  bind_cols(
+    as.data.frame(
+      convertColor(
+        t(col2rgb(paste0("#", color_reference_prep$hex))),
+        from="sRGB", to="Lab", scale.in=256
+      )
     )
   ) %>%
-  mutate(
-    name=tolower(name),
-    hex=tolower(hex)
-  ) %>%
-  group_by(name, hex, L, a, b) %>%
-  summarize_all(.funs=function(x) any(x %in% TRUE)) %>%
-  # Deduplicate names for a specific hex
-  group_by(hex) %>%
-  mutate_at(.vars=names(color_reference_list), .funs=any) %>%
-  mutate(
-    count=n(),
-    is_british_grey=grepl(x=name, pattern="grey"),
-    name_british=
-      case_when(
-        name == "slate gray"~"slate grey",
-        count == 2 & sum(!is_british_grey) == 1 & sum(is_british_grey) == 1 & !is_british_grey~name,
-        count == 2 & sum(!is_british_grey) == 1 & sum(is_british_grey) == 1 & is_british_grey~"DROP THIS COLOR"
-      )
-  ) %>%
-  select(-is_british_grey) %>%
-  filter(!name_british %in% "DROP THIS COLOR") %>%
-  # Remove names that are missing a space when a name with a space exists
-  mutate(
-    count=n(),
-    one_space_different=
-      max(nchar(name)) == (min(nchar(name)) + 1) &
-      length(unique(gsub(x=name, pattern=" ", replacement=""))) == 1,
-  ) %>%
-  # Keep the name with the space
-  filter(
-    !one_space_different |
-      (one_space_different & count == 2 & nchar(name) == max(nchar(name)))
-  ) %>%
-  select(-one_space_different) %>%
-  # Arbitrary choices selected to be more descriptive in my opinion
-  mutate(
-    count=n(),
-    name_alt=
-      case_when(
-        hex == "000080" & name == "navy"~"DROP THIS COLOR",
-        hex == "000080" & name == "navy blue"~"navy",
-        hex == "00ff00" & name == "green"~"DROP THIS COLOR",
-        hex == "00ff00" & name == "lime"~"green",
-        hex == "00ffff" & name %in% c("aqua", "cyan  aqua")~"DROP THIS COLOR",
-        hex == "00ffff" & name == "cyan"~"aqua",
-        hex == "4b0082" & name == "pigment indigo"~"DROP THIS COLOR",
-        hex == "4b0082" & name == "indigo"~"pigment indigo",
-        hex == "708090" & name %in% c("slategray", "slategrey")~"DROP THIS COLOR",
-        hex == "c71585" & name == "mediumvioletred"~"DROP THIS COLOR",
-        hex == "c71585" & name == "red violet"~"mediumvioletred",
-        hex == "cd5c5c" & name == "indianred"~"DROP THIS COLOR",
-        hex == "cd5c5c" & name == "chestnut rose"~"indianred",
-        hex == "d2691e" & name == "hot cinnamon"~"DROP THIS COLOR",
-        hex == "d2691e" & name == "chocolate"~"hot cinnamon",
-        hex == "daa520" & name == "goldenrod"~"DROP THIS COLOR",
-        hex == "daa520" & name == "golden grass"~"goldenrod",
-        hex == "e0ffff" & name == "lightcyan"~"DROP THIS COLOR",
-        hex == "e0ffff" & name == "baby blue"~"lightcyan",
-        hex == "ee82ee" & name == "lavender magenta"~"DROP THIS COLOR",
-        hex == "ee82ee" & name == "violet"~"",
-        hex == "fdd7e4" & name == "piggy pink"~"DROP THIS COLOR",
-        hex == "fdd7e4" & name == "pig pink"~"piggy pink",
-        hex == "fdfc74" & name == "laser lemon"~"DROP THIS COLOR",
-        hex == "fdfc74" & name == "unmellow yellow"~"laser lemon",
-        hex == "ff00ff" & name %in% c("fuchsia", "magenta  fuchsia")~"DROP THIS COLOR",
-        hex == "ff00ff" & name == "magenta"~"fuchsia",
-        hex == "ff1dce" & name == "purple pizzazz"~"DROP THIS COLOR",
-        hex == "ff1dce" & name == "hot magenta"~"purple pizzazz",
-        hex == "ffa500" & name == "web orange"~"DROP THIS COLOR",
-        hex == "ffa500" & name == "orange"~"web orange",
-        hex == "fff5ee" & name == "seashell peach"~"DROP THIS COLOR",
-        hex == "fff5ee" & name == "seashell"~"seashell peach",
-        hex == "ffff99" & name == "pale canary"~"DROP THIS COLOR",
-        hex == "ffff99" & name == "canary"~"pale canary"
-      )
-  ) %>%
-  filter(!(name_alt %in% "DROP THIS COLOR")) %>%
-  mutate(count=n())
+  select(hex, L, a, b, name, name_alt, everything())
 
-# Verify that there is only one name per hex
-if (nrow(color_reference %>% filter(count > 1)) != 0) {
-  stop("Update so that hex values are unique per name")
-}
-# Note that the names are not necessarily unique (often because pantone defines
-# a slightly different color than others for the same name)
-
-color_reference <-
-  color_reference %>%
-  select(-count) %>%
-  select(name, name_british, name_alt, everything())
-
-usethis::use_data(color_reference, overwrite=TRUE)
+usethis::use_data(color_reference, overwrite=TRUE, internal=TRUE)

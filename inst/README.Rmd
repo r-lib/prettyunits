@@ -1,3 +1,6 @@
+---
+output: md_document
+---
 
 ```{r, setup, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(
@@ -51,9 +54,16 @@ uls <- function(path = ".") {
     lapply(file.info) %>%
     do.call(what = rbind)
   info$size <- pretty_bytes(info$size)
-  df <- data.frame(d = ifelse(info$isdir, "d", " "),
-	mode = as.character(info$mode), user = info$uname, group = info$grname,
-    size = ifelse(info$isdir, "", info$size), modified = info$mtime, name = files)
+  df <-
+    data.frame(
+      d = ifelse(info$isdir, "d", " "),
+      mode = as.character(info$mode),
+      user = ifelse(is.null(info$uname), "", info$uname),
+      group = ifelse(is.null(info$grname), "", info$grname),
+      size = ifelse(info$isdir, "", info$size),
+      modified = info$mtime,
+      name = files
+    )
   print(df, row.names = FALSE)
 }
 uls()
@@ -99,6 +109,13 @@ time_ago(now - as.difftime(5, units = "hours"))
 time_ago(now - as.difftime(25, units = "hours"))
 ```
 
-```{r}
+## Colors
 
+`pretty_color` converts colors from other representations to human-readable
+names.
+
+```{r}
+pretty_color("black")
+pretty_color("#123456")
+pretty_color("#123456", color_set="complete")
 ```

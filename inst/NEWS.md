@@ -3,6 +3,7 @@
 
 * `pretty_dt()`, `pretty_ms()` and `pretty_sec()` now handle `NA` values
   properly, and return `NA_character_` for them (#10, @petermeissner).
+* `pretty_color()` converts a color to a named color (#12, @billdenney).
 
 # 1.0.2
 
