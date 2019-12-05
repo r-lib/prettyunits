@@ -14,8 +14,7 @@ pretty_signif(x, ...)
 
 \method{pretty_signif}{data.frame}(x, ...)
 
-\method{pretty_signif}{default}(x, digits = 6, sci_range = 6,
-  sci_sep = "e", ...)
+\method{pretty_signif}{default}(x, digits = 6, sci_range = 6, sci_sep = "e", ...)
 }
 \arguments{
 \item{x}{The number to round}
@@ -27,13 +26,11 @@ pretty_signif(x, ...)
 \item{sci_range}{integer (or \code{Inf}) indicating when to switch to
 scientific notation instead of floating point. Zero indicates always use
 scientific; \code{Inf} indicates to never use scientific notation;
-otherwise, scientific notation is used when \code{abs(log10(x)) > si_range}.}
+otherwise, scientific notation is used when \code{abs(log10(x)) > sci_range}.}
 
 \item{sci_sep}{The separator to use for scientific notation strings
 (typically this will be either "e" or "x10^" for computer- or
 human-readable output).}
-
-\item{si_range}{Deprecated, please use \code{sci_range}}
 }
 \value{
 A string with the value
