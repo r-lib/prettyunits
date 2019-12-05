@@ -5,6 +5,7 @@
 #'   \code{NaN} are returned as \code{"Inf"}, \code{"NA"}, and \code{"NaN"}.
 #'
 #' @param x The number to round
+#' @param ... Arguments passed to methods.
 #' @param digits integer indicating the number of decimal places
 #' @param sci_range See help for \code{\link{pretty_signif}} (and you likely want
 #'   to round with \code{pretty_signif} if you want to use this argument)
@@ -19,7 +20,7 @@ pretty_round <- function(x, ...)
 
 #' @rdname pretty_round
 #' @export
-pretty_round.default <- function(x, digits=0, sci_range=Inf, sci_sep="e") {
+pretty_round.default <- function(x, digits=0, sci_range=Inf, sci_sep="e", ...) {
   if (length(digits) == 1) {
     mask_na <- is.na(x)
     mask_aschar <- is.nan(x) | is.infinite(x)
@@ -95,11 +96,10 @@ pretty_round.data.frame <- function(x, ...) {
 #' @param sci_range integer (or \code{Inf}) indicating when to switch to
 #'   scientific notation instead of floating point. Zero indicates always use
 #'   scientific; \code{Inf} indicates to never use scientific notation;
-#'   otherwise, scientific notation is used when \code{abs(log10(x)) > si_range}.
+#'   otherwise, scientific notation is used when \code{abs(log10(x)) > sci_range}.
 #' @param sci_sep The separator to use for scientific notation strings
 #'   (typically this will be either "e" or "x10^" for computer- or
 #'   human-readable output).
-#' @param si_range Deprecated, please use \code{sci_range}
 #' @param ... Arguments passed to methods.
 #' @return A string with the value
 #' @seealso \code{\link{signif}}, \code{\link{pretty_round}}
