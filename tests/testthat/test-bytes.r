@@ -16,6 +16,7 @@ test_that("pretty_bytes converts properly", {
   expect_equal(pretty_bytes(10), '10 B')
   expect_equal(pretty_bytes(999), '999 B')
   expect_equal(pretty_bytes(1001), '1 kB')
+  expect_equal(pretty_bytes(1000 * 1000 - 1), '1 MB')
   expect_equal(pretty_bytes(1e16), '10 PB')
   expect_equal(pretty_bytes(1e30), '1000000 YB')
 

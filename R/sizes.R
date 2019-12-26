@@ -16,12 +16,14 @@ pretty_bytes <- function(bytes) {
 
   stopifnot(is.numeric(bytes))
 
-  units <- c('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB')
+  units  <- c('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB')
+  limits <- c(1000, 999950 * 1000 ^ (seq_len(length(units) - 2) - 1))
 
   neg <- bytes < 0 & !is.na(bytes)
   bytes <- abs(bytes)
 
-  exponent <- pmin(floor(log(bytes, 1000)), length(units) - 1)
+  mat <- matrix(rep(bytes, each = length(limits)), nrow = length(limits))
+  exponent <- length(limits) - colSums(mat < limits)
   res <- round(bytes / 1000 ^ exponent, 2)
   unit <- units[exponent + 1]
 

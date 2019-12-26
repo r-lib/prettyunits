@@ -4,6 +4,9 @@
 * `pretty_dt()`, `pretty_ms()` and `pretty_sec()` now handle `NA` values
   properly, and return `NA_character_` for them (#10, @petermeissner).
 
+* `pretty_bytes()` now formats quantities just below the units better.
+  E.g. 1MB - 1B is formatted as `"1 MB"` instead of `""1000 kB"` (#18).
+
 # 1.0.2
 
 * `pretty_bytes()` always uses two fraction digits for non-integers.
