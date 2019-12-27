@@ -7,6 +7,13 @@
 * `pretty_bytes()` now formats quantities just below the units better.
   E.g. 1MB - 1B is formatted as `"1 MB"` instead of `""1000 kB"` (#18).
 
+* `pretty_bytes()` now has multiple styles. In particular, a fixed width
+  style is useful for progress bars. Another style avoids the left-padding
+  with spaces.
+
+* The new low level `compute_bytes()` function can be used to create
+  custom formatters for bytes.
+
 # 1.0.2
 
 * `pretty_bytes()` always uses two fraction digits for non-integers.

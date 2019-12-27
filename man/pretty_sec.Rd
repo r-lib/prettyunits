@@ -25,7 +25,8 @@ pretty_sec(c(1337, 13370, 133700, 1337000, 13370000),
            compact = TRUE)
 }
 \seealso{
-Other time: \code{\link{pretty_dt}},
-  \code{\link{pretty_ms}}
+Other time: 
+\code{\link{pretty_dt}()},
+\code{\link{pretty_ms}()}
 }
 \concept{time}

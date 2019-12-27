@@ -3,7 +3,6 @@
 \docType{package}
 \name{prettyunits}
 \alias{prettyunits}
-\alias{prettyunits-package}
 \title{Prettier formatting of quantities}
 \description{
 Prettier formatting of quantities

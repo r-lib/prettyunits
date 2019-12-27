@@ -24,7 +24,8 @@ pretty_dt(as.difftime(1000, units = "secs"))
 pretty_dt(as.difftime(0, units = "secs"))
 }
 \seealso{
-Other time: \code{\link{pretty_ms}},
-  \code{\link{pretty_sec}}
+Other time: 
+\code{\link{pretty_ms}()},
+\code{\link{pretty_sec}()}
 }
 \concept{time}
