@@ -114,7 +114,7 @@ test_that("pretty_dt handles vectors", {
 test_that("pretty_dt works with NAs", {
 
   stime <- Sys.time()
-  v  <- c(difftime(NA, NA), difftime(stime + 1, stime))
+  v  <- .difftime(c(difftime(NA, NA), difftime(stime + 1, stime)), "secs")
   v2 <- c(NA_character_, "~1s")
   v3 <- c(NA_character_, "1s")
 
