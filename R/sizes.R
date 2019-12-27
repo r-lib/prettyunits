@@ -59,8 +59,13 @@ compute_bytes <- function(bytes, smallest_unit = "B") {
   neg <- bytes < 0 & !is.na(bytes)
   bytes <- abs(bytes)
 
-  mat <- matrix(rep(bytes, each = length(limits)), nrow = length(limits))
-  exponent <- length(limits) - colSums(mat < limits) + low - 1L
+  mat <- matrix(
+    rep(bytes, each = length(limits)),
+    nrow = length(limits),
+    ncol = length(bytes)
+  )
+  mat2 <- matrix(mat < limits, nrow  = length(limits), ncol = length(bytes))
+  exponent <- length(limits) - colSums(mat2) + low - 1L
   res <- bytes / 1000 ^ exponent
   unit <- units[exponent - low + 2L]
 
