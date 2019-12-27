@@ -11,9 +11,24 @@
 #' pretty_bytes(13333337)
 #' pretty_bytes(1333333337)
 #' pretty_bytes(133333333337)
+#' pretty_bytes(c(1000 * 1000, 1000 * 1000 - 1))
 
 pretty_bytes <- function(bytes) {
 
+  szs <- units_bytes(bytes)
+  amt <- szs$amount
+
+  ## String. For fractions we always show two fraction digits
+  res <- ifelse(
+    is.na(amt) | amt == as.integer(amt),
+    format(ifelse(szs$negative, -1, 1) * amt, scientific = FALSE),
+    sprintf("%.2f", ifelse(szs$negative, -1, 1) * amt)
+  )
+
+  "%s %s" %s% list(res, szs$unit)
+}
+
+units_bytes <- function(bytes) {
   stopifnot(is.numeric(bytes))
 
   units  <- c('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB')
@@ -36,12 +51,5 @@ pretty_bytes <- function(bytes) {
   res[is.nan(bytes)] <- NaN
   unit[is.na(bytes)] <- "B"            # Includes NaN as well
 
-  ## String. For fractions we always show two fraction digits
-  res <- ifelse(
-    is.na(res) | res == as.integer(res),
-    format(ifelse(neg, -1, 1) * res, scientific = FALSE),
-    sprintf("%.2f", ifelse(neg, -1, 1) * res)
-  )
-
-  "%s %s" %s% list(res, unit)
+  list(amount = res, unit = unit, negative = neg)
 }
