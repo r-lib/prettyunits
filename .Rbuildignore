@@ -6,3 +6,4 @@
 ^appveyor.yml$
 ^\.Rprofile$
 ^r-packages$
+^revdep$
