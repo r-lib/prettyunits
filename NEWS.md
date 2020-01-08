@@ -1,5 +1,5 @@
 
-# dev
+# 1.1.0
 
 * `pretty_dt()`, `pretty_ms()` and `pretty_sec()` now handle `NA` values
   properly, and return `NA_character_` for them (#10, @petermeissner).
