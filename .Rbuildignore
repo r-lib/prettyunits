@@ -1,7 +1,7 @@
 ^\.travis\.yml$
 ^tags$
 ^Makefile$
-^README.md$
+^README.Rmd$
 ^.travis.yml$
 ^appveyor.yml$
 ^\.Rprofile$
