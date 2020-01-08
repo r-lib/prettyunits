@@ -12,6 +12,7 @@ LazyData: true
 URL: https://github.com/gaborcsardi/prettyunits
 BugReports: https://github.com/gaborcsardi/prettyunits/issues
 Suggests:
+    codetools,
     covr,
     testthat
 RoxygenNote: 7.0.2
