@@ -1,4 +1,6 @@
 
+# development version
+
 # 1.1.0
 
 * `pretty_dt()`, `pretty_ms()` and `pretty_sec()` now handle `NA` values
