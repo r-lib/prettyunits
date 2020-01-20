@@ -24,38 +24,23 @@ format_bytes <- local({
       smallest_unit %in% units0
     )
 
-    limits <- c(1000, 999950 * 1000 ^ (seq_len(length(units0) - 2) - 1))
-    low <- match(smallest_unit, units0)
-    units <- units0[low:length(units0)]
-    limits <- limits[low:length(limits)]
-
-    neg <- bytes < 0 & !is.na(bytes)
+    negative <- (bytes < 0)
     bytes <- abs(bytes)
+    smallest_idx <- match(smallest_unit, units0)
 
-    mat <- matrix(
-      rep(bytes, each = length(limits)),
-      nrow = length(limits),
-      ncol = length(bytes)
-    )
-    mat2 <- matrix(mat < limits, nrow  = length(limits), ncol = length(bytes))
-    exponent <- length(limits) - colSums(mat2) + low - 1L
-    res <- bytes / 1000 ^ exponent
-    unit <- units[exponent - low + 2L]
+    limits <- c(1000, 999950 * 1000 ^ (seq_len(length(units0) - 2) - 1))
+    idx <- cut(bytes, c(0, limits, Inf), labels = FALSE, right = FALSE)
+    idx <- pmax(idx, smallest_idx)
 
-    ## Zero bytes
-    res[bytes == 0] <- 0
-    unit[bytes == 0] <- units[1]
-
-    ## NA and NaN bytes
-    res[is.na(bytes)] <- NA_real_
-    res[is.nan(bytes)] <- NaN
-    unit[is.na(bytes)] <- units0[low]     # Includes NaN as well
+    amount <- bytes / signif(c(1, limits), 1)[idx]
+    idx[is.na(idx)] <- smallest_idx
+    unit <- units0[idx]
 
     data.frame(
       stringsAsFactors = FALSE,
-      amount = res,
-      unit = unit,
-      negative = neg
+      amount,
+      unit,
+      negative
     )
   }
 
