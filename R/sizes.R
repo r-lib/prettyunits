@@ -61,13 +61,15 @@ format_bytes <- local({
 
   pretty_bytes_default <- function(bytes) {
     szs <- compute_bytes(bytes)
-    amt <- szs$amount
+    amt <- szs$amount * ifelse(szs$negative, -1, 1)
+
+    is_int <- is.na(amt) | amt == as.integer(amt)
 
     ## String. For fractions we always show two fraction digits
     res <- ifelse(
-      is.na(amt) | amt == as.integer(amt),
-      format(ifelse(szs$negative, -1, 1) * amt, digits = 0, scientific = FALSE),
-      sprintf("%.2f", ifelse(szs$negative, -1, 1) * amt)
+      is_int,
+      sprintf("%.0f%s", amt, ifelse(all(is_int) | (szs$unit == "B"), "", "   ")),
+      sprintf("%.2f", amt)
     )
 
     format(paste(res, szs$unit), justify = "right")

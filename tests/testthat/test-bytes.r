@@ -74,8 +74,8 @@ test_that("pretty_bytes handles negative values", {
 
 test_that("always two fraction digits", {
   expect_equal(
-    pretty_bytes(c(5.6, NA) * 1000 * 1000),
-    c("5.60 MB", "   NA B")
+    pretty_bytes(c(5.6, 5, NA) * 1000 * 1000),
+    c("5.60 MB", "5    MB", "   NA B")
   )
 })
 
