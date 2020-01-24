@@ -2,7 +2,7 @@
 # development version
 
 * Fix spurious zero fractions in `pretty_bytes()` when formatting
-  vectors or sizes (#23).
+  vectors of sizes (#23).
 
 # 1.1.0
 
