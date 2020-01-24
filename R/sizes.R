@@ -64,11 +64,13 @@ format_bytes <- local({
     amt <- szs$amount
 
     ## String. For fractions we always show two fraction digits
-    res <- ifelse(
-      is.na(amt) | amt == as.integer(amt),
-      format(ifelse(szs$negative, -1, 1) * amt, scientific = FALSE),
-      sprintf("%.2f", ifelse(szs$negative, -1, 1) * amt)
+    res <- character(length(amt))
+    int <- is.na(amt) | amt == as.integer(amt)
+    res[int] <- format(
+      ifelse(szs$negative[int], -1, 1) * amt[int],
+      scientific = FALSE
     )
+    res[!int] <- sprintf("%.2f", ifelse(szs$negative[!int], -1, 1) * amt[!int])
 
     format(paste(res, szs$unit), justify = "right")
   }

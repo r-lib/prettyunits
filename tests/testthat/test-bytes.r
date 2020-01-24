@@ -74,8 +74,8 @@ test_that("pretty_bytes handles negative values", {
 
 test_that("always two fraction digits", {
   expect_equal(
-    pretty_bytes(c(5.6, NA) * 1000 * 1000),
-    c("5.60 MB", "   NA B")
+    pretty_bytes(c(5.6, 5, NA) * 1000 * 1000),
+    c("5.60 MB", "   5 MB", "   NA B")
   )
 })
 
@@ -103,4 +103,20 @@ test_that("6 width style", {
   )
 
   expect_equal(pretty_bytes(unname(cases), style = "6"), names(cases))
+})
+
+test_that("No fractional bytes (#23)", {
+  cases <- c(
+    "    -1 B" = -1,                   # 1
+    "     1 B" = 1,                    # 2
+    "    16 B" = 16,                   # 3
+    "   128 B" = 128,                  # 4
+    " 1.02 kB" = 1024,                 # 5
+    "16.38 kB" = 16384,                # 6
+    " 1.05 MB" = 1048576,              # 7
+    "-1.05 MB" = -1048576,             # 8
+    "    NA B" = NA                    # 9
+  )
+
+  expect_equal(pretty_bytes(unname(cases)), names(cases))
 })
