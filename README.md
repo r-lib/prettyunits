@@ -1,8 +1,8 @@
 
 
 
-[![Linux Build Status](https://travis-ci.org/gaborcsardi/prettyunits.svg?branch=master)](https://travis-ci.org/gaborcsardi/prettyunits)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/gaborcsardi/prettyunits?svg=true)](https://ci.appveyor.com/project/gaborcsardi/prettyunits)
+[![Linux Build Status](https://travis-ci.org/r-lib/prettyunits.svg?branch=master)](https://travis-ci.org/r-lib/prettyunits)
+[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/r-lib/prettyunits?svg=true)](https://ci.appveyor.com/project/gaborcsardi/prettyunits)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/prettyunits)](https://CRAN.R-project.org/package=prettyunits)
 
 
