@@ -1,4 +1,6 @@
 
+# development version
+
 # 1.1.1
 
 * Fix spurious zero fractions in `pretty_bytes()` when formatting
