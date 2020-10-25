@@ -44,7 +44,7 @@ format_num <- local({
 
     ## Zero number
     res[number == 0] <- 0
-    unit[number == 0] <- units[1]
+    unit[number == 0] <- units[5]
 
     ## NA and NaN number
     res[is.na(number)] <- NA_real_
