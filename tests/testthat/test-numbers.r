@@ -25,6 +25,9 @@ test_that("pretty_num gives errors on invalid input", {
 
 test_that("pretty_num converts properly", {
 
+  expect_equal(pretty_num(1e-12), '1 p')
+  expect_equal(pretty_num(-1e-4), '-100.00 μ')
+  expect_equal(pretty_num(-0.01), '-10 m')
   expect_equal(pretty_num(0), '0 ')
   expect_equal(pretty_num(10), '10 ')
   expect_equal(pretty_num(999), '999 ')
@@ -49,10 +52,10 @@ test_that("pretty_num handles NA and NaN", {
 test_that("pretty_num handles vectors", {
 
   expect_equal(pretty_num(1:10), paste(format(1:10), ""))
-  v <- c(NA, 1, 1e4, 1e6, NaN, 1e5)
 
+  v <- c(NA, -1e-7, 1, 1e4, 1e6, NaN, 1e5)
   expect_equal(pretty_num(v),
-    c("  NA ", "   1 ", " 10 k", "  1 M", " NaN ", "100 k"))
+    c("      NA ", "-100.00 n","       1 ", "     10 k", "      1 M", "     NaN ", "    100 k"))
 
   expect_equal(pretty_num(numeric()), character())
 })
@@ -81,41 +84,45 @@ test_that("always two fraction digits", {
 
 test_that("6 width style", {
   cases <- c(
-    "< 0 k" = -1e4,                    # 1
-    "< 0 k" = -100,                    # 2
-    "< 0 k" = -1,                      # 3
-    "0.0 k" = 0,                       # 4
-    "0.0 k" = 1,                       # 5
-    "0.0 k" = 9,                       # 6
-    "0.0 k" = 9.99999,                 # 7
-    "0.0 k" = 10.33333,                # 8
-    "0.1 k" = 100,                     # 9
-    "0.1 k" = 111.33333,               # 10
-    "1.0 k" = 1e3,                     # 11
-    "1.0 k" = 1049,                    # 12
-    "1.1 k" = 1051,                    # 13
-    "1.1 k" = 1100,                    # 14
-    " 10 k" = 1e4,                     # 15
-    "100 k" = 1e5,                     # 16
-    "1.0 M" = 1e6,                     # 17
-    "NaN k" = NaN,                     # 18
-    " NA k" = NA                       # 19
+    " -10 k" = -1e4,                    # 1
+    "-111  " = -111.33333,              # 2
+    "-100  " = -100,                    # 3
+    " -10  " = -10.33333,               # 4
+    " -10  " = -9.99999,                # 5
+    "-9.0  " = -9,                      # 6
+    "-1.0  " = -1,                      # 7
+    "0.00  " = 0,                       # 8
+    "1.00  " = 1,                       # 9
+    "9.00  " = 9,                       # 10
+    "10.0  " = 9.99999,                 # 11
+    "10.3  " = 10.33333,                # 12
+    " 100  " = 100,                     # 13
+    " 111  " = 111.33333,               # 14
+    "1.00 k" = 1e3,                     # 15
+    "1.05 k" = 1049,                    # 16
+    "1.05 k" = 1051,                    # 17
+    "1.10 k" = 1100,                    # 18
+    "10.0 k" = 1e4,                     # 19
+    " 100 k" = 1e5,                     # 20
+    "1.00 M" = 1e6,                     # 21
+    " NaN  " = NaN,                     # 22
+    "  NA  " = NA                       # 23
   )
-
+  
   expect_equal(pretty_num(unname(cases), style = "6"), names(cases))
 })
 
 test_that("No fractional bytes (#23)", {
   cases <- c(
-    "    -1 B" = -1,                   # 1
-    "     1 B" = 1,                    # 2
-    "    16 B" = 16,                   # 3
-    "   128 B" = 128,                  # 4
-    " 1.02 kB" = 1024,                 # 5
-    "16.38 kB" = 16384,                # 6
-    " 1.05 MB" = 1048576,              # 7
-    "-1.05 MB" = -1048576,             # 8
-    "    NA B" = NA                    # 9
+    "    -1 " = -1,                   # 1
+    "     1 " = 1,                    # 2
+    "    16 " = 16,                   # 3
+    "   128 " = 128,                  # 4
+    " 1.02 k" = 1024,                 # 5
+    "16.38 k" = 16384,                # 6
+    " 1.05 M" = 1048576,              # 7
+    "-1.05 M" = -1048576,             # 8
+    "    NA " = NA                    # 9
   )
 
   expect_equal(pretty_num(unname(cases)), names(cases))
