@@ -14,7 +14,7 @@ format_num <- local({
   }
 
   compute_num <- function(number, smallest_unit = "p") {
-    units0 <- c("p","n","μ","m","", "k", "M", "G", "T", "P", "E", "Z", "Y")
+    units0 <- c("p","n","\xC2\xB5","m","", "k", "M", "G", "T", "P", "E", "Z", "Y")
     zeroshif0 <- 5L
     
     stopifnot(
