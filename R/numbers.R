@@ -31,8 +31,10 @@ format_num <- local({
     zeroshift <- zeroshif0 +1L - low
     units <- units0[low:length(units0)]
     limits <- limits[low:nrow]
-
-    neg <- number < 0 & !is.na(number)
+    
+    # TODO turn 0 here as a vector with same units as number if units %in% attributes(number)
+    
+    neg <- number != abs(number) & !is.na(number)
     number <- abs(number)
     mat <- matrix(
       rep(number, each = nrow),
@@ -50,9 +52,9 @@ format_num <- local({
     res <- number / 1000 ^ exponent
     unit <- units[exponent + zeroshift]
 
-    ## Zero number
-    res[number == 0] <- 0
-    unit[number == 0] <- units[5]
+    ## Zero number, with or without set_units
+    res[number == -1*number] <- number-number
+    unit[number == -1*number] <- units[zeroshift]
 
     ## NA and NaN number
     res[is.na(number)] <- NA_real_
@@ -74,7 +76,7 @@ format_num <- local({
 
     ## String. For fractions we always show two fraction digits
     res <- character(length(amt))
-    int <- is.na(amt) | amt == as.integer(amt)
+    int <- is.na(amt) | as.numeric(amt) == as.integer(amt)
     res[int] <- format(
       ifelse(szs$negative[int], -1, 1) * amt[int],
       scientific = FALSE

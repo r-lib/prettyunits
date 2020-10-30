@@ -1,7 +1,7 @@
 
 context("Pretty numbers")
 
-test_that("sizes.R is standalone", {
+test_that("numbers.R is standalone", {
   stenv <- environment(format_num$pretty_num)
   objs <- ls(stenv, all.names = TRUE)
   funs <- Filter(function(x) is.function(stenv[[x]]), objs)
@@ -23,8 +23,8 @@ test_that("pretty_num gives errors on invalid input", {
 
 })
 
-test_that("pretty_num converts properly", {
-
+test_that("pretty_num converts numbers properly", {
+  
   expect_equal(pretty_num(1e-12), '1 p')
   expect_equal(pretty_num(-1e-4), '-100.00 µ')
   expect_equal(pretty_num(-0.01), '-10 m')
@@ -35,7 +35,22 @@ test_that("pretty_num converts properly", {
   expect_equal(pretty_num(1000 * 1000 - 1), '1.00 M')
   expect_equal(pretty_num(1e16), '10 P')
   expect_equal(pretty_num(1e30), '1000000 Y')
+  
+})
 
+test_that("pretty_num converts units properly", {
+  
+  expect_equal(pretty_num(units::set_units(1e-12,m)), '1 p [m]')
+  expect_equal(pretty_num(units::set_units(-1e-4,s)), '-100.00 µ [s]')
+  expect_equal(pretty_num(units::set_units(-0.01,g)), '-10 m [g]')
+  expect_equal(pretty_num(units::set_units(0,t)), '0 [t]')
+  expect_equal(pretty_num(units::set_units(10,m/s)), '10 [m/s]')
+  expect_equal(pretty_num(units::set_units(999,J)), '999 [J]')
+  expect_equal(pretty_num(units::set_units(1001,kg)), '1.00 k [kg]')
+  expect_equal(pretty_num(units::set_units(1000 * 1000 - 1,m2)), '1.00 M [m2]')
+  expect_equal(pretty_num(units::set_units(1e10,Hz)), '10 G [Hz]')
+  expect_equal(pretty_num(units::set_units(1e30,g)), '1000000 Y [g]')
+  
 })
 
 test_that("pretty_num handles NA and NaN", {
