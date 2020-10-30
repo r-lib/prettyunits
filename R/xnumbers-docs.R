@@ -1,5 +1,5 @@
 
-#' Bytes in a human readable string
+#' Numbers in a human readable string
 #'
 #' Use `pretty_num()` to format numbers `compute_num()` is the underlying
 #' engine that may be useful for custom formatting.

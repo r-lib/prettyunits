@@ -15,7 +15,8 @@ format_num <- local({
 
   compute_num <- function(number, smallest_unit = "p") {
     units0 <- c("p","n","μ","m","", "k", "M", "G", "T", "P", "E", "Z", "Y")
-
+    zeroshif0 <- 5L
+    
     stopifnot(
       is.numeric(number),
       is.character(smallest_unit),
@@ -23,24 +24,31 @@ format_num <- local({
       !is.na(smallest_unit),
       smallest_unit %in% units0
     )
-
-    limits <- c(1000, 999950 * 1000 ^ (seq_len(length(units0) - 2) - 1))
+    
+    limits <- c( 999950 * 1000 ^ (seq_len(length(units0) ) - (zeroshif0+1L)))
+    nrow <- length(limits)
     low <- match(smallest_unit, units0)
+    zeroshift <- zeroshif0 +1L - low
     units <- units0[low:length(units0)]
-    limits <- limits[low:length(limits)]
+    limits <- limits[low:nrow]
 
     neg <- number < 0 & !is.na(number)
     number <- abs(number)
-
     mat <- matrix(
-      rep(number, each = length(limits)),
-      nrow = length(limits),
+      rep(number, each = nrow),
+      nrow = nrow,
       ncol = length(number)
     )
-    mat2 <- matrix(mat < limits, nrow  = length(limits), ncol = length(number))
-    exponent <- length(limits) - colSums(mat2) + low - 1L
+    mat2 <- matrix(mat < limits, nrow  = nrow, ncol = length(number))
+    exponent <- nrow - colSums(mat2) - (zeroshift -1L)
+    in_range <- function(exponent) {
+        max(min(exponent,nrow-zeroshift, na.rm = FALSE),1L-zeroshift, na.rm = TRUE)
+    }
+    if (length(exponent)) {
+      exponent <- sapply(exponent, in_range)
+    }
     res <- number / 1000 ^ exponent
-    unit <- units[exponent - low + 6L]
+    unit <- units[exponent + zeroshift]
 
     ## Zero number
     res[number == 0] <- 0
@@ -62,6 +70,7 @@ format_num <- local({
   pretty_num_default <- function(number) {
     szs <- compute_num(number)
     amt <- szs$amount
+    sep <- " "
 
     ## String. For fractions we always show two fraction digits
     res <- character(length(amt))
@@ -72,7 +81,7 @@ format_num <- local({
     )
     res[!int] <- sprintf("%.2f", ifelse(szs$negative[!int], -1, 1) * amt[!int])
 
-    format(paste(res, szs$unit), justify = "right")
+    format(paste(res, szs$unit,sep = sep), justify = "right")
   }
 
   pretty_num_nopad <- function(number) {
@@ -81,26 +90,30 @@ format_num <- local({
 
   pretty_num_6 <- function(number) {
     szs <- compute_num(number, smallest_unit = "p")
-    amt <- szs$amount
+    amt <- round(szs$amount,2)
+    sep <- " "
 
     na   <- is.na(amt)
     nan  <- is.nan(amt)
     neg  <- !na & !nan & szs$negative
-    l10  <- !na & !nan & !neg & amt < 10
-    l100 <- !na & !nan & !neg & amt >= 10 & amt < 100
-    b100 <- !na & !nan & !neg & amt >= 100
-
-    szs$unit[neg] <- "kB"
+    l10p  <- !na & !nan & !neg & amt < 10
+    l100p <- !na & !nan & !neg & amt >= 10 & amt < 100
+    b100p <- !na & !nan & !neg & amt >= 100
+    l10n  <- !na & !nan & neg & amt < 10
+    l100n <- !na & !nan & neg & amt >= 10 & amt < 100
+    b100n <- !na & !nan & neg & amt >= 100
 
     famt <- character(length(amt))
-    famt[na] <- " NA"
-    famt[nan] <- "NaN"
-    famt[neg] <- "< 0"
-    famt[l10] <- sprintf("%.1f", amt[l10])
-    famt[l100] <- sprintf(" %.0f", amt[l100])
-    famt[b100] <- sprintf("%.0f", amt[b100])
+    famt[na] <- "  NA"
+    famt[nan] <- " NaN"
+    famt[l10p] <- sprintf("%.2f", amt[l10p])
+    famt[l100p] <- sprintf("%.1f", amt[l100p])
+    famt[b100p] <- sprintf(" %.0f", amt[b100p])
+    famt[l10n] <- sprintf("-%.1f", amt[l10n])
+    famt[l100n] <- sprintf(" -%.0f", amt[l100n])
+    famt[b100n] <- sprintf("-%.0f", amt[b100n])
 
-    paste0(famt, " ", szs$unit)
+    sub(" $","  ",paste0(famt, sep, szs$unit))
   }
 
   structure(
