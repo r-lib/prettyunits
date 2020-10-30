@@ -19,7 +19,7 @@
 #'
 #' @export
 #' @examples
-#' numbers <- c(1337, 133337, 13333337, 1333333337, 133333333337)
+#' numbers <- c(1337, 1.3333e-5, 13333337, 1333333337, 133333333337)
 #' pretty_num(numbers)
 #' pretty_num(numbers, style = "nopad")
 #' pretty_num(numbers, style = "6")

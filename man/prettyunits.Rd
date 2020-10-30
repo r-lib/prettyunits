@@ -4,6 +4,3 @@
 \name{prettyunits}
 \alias{prettyunits}
 \title{Prettier formatting of quantities}
-\description{
-Prettier formatting of quantities
-}
