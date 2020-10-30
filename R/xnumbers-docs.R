@@ -1,10 +1,10 @@
 
-#' Numbers in a human readable string
+#' Linear quantities in a human readable string
 #'
 #' Use `pretty_num()` to format numbers `compute_num()` is the underlying
 #' engine that may be useful for custom formatting.
 #' 
-#' @param number Numeric vector, number.
+#' @param number Numeric vector, number related to a linear quantity.
 #' @param style Formatting style:
 #'   * `"default"` is the original `pretty_num` formatting, and it always
 #'     pads the output, so that all vector elements are of the same width,
