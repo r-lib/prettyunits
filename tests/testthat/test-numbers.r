@@ -23,10 +23,10 @@ test_that("pretty_num gives errors on invalid input", {
 
 })
 
-test_that("pretty_num converts numbers properly", {
-  
-  expect_equal(pretty_num(1e-12), '1 p')
-  expect_equal(pretty_num(-1e-4), '-100.00 µ')
+test_that("pretty_num converts properly", {
+
+  expect_equal(pretty_num(1e-24), '1 y')
+  expect_equal(pretty_num(-1e-4), '-100.00 \xC2\xB5')
   expect_equal(pretty_num(-0.01), '-10 m')
   expect_equal(pretty_num(0), '0 ')
   expect_equal(pretty_num(10), '10 ')
@@ -141,4 +141,12 @@ test_that("No fractional bytes (#23)", {
   )
 
   expect_equal(pretty_num(unname(cases)), names(cases))
+})
+
+test_that("compute_num handles `smallest_prefix` properly", {
+  
+  expect_equal(compute_num(1e-24, smallest_prefix = "m"), data.frame(amount = 1e-21, prefix = "m", negative = FALSE, stringsAsFactors = FALSE))
+  expect_equal(compute_num(-1e-4, smallest_prefix = "m"), data.frame(amount = 0.1, prefix = "m", negative = TRUE, stringsAsFactors = FALSE))
+  expect_equal(compute_num(-0.01, smallest_prefix = "m"), data.frame(amount = 10, prefix = "m", negative = TRUE, stringsAsFactors = FALSE))
+  expect_equal(compute_num(0, smallest_prefix = "m"), data.frame(amount = 0, prefix = "", negative = FALSE, stringsAsFactors = FALSE))
 })

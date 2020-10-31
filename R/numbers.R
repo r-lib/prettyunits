@@ -13,23 +13,23 @@ format_num <- local({
     style(number)
   }
 
-  compute_num <- function(number, smallest_unit = "p") {
-    units0 <- c("p","n","\xC2\xB5","m","", "k", "M", "G", "T", "P", "E", "Z", "Y")
-    zeroshif0 <- 5L
+  compute_num <- function(number, smallest_prefix = "y") {
+    prefixes0 <- c("y","z","a","f","p","n","\xC2\xB5","m","", "k", "M", "G", "T", "P", "E", "Z", "Y")
+    zeroshif0 <- 9L
     
     stopifnot(
       is.numeric(number),
-      is.character(smallest_unit),
-      length(smallest_unit) == 1,
-      !is.na(smallest_unit),
-      smallest_unit %in% units0
+      is.character(smallest_prefix),
+      length(smallest_prefix) == 1,
+      !is.na(smallest_prefix),
+      smallest_prefix %in% prefixes0
     )
     
-    limits <- c( 999950 * 1000 ^ (seq_len(length(units0) ) - (zeroshif0+1L)))
+    limits <- c( 999950 * 1000 ^ (seq_len(length(prefixes0) ) - (zeroshif0+1L)))
     nrow <- length(limits)
-    low <- match(smallest_unit, units0)
+    low <- match(smallest_prefix, prefixes0)
     zeroshift <- zeroshif0 +1L - low
-    units <- units0[low:length(units0)]
+    prefixes <- prefixes0[low:length(prefixes0)]
     limits <- limits[low:nrow]
     
     # TODO turn 0 here as a vector with same units as number if units %in% attributes(number)
@@ -50,7 +50,7 @@ format_num <- local({
       exponent <- sapply(exponent, in_range)
     }
     res <- number / 1000 ^ exponent
-    unit <- units[exponent + zeroshift]
+    prefix <- prefixes[exponent + zeroshift]
 
     ## Zero number, with or without set_units
     res[number == -1*number] <- number-number
@@ -59,12 +59,12 @@ format_num <- local({
     ## NA and NaN number
     res[is.na(number)] <- NA_real_
     res[is.nan(number)] <- NaN
-    unit[is.na(number)] <- "" # units0[low] is meaningless    # Includes NaN as well
+    prefix[is.na(number)] <- "" # prefixes0[low] is meaningless    # Includes NaN as well
 
     data.frame(
       stringsAsFactors = FALSE,
       amount = res,
-      unit = unit,
+      prefix = prefix,
       negative = neg
     )
   }
@@ -83,7 +83,7 @@ format_num <- local({
     )
     res[!int] <- sprintf("%.2f", ifelse(szs$negative[!int], -1, 1) * amt[!int])
 
-    format(paste(res, szs$unit,sep = sep), justify = "right")
+    format(paste(res, szs$prefix,sep = sep), justify = "right")
   }
 
   pretty_num_nopad <- function(number) {
@@ -91,7 +91,7 @@ format_num <- local({
   }
 
   pretty_num_6 <- function(number) {
-    szs <- compute_num(number, smallest_unit = "p")
+    szs <- compute_num(number, smallest_prefix = "y")
     amt <- round(szs$amount,2)
     sep <- " "
 
@@ -115,7 +115,7 @@ format_num <- local({
     famt[l100n] <- sprintf(" -%.0f", amt[l100n])
     famt[b100n] <- sprintf("-%.0f", amt[b100n])
 
-    sub(" $","  ",paste0(famt, sep, szs$unit))
+    sub(" $","  ",paste0(famt, sep, szs$prefix))
   }
 
   structure(

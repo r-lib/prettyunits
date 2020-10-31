@@ -7,7 +7,7 @@
 \usage{
 pretty_num(number, style = c("default", "nopad", "6"))
 
-compute_num(number, smallest_unit = "p")
+compute_num(number, smallest_prefix = "y")
 }
 \arguments{
 \item{number}{Numeric vector, number related to a linear quantity.}
@@ -23,11 +23,11 @@ has the same width (number of characters), e.g. in progress bars.
 See some examples below.
 }}
 
-\item{smallest_unit}{A character scalar, the smallest unit to use.}
+\item{smallest_prefix}{A character scalar, the smallest prefix to use.}
 }
 \value{
 Character vector, the formatted sizes.
-For \code{compute_num}, a data frame with columns \code{amount}, \code{unit},
+For \code{compute_num}, a data frame with columns \code{amount}, \code{prefix},
 \code{negative}.
 }
 \description{
