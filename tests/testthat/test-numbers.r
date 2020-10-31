@@ -70,8 +70,12 @@ test_that("pretty_num handles vectors", {
 
   v <- c(NA, -1e-7, 1, 1e4, 1e6, NaN, 1e5)
   expect_equal(pretty_num(v),
-    c("      NA ", "-100.00 n","       1 ", "     10 k", "      1 M", "     NaN ", "    100 k"))
+               c("      NA ", "-100.00 n","       1 ", "     10 k", "      1 M", "     NaN ", "    100 k"))
 
+  v_units <- units::set_units(c(NA, -1e-7, 1, 1e4, 1e6, NaN, 1e5), cm)
+  expect_equal(pretty_num(v_units),
+               c("      NA [cm]", "-100.00 n [cm]","       1  [cm]", "     10 k [cm]", "      1 M [cm]", "     NaN [cm]", "    100 k [cm]"))
+  
   expect_equal(pretty_num(numeric()), character())
 })
 

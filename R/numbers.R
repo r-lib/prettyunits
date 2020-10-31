@@ -52,8 +52,8 @@ format_num <- local({
     res <- number / 1000 ^ exponent
     prefix <- prefixes[exponent + zeroshift]
 
-    ## Zero number, with or without set_units
-    res[as.numeric(number)==0] <- number-number
+    ## Zero number, with set_units to copy the units from number to 0
+    res[as.numeric(number)==0] <- ifelse(length(attr(number,"units")), units::set_units(0,units::deparse_unit(number),mode = "standard"), 0)
     prefix[as.numeric(number)==0] <- ""
 
     ## NA and NaN number
@@ -84,7 +84,7 @@ format_num <- local({
     res[!int] <- sprintf("%.2f", ifelse(szs$negative[!int], -1, 1) * amt[!int])
     pretty_num <- paste0(res, sep, szs$prefix)
     if(length(attr(number,"units"))){
-      pretty_num <- paste0(pretty_num,units::make_unit_label("", amt, parse=FALSE))
+      pretty_num <- paste0(pretty_num,units::make_unit_label("", number, parse=FALSE))
     }
     sub("(?<=\\d)\\s\\s",sep, format(pretty_num, justify = "right"), perl=TRUE)
   }
