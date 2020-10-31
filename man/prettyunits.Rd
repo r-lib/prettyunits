@@ -4,3 +4,12 @@
 \name{prettyunits}
 \alias{prettyunits}
 \title{Prettier formatting of quantities}
+\description{
+Render quantities with a pretty, human-readable formatting.
+\itemize{
+\item Time intervals: '1337000' -> '15d 11h 23m 20s'.
+\item Vague time intervals: '2674000' -> 'about a month ago'.
+\item Bytes: '1337' -> '1.34 kB'.
+\item Quantities: '1239437' -> '1.24 M'.
+}
+}
