@@ -25,7 +25,7 @@ test_that("pretty_num gives errors on invalid input", {
 
 test_that("pretty_num converts properly", {
 
-  expect_equal(pretty_num(1e-12), '1 p')
+  expect_equal(pretty_num(1e-24), '1 y')
   expect_equal(pretty_num(-1e-4), '-100.00 µ')
   expect_equal(pretty_num(-0.01), '-10 m')
   expect_equal(pretty_num(0), '0 ')

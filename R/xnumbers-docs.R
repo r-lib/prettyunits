@@ -14,7 +14,7 @@
 #'   has the same width (number of characters), e.g. in progress bars.
 #'   See some examples below.
 #' @return Character vector, the formatted sizes.
-#'   For `compute_num`, a data frame with columns `amount`, `unit`,
+#'   For `compute_num`, a data frame with columns `amount`, `prefix`,
 #'   `negative`.
 #'
 #' @export
@@ -27,7 +27,7 @@
 pretty_num <- format_num$pretty_num
 
 #' @rdname pretty_num
-#' @param smallest_unit A character scalar, the smallest unit to use.
+#' @param smallest_prefix A character scalar, the smallest prefix to use.
 #' @export
 
 compute_num <- format_num$compute_num
