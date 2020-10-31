@@ -41,13 +41,13 @@ test_that("pretty_num converts properly", {
 test_that("pretty_num converts units properly", {
   
   expect_equal(pretty_num(units::set_units(1e-12,m)), '1 p [m]')
-  expect_equal(pretty_num(units::set_units(-1e-4,s)), '-100.00 µ [s]')
+  expect_equal(pretty_num(units::set_units(-1e-4,s)), '-100.00 \xC2\xB5 [s]')
   expect_equal(pretty_num(units::set_units(-0.01,g)), '-10 m [g]')
   expect_equal(pretty_num(units::set_units(0,t)), '0 [t]')
   expect_equal(pretty_num(units::set_units(10,m/s)), '10 [m/s]')
   expect_equal(pretty_num(units::set_units(999,J)), '999 [J]')
   expect_equal(pretty_num(units::set_units(1001,kg)), '1.00 k [kg]')
-  expect_equal(pretty_num(units::set_units(1000 * 1000 - 1,m2)), '1.00 M [m2]')
+  expect_equal(pretty_num(units::set_units(1000 * 1000 - 1,m3)), '1.00 M [m3]')
   expect_equal(pretty_num(units::set_units(1e10,Hz)), '10 G [Hz]')
   expect_equal(pretty_num(units::set_units(1e30,g)), '1000000 Y [g]')
   

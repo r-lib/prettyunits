@@ -53,8 +53,8 @@ format_num <- local({
     prefix <- prefixes[exponent + zeroshift]
 
     ## Zero number, with or without set_units
-    res[number == -1*number] <- number-number
-    unit[number == -1*number] <- units[zeroshift]
+    res[as.numeric(number)==0] <- number-number
+    prefix[as.numeric(number)==0] <- ""
 
     ## NA and NaN number
     res[is.na(number)] <- NA_real_
@@ -78,12 +78,15 @@ format_num <- local({
     res <- character(length(amt))
     int <- is.na(amt) | as.numeric(amt) == as.integer(amt)
     res[int] <- format(
-      ifelse(szs$negative[int], -1, 1) * amt[int],
+      ifelse(szs$negative[int], -1, 1) * as.numeric(amt[int]),
       scientific = FALSE
     )
     res[!int] <- sprintf("%.2f", ifelse(szs$negative[!int], -1, 1) * amt[!int])
-
-    format(paste(res, szs$prefix,sep = sep), justify = "right")
+    pretty_num <- paste0(res, sep, szs$prefix)
+    if(length(attr(number,"units"))){
+      pretty_num <- paste0(pretty_num,units::make_unit_label("", amt, parse=FALSE))
+    }
+    sub("(?<=\\d)\\s\\s",sep, format(pretty_num, justify = "right"), perl=TRUE)
   }
 
   pretty_num_nopad <- function(number) {
