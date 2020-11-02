@@ -13,7 +13,10 @@ knitr::opts_chunk$set(
 # prettyunits
 
 The `prettyunits` package formats quantities in human readable form. Currently
-time units and information (i.e. bytes) are supported.
+- time units 
+- information (i.e. bytes) 
+- linear quantities (i.e. quantities representing meters, but not square-meters)
+are supported.
 
 ## Installation
 
@@ -98,6 +101,13 @@ time_ago(now - as.difftime(5, units = "hours"))
 time_ago(now - as.difftime(25, units = "hours"))
 ```
 
-```{r}
+## Quantities
 
+`pretty_num` formats number related to linear quantities in a human readable way:
+```{r}
+pretty_num(1337)
+pretty_num(133337)
+pretty_num(1333.37e-9)
 ```
+
+
