@@ -5,11 +5,13 @@
 [![Windows Build status](https://ci.appveyor.com/api/projects/status/github/r-lib/prettyunits?svg=true)](https://ci.appveyor.com/project/gaborcsardi/prettyunits)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/prettyunits)](https://CRAN.R-project.org/package=prettyunits)
 
-
 # prettyunits
 
 The `prettyunits` package formats quantities in human readable form. Currently
-time units and information (i.e. bytes) are supported.
+- time units 
+- information (i.e. bytes) 
+- linear quantities (i.e. like quantities representing distance, but not surface or volume)
+are supported.
 
 ## Installation
 
@@ -96,6 +98,57 @@ uls()
 ##>     644 gaborcsardi staff  4.65 kB 2017-12-15 11:00:16  README.md
 ##>     644 gaborcsardi staff  2.95 kB 2019-03-27 09:58:43 README.Rmd
 ```
+
+## Quantities
+
+`pretty_num` formats number related to linear quantities in a human readable way:
+
+```r
+pretty_num(1337)
+```
+
+```
+##> [1] "1.34 k"
+```
+
+```r
+pretty_num(-133337)
+```
+
+```
+##> [1] "-133.34 k"
+```
+
+```r
+pretty_num(1333.37e-9)
+```
+
+```
+##> [1] "1.33 µ"
+```
+Be aware that the result is wrong in case of surface or volumes, and for any non-linear quantity.
+
+Here is a simple example of how to prettify a entire tibble
+
+```r
+library(tidyverse)
+tdf <- tribble( ~name, ~`size in m`, ~`speed in m/s`,
+                "land snail", 0.075, 0.001,
+                "photon", NA,  299792458,
+                "African plate", 10546330, 0.000000000681)
+tdf %>% mutate(across(where(is.numeric), pretty_num))
+```
+
+```
+##> # A tibble: 3 x 3
+##>   name          `size in m` `speed in m/s`
+##>   <chr>         <chr>       <chr>         
+##> 1 land snail    "   75 m"   "     1 m"    
+##> 2 photon        "    NA "   "299.79 M"    
+##> 3 African plate "10.55 M"   "   681 p"
+```
+
+
 
 ## Time intervals
 
