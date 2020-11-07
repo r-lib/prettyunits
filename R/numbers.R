@@ -82,11 +82,13 @@ format_num <- local({
       scientific = FALSE
     )
     res[!int] <- sprintf("%.2f", ifelse(szs$negative[!int], -1, 1) * amt[!int])
+    sep <- ifelse(is.na(res), NA_character_, sep)
     pretty_num <- paste0(res, sep, szs$prefix)
     if(length(attr(number,"units"))){
       pretty_num <- paste0(pretty_num,units::make_unit_label("", number, parse=FALSE))
     }
-    sub("(?<=\\d)\\s\\s",sep, format(pretty_num, justify = "right"), perl=TRUE)
+    # remove units added space if any
+    sub("(?<=\\d\\s)\\s","", format(pretty_num, justify = "right"), perl=TRUE)
   }
 
   pretty_num_nopad <- function(number) {
