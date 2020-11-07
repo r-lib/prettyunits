@@ -1,7 +1,7 @@
 
 format_num <- local({
 
-  pretty_num <- function(number, style = c("default", "nopad", "6")) {
+  pretty_num <- function(number, style = c("default", "nopad", "6"), sep = "\xC2\xA0") {
 
     style <- switch(
       match.arg(style),
@@ -9,8 +9,8 @@ format_num <- local({
       "nopad" = pretty_num_nopad,
       "6" = pretty_num_6
     )
-
-    style(number)
+    stopifnot(!is.na(sep))
+    style(number, sep)
   }
 
   compute_num <- function(number, smallest_prefix = "y") {
@@ -69,10 +69,9 @@ format_num <- local({
     )
   }
 
-  pretty_num_default <- function(number) {
+  pretty_num_default <- function(number, sep) {
     szs <- compute_num(number)
     amt <- szs$amount
-    sep <- " "
 
     ## String. For fractions we always show two fraction digits
     res <- character(length(amt))
@@ -91,14 +90,13 @@ format_num <- local({
     sub("(?<=\\d\\s)\\s","", format(pretty_num, justify = "right"), perl=TRUE)
   }
 
-  pretty_num_nopad <- function(number) {
-    sub("^\\s+", "", pretty_num_default(number))
+  pretty_num_nopad <- function(number, sep) {
+    sub("^\\s+", "", pretty_num_default(number, sep))
   }
 
-  pretty_num_6 <- function(number) {
+  pretty_num_6 <- function(number, sep) {
     szs <- compute_num(number, smallest_prefix = "y")
     amt <- round(szs$amount,2)
-    sep <- " "
 
     na   <- is.na(amt)
     nan  <- is.nan(amt)

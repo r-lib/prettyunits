@@ -108,7 +108,7 @@ pretty_num(1337)
 ```
 
 ```
-##> [1] "1.34 k"
+##> [1] "1.34 k"
 ```
 
 ```r
@@ -116,7 +116,7 @@ pretty_num(-133337)
 ```
 
 ```
-##> [1] "-133.34 k"
+##> [1] "-133.34 k"
 ```
 
 ```r
@@ -124,7 +124,7 @@ pretty_num(1333.37e-9)
 ```
 
 ```
-##> [1] "1.33 µ"
+##> [1] "1.33 µ"
 ```
 Be aware that the result is wrong in case of surface or volumes, and for any non-linear quantity.
 
@@ -143,9 +143,9 @@ tdf %>% mutate(across(where(is.numeric), pretty_num))
 ##> # A tibble: 3 x 3
 ##>   name          `size in m` `speed in m/s`
 ##>   <chr>         <chr>       <chr>         
-##> 1 land snail    "   75 m"   "     1 m"    
-##> 2 photon        "    NA "   "299.79 M"    
-##> 3 African plate "10.55 M"   "   681 p"
+##> 1 land snail    "   75 m"   "     1 m"    
+##> 2 photon        "    NA "   "299.79 M"    
+##> 3 African plate "10.55 M"   "   681 p"
 ```
 
 ### Quantitiies of class `units`
@@ -159,7 +159,7 @@ pretty_num(l_cm)
 ```
 
 ```
-##> [1] "1.34 M [cm]"
+##> [1] "1.34 M [cm]"
 ```
 So it is up to you to turn the unit into the right [base-unit](https://en.wikipedia.org/wiki/SI_base_unit)
 
@@ -168,7 +168,7 @@ pretty_num(l_cm %>% set_units(m))
 ```
 
 ```
-##> [1] "13.37 k [m]"
+##> [1] "13.37 k [m]"
 ```
 
 
@@ -185,9 +185,9 @@ tdf %>% mutate(across(where(is.numeric), pretty_num))
 ##> # A tibble: 3 x 3
 ##>   name          size          speed           
 ##>   <chr>         <chr>         <chr>           
-##> 1 land snail    "   75 m [m]" "     1 m [m/s]"
-##> 2 photon        "    NA  [m]" "299.79 M [m/s]"
-##> 3 African plate "10.55 M [m]" "   681 p [m/s]"
+##> 1 land snail    "   75 m [m]" "     1 m [m/s]"
+##> 2 photon        "    NA  [m]" "299.79 M [m/s]"
+##> 3 African plate "10.55 M [m]" "   681 p [m/s]"
 ```
 
 ## Time intervals
@@ -202,8 +202,7 @@ pretty_ms(c(1337, 13370, 133700, 1337000, 1337000000))
 ```
 
 ```
-##> [1] "1.3s"            "13.4s"           "2m 13.7s"        "22m 17s"        
-##> [5] "15d 11h 23m 20s"
+##> [1] "1.3s"            "13.4s"           "2m 13.7s"        "22m 17s"         "15d 11h 23m 20s"
 ```
 
 ```r
@@ -220,8 +219,7 @@ pretty_sec(c(1337, 13370, 133700, 1337000, 13370000))
 ```
 
 ```
-##> [1] "22m 17s"          "3h 42m 50s"       "1d 13h 8m 20s"   
-##> [4] "15d 11h 23m 20s"  "154d 17h 53m 20s"
+##> [1] "22m 17s"          "3h 42m 50s"       "1d 13h 8m 20s"    "15d 11h 23m 20s"  "154d 17h 53m 20s"
 ```
 
 ```r

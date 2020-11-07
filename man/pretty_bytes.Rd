@@ -5,7 +5,7 @@
 \alias{compute_bytes}
 \title{Bytes in a human readable string}
 \usage{
-pretty_bytes(bytes, style = c("default", "nopad", "6"))
+pretty_bytes(bytes, style = c("default", "nopad", "6"), sep = " ")
 
 compute_bytes(bytes, smallest_unit = "B")
 }
@@ -23,6 +23,9 @@ has the same width (number of characters), e.g. in progress bars.
 See some examples below.
 }}
 
+\item{sep}{A character scalar to separate amount and unit. Not NA_character_.
+defaults to non-breaking space}
+
 \item{smallest_unit}{A character scalar, the smallest unit to use.}
 }
 \value{
@@ -39,4 +42,5 @@ bytes <- c(1337, 133337, 13333337, 1333333337, 133333333337)
 pretty_bytes(bytes)
 pretty_bytes(bytes, style = "nopad")
 pretty_bytes(bytes, style = "6")
+pretty_bytes(bytes, sep = " ")
 }
