@@ -26,7 +26,7 @@ You can install the package from CRAN:
 install.packages("prettyunits")
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 library(prettyunits)
 library(magrittr)
 ```
@@ -81,7 +81,27 @@ tdf <- tribble( ~name, ~`size in m`, ~`speed in m/s`,
 tdf %>% mutate(across(where(is.numeric), pretty_num))
 ```
 
+### Quantitiies of class `units`
 
+`pretty_num` loosely preserves units associated with a quantity: 
+```{r}
+library(units)
+l_cm <- set_units(1337129, cm)
+pretty_num(l_cm)
+```
+So it is up to you to turn the unit into the right [base-unit](https://en.wikipedia.org/wiki/SI_base_unit)
+```{r}
+pretty_num(l_cm %>% set_units(m))
+```
+
+
+This can be used for an entire data-frame as well
+```{r}
+names(tdf) <- c( "name", "size", "speed" )
+units(tdf$size) <- "m"
+units(tdf$speed) <- "m/s"
+tdf %>% mutate(across(where(is.numeric), pretty_num))
+```
 
 ## Time intervals
 

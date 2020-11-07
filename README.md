@@ -148,7 +148,47 @@ tdf %>% mutate(across(where(is.numeric), pretty_num))
 ##> 3 African plate "10.55 M"   "   681 p"
 ```
 
+### Quantitiies of class `units`
 
+`pretty_num` loosely preserves units associated with a quantity: 
+
+```r
+library(units)
+l_cm <- set_units(1337129, cm)
+pretty_num(l_cm)
+```
+
+```
+##> [1] "1.34 M [cm]"
+```
+So it is up to you to turn the unit into the right [base-unit](https://en.wikipedia.org/wiki/SI_base_unit)
+
+```r
+pretty_num(l_cm %>% set_units(m))
+```
+
+```
+##> [1] "13.37 k [m]"
+```
+
+
+This can be used for an entire data-frame as well
+
+```r
+names(tdf) <- c( "name", "size", "speed" )
+units(tdf$size) <- "m"
+units(tdf$speed) <- "m/s"
+tdf %>% mutate(across(where(is.numeric), pretty_num))
+```
+
+```
+##> # A tibble: 3 x 3
+##>   name          size          speed           
+##>   <chr>         <chr>         <chr>           
+##> 1 land snail    "   75 m [m]" "     1 m [m/s]"
+##> 2 photon        "    NA  [m]" "299.79 M [m/s]"
+##> 3 African plate "10.55 M [m]" "   681 p [m/s]"
+```
 
 ## Time intervals
 
