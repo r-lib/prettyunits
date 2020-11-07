@@ -1,6 +1,8 @@
 
 # development version
 
+* `pretty_num()` is added with all the [BIPM](https://www.bipm.org) agreed unit prefix 
+
 # 1.1.1
 
 * Fix spurious zero fractions in `pretty_bytes()` when formatting

@@ -1,7 +1,10 @@
 Package: prettyunits
 Title: Pretty, Human Readable Formatting of Quantities
 Version: 1.1.1.9000
-Author: Gabor Csardi
+Authors@R: c(
+    person("Gabor", "Csardi", email="csardi.gabor@gmail.com", role=c("aut", "cre")),
+    person("Christophe", "Regouby", email="christophe.regouby@free.fr", role=c("ctb"))
+    )
 Maintainer: Gabor Csardi <csardi.gabor@gmail.com>
 Description: Pretty, human readable formatting of quantities.
     Time intervals: '1337000' -> '15d 11h 23m 20s'.
