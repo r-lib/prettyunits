@@ -1,4 +1,3 @@
-
 format_num <- local({
 
   pretty_num <- function(number, style = c("default", "nopad", "6"), sep = "\xC2\xA0") {
@@ -31,9 +30,7 @@ format_num <- local({
     zeroshift <- zeroshif0 +1L - low
     prefixes <- prefixes0[low:length(prefixes0)]
     limits <- limits[low:nrow]
-    
-    # TODO turn 0 here as a vector with same units as number if units %in% attributes(number)
-    
+
     neg <- number != abs(number) & !is.na(number)
     number <- abs(number)
     mat <- matrix(
@@ -43,27 +40,54 @@ format_num <- local({
     )
     mat2 <- matrix(mat < limits, nrow  = nrow, ncol = length(number))
     exponent <- nrow - colSums(mat2) - (zeroshift -1L)
+    ## enforce exponent to be in range of prefixes limits
     in_range <- function(exponent) {
         max(min(exponent,nrow-zeroshift, na.rm = FALSE),1L-zeroshift, na.rm = TRUE)
     }
     if (length(exponent)) {
       exponent <- sapply(exponent, in_range)
     }
-    res <- number / 1000 ^ exponent
     prefix <- prefixes[exponent + zeroshift]
 
+    ## Change unit with majority prefix if convertible and exponent accordingly
+    is_unit=FALSE
+    if (length(attr(number,"units"))) {
+      is_unit = TRUE
+      # test if numerator is not linear unit and exit with error
+      if (max(table(attr(number,"units")$numerator)>1 )) {
+        stop("pretty_num() doesn't handle non-linear units")
+      }
+      number_unit <- units::deparse_unit(number)
+      prefix_table <- sort(table(prefix[prefix !=""]),decreasing = T)
+      majority_prefix <- ifelse(prefix_table[1] >= sum(prefix_table)/2, as.character(names(prefix_table[1])), "")
+      majority_unit <- paste0(majority_prefix, number_unit)
+      if (units:::ud_are_convertible(number_unit, majority_unit)) {
+        # change unit to majority_unit
+        units(number) <- majority_unit
+        # shift exponent and prefix in_range accordingly
+        exponent <- exponent - (match(majority_prefix, prefixes) - zeroshift)
+        if (length(exponent)) {
+          exponent <- sapply(exponent, in_range)
+        }
+        prefix <- prefixes[exponent + zeroshift]
+        number_unit <- units::deparse_unit(number)
+      }
+    }
+    
+    amount <- number / 1000 ^ exponent
+
     ## Zero number, with set_units to copy the units from number to 0
-    res[as.numeric(number)==0] <- ifelse(length(attr(number,"units")), units::set_units(0,units::deparse_unit(number),mode = "standard"), 0)
+    amount[as.numeric(number)==0] <- ifelse(is_unit, units::set_units(0, number_unit, mode = "standard"), 0)
     prefix[as.numeric(number)==0] <- ""
 
     ## NA and NaN number
-    res[is.na(number)] <- NA_real_
-    res[is.nan(number)] <- NaN
+    amount[is.na(number)] <- NA_real_
+    amount[is.nan(number)] <- NaN
     prefix[is.na(number)] <- "" # prefixes0[low] is meaningless    # Includes NaN as well
 
     data.frame(
       stringsAsFactors = FALSE,
-      amount = res,
+      amount = amount,
       prefix = prefix,
       negative = neg
     )
@@ -84,7 +108,7 @@ format_num <- local({
     sep <- ifelse(is.na(res), NA_character_, sep)
     pretty_num <- paste0(res, sep, szs$prefix)
     if(length(attr(number,"units"))){
-      pretty_num <- paste0(pretty_num,units::make_unit_label("", number, parse=FALSE))
+      pretty_num <- paste0(pretty_num,units::make_unit_label("", amt, parse=FALSE))
     }
     # remove units added space if any
     sub("(?<=\\d\\s)\\s","", format(pretty_num, justify = "right"), perl=TRUE)
