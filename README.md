@@ -163,6 +163,8 @@ pretty_num(l_cm)
 ```
 So it is up to you to turn the unit into the right [base-unit](https://en.wikipedia.org/wiki/SI_base_unit)
 
+If you do so, then the best prefix is potentially moved to the units : 
+
 ```r
 pretty_num(l_cm %>% set_units(m))
 ```
@@ -170,6 +172,9 @@ pretty_num(l_cm %>% set_units(m))
 ```
 ##> [1] "13.37 [km]"
 ```
+
+If you try non-linear units, you should get an error:
+
 
 
 This can be used for an entire data-frame as well
