@@ -174,6 +174,14 @@ pretty_num(l_cm %>% set_units(m))
 ```
 
 If you try non-linear units, you should get an error:
+```r
+surface <- set_units(1337129, "m2")
+pretty_num(surface)
+```
+
+```
+##> Error in compute_num(number) : pretty_num() doesn't handle non-linear units
+```
 
 
 
