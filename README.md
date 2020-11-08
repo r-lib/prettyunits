@@ -38,7 +38,7 @@ pretty_bytes(1337)
 ```
 
 ```
-##> [1] "1.34 kB"
+##> [1] "1.34 kB"
 ```
 
 ```r
@@ -46,7 +46,7 @@ pretty_bytes(133337)
 ```
 
 ```
-##> [1] "133.34 kB"
+##> [1] "133.34 kB"
 ```
 
 ```r
@@ -54,7 +54,7 @@ pretty_bytes(13333337)
 ```
 
 ```
-##> [1] "13.33 MB"
+##> [1] "13.33 MB"
 ```
 
 ```r
@@ -62,7 +62,7 @@ pretty_bytes(1333333337)
 ```
 
 ```
-##> [1] "1.33 GB"
+##> [1] "1.33 GB"
 ```
 
 ```r
@@ -70,7 +70,7 @@ pretty_bytes(133333333337)
 ```
 
 ```
-##> [1] "133.33 GB"
+##> [1] "133.33 GB"
 ```
 
 Here is a simple function that emulates the Unix `ls` command, with
@@ -93,10 +93,20 @@ uls()
 ```
 
 ```
-##>  d mode        user group     size            modified       name
-##>     644 gaborcsardi staff 440.00 B 2019-03-25 10:25:08    NEWS.md
-##>     644 gaborcsardi staff  4.65 kB 2017-12-15 11:00:16  README.md
-##>     644 gaborcsardi staff  2.95 kB 2019-03-27 09:58:43 README.Rmd
+##>  d mode    user group    size            modified              name
+##>     644 to94498 staff   795 B 2020-10-24 20:55:33      appveyor.yml
+##>     644 to94498 staff   892 B 2020-11-07 18:37:18       DESCRIPTION
+##>     644 to94498 staff    42 B 2020-10-24 20:55:33           LICENSE
+##>     644 to94498 staff   111 B 2020-10-24 20:55:33          Makefile
+##>  d  755 to94498 staff         2020-11-07 18:39:15               man
+##>     644 to94498 staff   217 B 2020-11-08 17:41:51         NAMESPACE
+##>     644 to94498 staff 1.31 kB 2020-11-07 18:39:15           NEWS.md
+##>     644 to94498 staff   343 B 2020-11-08 19:24:02 prettyunits.Rproj
+##>  d  755 to94498 staff         2020-11-07 18:39:15                 R
+##>  d  755 to94498 staff         2020-10-25 09:57:43        r-packages
+##>     644 to94498 staff 3.19 kB 2020-11-08 19:18:45         README.md
+##>     644 to94498 staff 4.17 kB 2020-11-08 19:23:55        README.Rmd
+##>  d  755 to94498 staff         2020-10-24 20:55:33             tests
 ```
 
 ## Quantities
@@ -168,7 +178,7 @@ pretty_num(l_cm %>% set_units(m))
 ```
 
 ```
-##> [1] "13.37 k [m]"
+##> [1] "13.37 [km]"
 ```
 
 
