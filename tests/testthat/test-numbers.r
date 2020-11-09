@@ -1,4 +1,4 @@
-
+library(units)
 context("Pretty numbers")
 
 test_that("numbers.R is standalone", {

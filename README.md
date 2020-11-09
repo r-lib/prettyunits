@@ -150,7 +150,7 @@ tdf %>% mutate(across(where(is.numeric), pretty_num))
 
 ### Quantitiies of class `units`
 
-`pretty_num` loosely preserves units associated with a quantity: 
+`pretty_num` preserves units associated with package `units` to a  quantity: 
 
 ```r
 library(units)
@@ -161,9 +161,8 @@ pretty_num(l_cm)
 ```
 ##> [1] "1.34 M [cm]"
 ```
-So it is up to you to turn the unit into the right [base-unit](https://en.wikipedia.org/wiki/SI_base_unit)
-
-If you do so, then the best prefix is potentially moved to the units : 
+This is not so pretty, because `units` package does not consider the conversion between "cm" and "Mcm" as valid. 
+For better result, you have to turn the unit into the right [base-unit](https://en.wikipedia.org/wiki/SI_base_unit) first, and thus let `pretty_num()` moved prefix into the units: 
 
 ```r
 pretty_num(l_cm %>% set_units(m))
@@ -173,7 +172,7 @@ pretty_num(l_cm %>% set_units(m))
 ##> [1] "13.37 [km]"
 ```
 
-If you try non-linear units, you should get an error:
+As you shouldn't use it with non-linear units, you will get an error if discovered:
 ```r
 surface <- set_units(1337129, "m2")
 pretty_num(surface)

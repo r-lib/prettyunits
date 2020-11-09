@@ -48,6 +48,8 @@ format_num <- local({
       exponent <- sapply(exponent, in_range)
     }
     prefix <- prefixes[exponent + zeroshift]
+    # Zero number
+    prefix[as.numeric(number)==0] <- ""
 
     ## Change unit with majority prefix if convertible and exponent accordingly
     is_unit=FALSE
@@ -59,9 +61,9 @@ format_num <- local({
       }
       number_unit <- units::deparse_unit(number)
       prefix_table <- sort(table(prefix[prefix !=""]),decreasing = T)
-      majority_prefix <- ifelse(prefix_table[1] >= sum(prefix_table)/2, as.character(names(prefix_table[1])), "")
+      majority_prefix <- ifelse(length(prefix_table) && prefix_table[1] >= sum(prefix_table)/2, as.character(names(prefix_table[1])), "")
       majority_unit <- paste0(majority_prefix, number_unit)
-      if (units:::ud_are_convertible(number_unit, majority_unit)) {
+      if (number_unit != majority_unit && units:::ud_are_convertible(number_unit, majority_unit)) {
         # change unit to majority_unit
         units(number) <- majority_unit
         # shift exponent and prefix in_range accordingly
@@ -76,9 +78,8 @@ format_num <- local({
     
     amount <- number / 1000 ^ exponent
 
-    ## Zero number, with set_units to copy the units from number to 0
+    # Zero number, with set_units to copy the units from number to 0
     amount[as.numeric(number)==0] <- ifelse(is_unit, units::set_units(0, number_unit, mode = "standard"), 0)
-    prefix[as.numeric(number)==0] <- ""
 
     ## NA and NaN number
     amount[is.na(number)] <- NA_real_
