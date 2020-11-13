@@ -24,13 +24,14 @@ format_num <- local({
       smallest_prefix %in% prefixes0
     )
     
-    limits <- c( 999950 * 1000 ^ (seq_len(length(prefixes0) ) - (zeroshif0+1L)))
-    nrow <- length(limits)
+    limits0 <- c( 999950 * 1000 ^ (seq_len(length(prefixes0) ) - (zeroshif0+1L)))
+    nrow0 <- length(limits0)
     low <- match(smallest_prefix, prefixes0)
     zeroshift <- zeroshif0 +1L - low
     prefixes <- prefixes0[low:length(prefixes0)]
-    limits <- limits[low:nrow]
-
+    limits <- limits0[low:nrow0]
+    nrow <- length(limits)
+    
     neg <- number != abs(number) & !is.na(number)
     number <- abs(number)
     mat <- matrix(
@@ -98,13 +99,14 @@ format_num <- local({
     szs <- compute_num(number)
     amt <- szs$amount
 
-    ## String. For fractions we always show two fraction digits
+    ## String creation. Tests on amt shall be compliant with units::
     res <- character(length(amt))
-    int <- is.na(amt) | as.numeric(amt) == as.integer(amt)
+    int <- is.na(amt) | as.numeric(amt) == as.numeric(round(amt))
     res[int] <- format(
       ifelse(szs$negative[int], -1, 1) * as.numeric(amt[int]),
       scientific = FALSE
     )
+    # For fractions we always show two fraction digits. 
     res[!int] <- sprintf("%.2f", ifelse(szs$negative[!int], -1, 1) * amt[!int])
     sep <- ifelse(is.na(res), NA_character_, sep)
     pretty_num <- paste0(res, sep, szs$prefix)
@@ -112,7 +114,7 @@ format_num <- local({
       pretty_num <- paste0(pretty_num,units::make_unit_label("", amt, parse=FALSE))
     }
     # remove units added space if any
-    sub(paste0("(?<=\\d",sep,")\\s"),"", format(pretty_num, justify = "right"), perl=TRUE)
+    sub(paste0("(?<=\\d",sep,")\\s")[1],"", format(pretty_num, justify = "right"), perl=TRUE)
   }
 
   pretty_num_nopad <- function(number, sep) {
