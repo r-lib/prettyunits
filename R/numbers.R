@@ -112,7 +112,7 @@ format_num <- local({
       pretty_num <- paste0(pretty_num,units::make_unit_label("", amt, parse=FALSE))
     }
     # remove units added space if any
-    sub("(?<=\\d\\s)\\s","", format(pretty_num, justify = "right"), perl=TRUE)
+    sub(paste0("(?<=\\d",sep,")\\s"),"", format(pretty_num, justify = "right"), perl=TRUE)
   }
 
   pretty_num_nopad <- function(number, sep) {
