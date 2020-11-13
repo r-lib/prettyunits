@@ -41,7 +41,7 @@ test_that("pretty_num converts properly", {
 test_that("pretty_num converts units properly", {
   
   expect_equal(pretty_num(units::set_units(1e-12,m)), '1\xC2\xA0[pm]')
-  expect_equal(pretty_num(units::set_units(-1e-4,s)), '-100\xC2\xA0[\xC2\xB5s]')
+  expect_equal(pretty_num(units::set_units(-1e-10,s)), '-100\xC2\xA0[ps]')
   expect_equal(pretty_num(units::set_units(-0.01,g)), '-10\xC2\xA0[mg]')
   expect_equal(pretty_num(units::set_units(0,t)), '0\xC2\xA0[t]')
   expect_equal(pretty_num(units::set_units(10,m/s)), '10\xC2\xA0[m/s]')
