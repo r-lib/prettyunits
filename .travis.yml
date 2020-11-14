@@ -10,5 +10,8 @@ r:
  - release
  - devel
 
+apt-packages:
+ - libudunits2-dev
+ 
 after_success:
   - test $TRAVIS_R_VERSION_STRING = "release" && Rscript -e 'covr::codecov()'
