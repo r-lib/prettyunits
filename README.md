@@ -38,7 +38,7 @@ pretty_bytes(1337)
 ```
 
 ```
-##> [1] "1.34 kB"
+##> [1] "1.34 kB"
 ```
 
 ```r
@@ -46,7 +46,7 @@ pretty_bytes(133337)
 ```
 
 ```
-##> [1] "133.34 kB"
+##> [1] "133.34 kB"
 ```
 
 ```r
@@ -54,7 +54,7 @@ pretty_bytes(13333337)
 ```
 
 ```
-##> [1] "13.33 MB"
+##> [1] "13.33 MB"
 ```
 
 ```r
@@ -62,7 +62,7 @@ pretty_bytes(1333333337)
 ```
 
 ```
-##> [1] "1.33 GB"
+##> [1] "1.33 GB"
 ```
 
 ```r
@@ -70,7 +70,7 @@ pretty_bytes(133333333337)
 ```
 
 ```
-##> [1] "133.33 GB"
+##> [1] "133.33 GB"
 ```
 
 Here is a simple function that emulates the Unix `ls` command, with
@@ -108,7 +108,7 @@ pretty_num(1337)
 ```
 
 ```
-##> [1] "1.34 k"
+##> [1] "1.34 k"
 ```
 
 ```r
@@ -116,7 +116,7 @@ pretty_num(-133337)
 ```
 
 ```
-##> [1] "-133.34 k"
+##> [1] "-133.34 k"
 ```
 
 ```r
@@ -124,7 +124,7 @@ pretty_num(1333.37e-9)
 ```
 
 ```
-##> [1] "1.33 µ"
+##> [1] "1.33 µ"
 ```
 Be aware that the result is wrong in case of surface or volumes, and for any non-linear quantity.
 
@@ -143,46 +143,65 @@ tdf %>% mutate(across(where(is.numeric), pretty_num))
 ##> # A tibble: 3 x 3
 ##>   name          `size in m` `speed in m/s`
 ##>   <chr>         <chr>       <chr>         
-##> 1 land snail    "   75 m"   "     1 m"    
-##> 2 photon        "    NA "   "299.79 M"    
-##> 3 African plate "10.55 M"   "   681 p"
+##> 1 land snail    "   75 m"   "     1 m"    
+##> 2 photon        "    NA "   "299.79 M"    
+##> 3 African plate "10.55 M"   "   681 p"
 ```
+You may want to use non-breakable space so that the unit prefix is never separated from the number in space constrained situation like text hover or text labels:
+
+```r
+pretty_num(1333.37e-9 , sep = "\xC2\xA0")
+```
+
+```
+##> [1] "1.33 µ"
+```
+
 
 ### Quantitiies of class `units`
 
-`pretty_num` preserves units associated with package `units` to a  quantity: 
+`pretty_num` loosely preserves units associated with a quantity: 
 
 ```r
 library(units)
+```
+
+```
+##> Warning: package 'units' was built under R version 3.6.2
+```
+
+```
+##> udunits system database from /Library/Frameworks/R.framework/Versions/3.6/Resources/library/units/share/udunits
+```
+
+```r
 l_cm <- set_units(1337129, cm)
 pretty_num(l_cm)
 ```
 
 ```
-##> [1] "1.34 M [cm]"
+##> [1] "1.34 M [cm]"
 ```
-This is not so pretty, because `units` package does not consider the conversion between "cm" and "Mcm" as valid. 
-For better result, you have to turn the unit into the right [base-unit](https://en.wikipedia.org/wiki/SI_base_unit) first, and thus let `pretty_num()` moved prefix into the units: 
+So it is up to you to turn the unit into the right [base-unit](https://en.wikipedia.org/wiki/SI_base_unit)
+
+If you do so, then the best prefix is potentially moved to the units : 
 
 ```r
 pretty_num(l_cm %>% set_units(m))
 ```
 
 ```
-##> [1] "13.37 [km]"
+##> [1] "13.37 [km]"
 ```
 
-As you shouldn't use it with non-linear units, you will get an error if discovered:
-```r
+If you try non-linear units, you should get an error:
+```
 surface <- set_units(1337129, "m2")
 pretty_num(surface)
 ```
-
 ```
 ##> Error in compute_num(number) : pretty_num() doesn't handle non-linear units
 ```
-
-
 
 This can be used for an entire data-frame as well
 
@@ -197,9 +216,9 @@ tdf %>% mutate(across(where(is.numeric), pretty_num))
 ##> # A tibble: 3 x 3
 ##>   name          size          speed           
 ##>   <chr>         <chr>         <chr>           
-##> 1 land snail    "   75 m [m]" "     1 m [m/s]"
-##> 2 photon        "    NA  [m]" "299.79 M [m/s]"
-##> 3 African plate "10.55 M [m]" "   681 p [m/s]"
+##> 1 land snail    "   75 m [m]" "     1 m [m/s]"
+##> 2 photon        "    NA  [m]" "299.79 M [m/s]"
+##> 3 African plate "10.55 M [m]" "   681 p [m/s]"
 ```
 
 ## Time intervals

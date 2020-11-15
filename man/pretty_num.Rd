@@ -24,7 +24,7 @@ See some examples below.
 }}
 
 \item{sep}{A character scalar to separate amount and prefix. Not NA_character_.
-defaults to non-breaking space}
+defaults to space}
 
 \item{smallest_prefix}{A character scalar, the smallest prefix to use,
 within \code{c("y","z","a","f","p","n","\\xC2\\xB5","m","", "k", "M", "G", "T", "P", "E", "Z", "Y")}}
@@ -43,5 +43,5 @@ numbers <- c(1337, 1.3333e-5, 13333337, 1333333337, 133333333337)
 pretty_num(numbers)
 pretty_num(numbers, style = "nopad")
 pretty_num(numbers, style = "6")
-pretty_num(numbers, sep = " ")
+pretty_num(numbers, sep = "\xC2\xA0")
 }

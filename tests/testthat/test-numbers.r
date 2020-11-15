@@ -25,31 +25,31 @@ test_that("pretty_num gives errors on invalid input", {
 
 test_that("pretty_num converts properly", {
 
-  expect_equal(pretty_num(1e-24), '1\xC2\xA0y')
-  expect_equal(pretty_num(-1e-4), '-100.00\xC2\xA0\xC2\xB5')
-  expect_equal(pretty_num(-0.01), '-10\xC2\xA0m')
-  expect_equal(pretty_num(0), '0\xC2\xA0')
-  expect_equal(pretty_num(10), '10\xC2\xA0')
-  expect_equal(pretty_num(999), '999\xC2\xA0')
-  expect_equal(pretty_num(1001), '1.00\xC2\xA0k')
-  expect_equal(pretty_num(1000 * 1000 - 1), '1.00\xC2\xA0M')
-  expect_equal(pretty_num(1e16), '10\xC2\xA0P')
-  expect_equal(pretty_num(1e30), '1000000\xC2\xA0Y')
+  expect_equal(pretty_num(1e-24), '1 y')
+  expect_equal(pretty_num(-1e-4), '-100.00 \xC2\xB5')
+  expect_equal(pretty_num(-0.01), '-10 m')
+  expect_equal(pretty_num(0), '0 ')
+  expect_equal(pretty_num(10), '10 ')
+  expect_equal(pretty_num(999), '999 ')
+  expect_equal(pretty_num(1001), '1.00 k')
+  expect_equal(pretty_num(1000 * 1000 - 1), '1.00 M')
+  expect_equal(pretty_num(1e16), '10 P')
+  expect_equal(pretty_num(1e30), '1000000 Y')
   
 })
 
 test_that("pretty_num converts units properly", {
   
-  expect_equal(pretty_num(units::set_units(1e-12,m)), '1\xC2\xA0[pm]')
-  expect_equal(pretty_num(units::set_units(-1e-10,s)), '-100\xC2\xA0[ps]')
-  expect_equal(pretty_num(units::set_units(-0.01,g)), '-10\xC2\xA0[mg]')
-  expect_equal(pretty_num(units::set_units(0,t)), '0\xC2\xA0[t]')
-  expect_equal(pretty_num(units::set_units(10,m/s)), '10\xC2\xA0[m/s]')
-  expect_equal(pretty_num(units::set_units(999,J)), '999\xC2\xA0[J]')
-  expect_equal(pretty_num(units::set_units(1001,kg)), '1.00\xC2\xA0[t]')
-  expect_equal(pretty_num(units::set_units(1000 * 1000 - 1,m)), '1.00\xC2\xA0[Mm]')
-  expect_equal(pretty_num(units::set_units(1e10,Hz)), '10\xC2\xA0[GHz]')
-  expect_equal(pretty_num(units::set_units(1e30,g)), '1000000\xC2\xA0[Yg]')
+  expect_equal(pretty_num(units::set_units(1e-12,m)), '1 [pm]')
+  expect_equal(pretty_num(units::set_units(-1e-10,s)), '-100 [ps]')
+  expect_equal(pretty_num(units::set_units(-0.01,g)), '-10 [mg]')
+  expect_equal(pretty_num(units::set_units(0,t)), '0 [t]')
+  expect_equal(pretty_num(units::set_units(10,m/s)), '10 [m/s]')
+  expect_equal(pretty_num(units::set_units(999,J)), '999 [J]')
+  expect_equal(pretty_num(units::set_units(1001,kg)), '1.00 [t]')
+  expect_equal(pretty_num(units::set_units(1000 * 1000 - 1,m)), '1.00 [Mm]')
+  expect_equal(pretty_num(units::set_units(1e10,Hz)), '10 [GHz]')
+  expect_equal(pretty_num(units::set_units(1e30,g)), '1000000 [Yg]')
   
 })
 
@@ -65,11 +65,11 @@ test_that("pretty_num allows alternative separator character", {
 
 test_that("pretty_num handles NA and NaN", {
 
-  expect_equal(pretty_num(NA_real_), "NA\xC2\xA0")
-  expect_equal(pretty_num(NA_integer_), "NA\xC2\xA0")
+  expect_equal(pretty_num(NA_real_), "NA ")
+  expect_equal(pretty_num(NA_integer_), "NA ")
   expect_error(pretty_num(NA_character_), 'is.numeric.*is not TRUE')
   expect_error(pretty_num(NA), 'is.numeric.*is not TRUE')
-  expect_equal(pretty_num(NaN), "NaN\xC2\xA0")
+  expect_equal(pretty_num(NaN), "NaN ")
   
 })
 
@@ -79,7 +79,7 @@ test_that("pretty_num handles vectors", {
 
   v <- c(NA, -1e-7, 1, 1e4, 1e6, NaN, 1e5)
   expect_equal(pretty_num(v),
-               c("      NA\xC2\xA0", "-100.00\xC2\xA0n","       1\xC2\xA0", "     10\xC2\xA0k", "      1\xC2\xA0M", "     NaN\xC2\xA0", "    100\xC2\xA0k"))
+               c("      NA ", "-100.00 n","       1 ", "     10 k", "      1 M", "     NaN ", "    100 k"))
   expect_equal(pretty_num(numeric()), character())
 
 })
@@ -87,15 +87,15 @@ test_that("pretty_num handles vectors", {
 test_that("pretty_num handles units vectors", {
   
   v_units <- units::set_units(c(NA, -1e-7, 1, 1e4, 1e6, NaN, 1e5), cm)
-  expect_equal(pretty_num(v_units, sep=" "),
-               c("      NA  [cm]", "-100.00 n [cm]","       1 [cm]", "     10 k [cm]", "      1 M [cm]", "     NaN  [cm]", "    100 k [cm]"))
+  expect_equal(pretty_num(v_units, sep="\xC2\xA0"),
+               c("      NA\xC2\xA0 [cm]", "-100.00\xC2\xA0n [cm]","       1\xC2\xA0[cm]", "     10\xC2\xA0k [cm]", "      1\xC2\xA0M [cm]", "     NaN\xC2\xA0 [cm]", "    100\xC2\xA0k [cm]"))
   
 })
 
 test_that("pretty_num handles majority vote for units", {
   
   v_units <- units::set_units(c(NA, -1e-7, 1, 1e4, 1e6, NaN, 1e5, 21e4, 2.739488e5), m)
-  expect_equal(pretty_num(v_units, sep=" "),
+  expect_equal(pretty_num(v_units),
                c("    NA  [km]", " -100 p [km]","    1 m [km]", "    10 [km]", "    1 k [km]", "   NaN  [km]", "   100 [km]", "   210 [km]", "273.95 [km]"))
   
 })
@@ -105,7 +105,7 @@ test_that("pretty_num does not convert non-linear units", {
   expect_error(pretty_num(units::set_units(10000,"m2")), '.*t handle non-linear units')
   expect_error(pretty_num(units::set_units(10000,kg^3)), '.*t handle non-linear units')
   expect_error(pretty_num(units::set_units(10000,"pg4")), '.*t handle non-linear units')
-  expect_equal(pretty_num(units::set_units(10000,m/s^2)),  '10\xC2\xA0[km/s^2]')
+  expect_equal(pretty_num(units::set_units(10000,m/s^2)),  '10 [km/s^2]')
   
 })
 

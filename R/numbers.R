@@ -1,6 +1,6 @@
 format_num <- local({
 
-  pretty_num <- function(number, style = c("default", "nopad", "6"), sep = "\xC2\xA0") {
+  pretty_num <- function(number, style = c("default", "nopad", "6"), sep = " ") {
 
     style <- switch(
       match.arg(style),

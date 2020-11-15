@@ -80,6 +80,11 @@ tdf <- tribble( ~name, ~`size in m`, ~`speed in m/s`,
                 "African plate", 10546330, 0.000000000681)
 tdf %>% mutate(across(where(is.numeric), pretty_num))
 ```
+You may want to use non-breakable space so that the unit prefix is never separated from the number in space constrained situation like text hover or text labels:
+```{r}
+pretty_num(1333.37e-9 , sep = "\xC2\xA0")
+```
+
 
 ### Quantitiies of class `units`
 

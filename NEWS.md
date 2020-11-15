@@ -4,9 +4,8 @@
 * `pretty_num()` is added with all the [BIPM](https://www.bipm.org) agreed unit prefix 
   it handles numeric values and vector, as well as `units` class entries. 
   
-* Breaking change : Default separator is now non-breaking space, to comply with
-  BIPM SI Brochure.
-  It is configurable back to space through the `sep = " "` argument.
+* `sep ` option now allows to switch to non-breaking space separator according to 
+  BIPM SI Brochure recommendation.
 
 # 1.1.1
 

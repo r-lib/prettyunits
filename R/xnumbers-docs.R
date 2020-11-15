@@ -14,7 +14,7 @@
 #'   has the same width (number of characters), e.g. in progress bars.
 #'   See some examples below.
 #' @param sep A character scalar to separate amount and prefix. Not NA_character_.
-#'   defaults to non-breaking space
+#'   defaults to space
 #' @return Character vector, the formatted sizes.
 #'   For `compute_num`, a data frame with columns `amount`, `prefix`,
 #'   `negative`.
@@ -25,7 +25,7 @@
 #' pretty_num(numbers)
 #' pretty_num(numbers, style = "nopad")
 #' pretty_num(numbers, style = "6")
-#' pretty_num(numbers, sep = " ")
+#' pretty_num(numbers, sep = "\xC2\xA0")
 
 pretty_num <- format_num$pretty_num
 

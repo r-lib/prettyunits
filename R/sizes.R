@@ -1,7 +1,7 @@
 
 format_bytes <- local({
 
-  pretty_bytes <- function(bytes, style = c("default", "nopad", "6"), sep = "\xC2\xA0") {
+  pretty_bytes <- function(bytes, style = c("default", "nopad", "6"), sep = " ") {
 
     style <- switch(
       match.arg(style),
