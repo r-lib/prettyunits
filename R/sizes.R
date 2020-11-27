@@ -65,7 +65,7 @@ format_bytes <- local({
 
     ## String. For fractions we always show two fraction digits
     res <- character(length(amt))
-    int <- is.na(amt) | amt == as.integer(amt)
+    int <- is.na(amt) | abs(amt - as.integer(amt)) < 1e-7
     res[int] <- format(
       ifelse(szs$negative[int], -1, 1) * amt[int],
       scientific = FALSE

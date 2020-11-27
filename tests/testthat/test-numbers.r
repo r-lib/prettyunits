@@ -26,7 +26,7 @@ test_that("pretty_num gives errors on invalid input", {
 test_that("pretty_num converts properly", {
 
   expect_equal(pretty_num(1e-24), '1 y')
-  expect_equal(pretty_num(-1e-4), '-100.00 \xC2\xB5')
+  expect_equal(pretty_num(-1e-4), '-100 \xC2\xB5')
   expect_equal(pretty_num(-0.01), '-10 m')
   expect_equal(pretty_num(0), '0 ')
   expect_equal(pretty_num(10), '10 ')
@@ -56,7 +56,7 @@ test_that("pretty_num converts units properly", {
 test_that("pretty_num allows alternative separator character", {
   
   expect_equal(pretty_num(1e-24, sep= " "), '1 y')
-  expect_equal(pretty_num(-1e-4, sep= "\xE2\x80\xAF"), '-100.00\xE2\x80\xAF\xC2\xB5')
+  expect_equal(pretty_num(-1e-4, sep= "\xE2\x80\xAF"), '-100\xE2\x80\xAF\xC2\xB5')
   expect_equal(pretty_num(-0.01, sep= "_"), '-10_m')
   expect_equal(pretty_num(0, sep = ""), '0')
   expect_error(pretty_num(10, sep=NA_character_), '!is.na.*is not TRUE')
@@ -79,7 +79,7 @@ test_that("pretty_num handles vectors", {
 
   v <- c(NA, -1e-7, 1, 1e4, 1e6, NaN, 1e5)
   expect_equal(pretty_num(v),
-               c("      NA ", "-100.00 n","       1 ", "     10 k", "      1 M", "     NaN ", "    100 k"))
+               c("   NA ", "-100 n","    1 ", "  10 k", "   1 M", "  NaN ", " 100 k"))
   expect_equal(pretty_num(numeric()), character())
 
 })
@@ -88,7 +88,7 @@ test_that("pretty_num handles units vectors", {
   
   v_units <- units::set_units(c(NA, -1e-7, 1, 1e4, 1e6, NaN, 1e5), cm)
   expect_equal(pretty_num(v_units, sep="\xC2\xA0"),
-               c("      NA\xC2\xA0 [cm]", "-100.00\xC2\xA0n [cm]","       1\xC2\xA0[cm]", "     10\xC2\xA0k [cm]", "      1\xC2\xA0M [cm]", "     NaN\xC2\xA0 [cm]", "    100\xC2\xA0k [cm]"))
+               c("   NA\xC2\xA0 [cm]", "-100\xC2\xA0n [cm]","    1\xC2\xA0[cm]", "  10\xC2\xA0k [cm]", "   1\xC2\xA0M [cm]", "  NaN\xC2\xA0 [cm]", " 100\xC2\xA0k [cm]"))
   
 })
 

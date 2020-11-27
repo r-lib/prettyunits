@@ -101,7 +101,7 @@ format_num <- local({
 
     ## String creation. Tests on amt shall be compliant with units::
     res <- character(length(amt))
-    int <- is.na(amt) | as.numeric(amt) == as.numeric(round(amt))
+    int <- is.na(amt) | abs(as.numeric(amt) - as.numeric(round(amt))) < 1e-7
     res[int] <- format(
       ifelse(szs$negative[int], -1, 1) * as.numeric(amt[int]),
       scientific = FALSE
