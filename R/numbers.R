@@ -53,9 +53,7 @@ format_num <- local({
     prefix[as.numeric(number)==0] <- ""
 
     ## Change unit with majority prefix if convertible and exponent accordingly
-    is_unit=FALSE
-    if (length(attr(number,"units"))) {
-      is_unit = TRUE
+    if (inherits(number,"units")) {
       # test if numerator is not linear unit and exit with error
       if (max(table(attr(number,"units")$numerator)>1 )) {
         stop("pretty_num() doesn't handle non-linear units")
@@ -80,7 +78,7 @@ format_num <- local({
     amount <- number / 1000 ^ exponent
 
     # Zero number, with set_units to copy the units from number to 0
-    amount[as.numeric(number)==0] <- ifelse(is_unit, units::set_units(0, number_unit, mode = "standard"), 0)
+    amount[as.numeric(number)==0] <- ifelse(inherits(number,"units"), units::set_units(0, number_unit, mode = "standard"), 0)
 
     ## NA and NaN number
     amount[is.na(number)] <- NA_real_
