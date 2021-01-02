@@ -108,7 +108,7 @@ format_num <- local({
     res[!int] <- sprintf("%.2f", ifelse(szs$negative[!int], -1, 1) * amt[!int])
     sep <- ifelse(is.na(res), NA_character_, sep)
     pretty_num <- paste0(res, sep, szs$prefix)
-    if(length(attr(number,"units"))){
+    if(inherits(number,"units")){
       pretty_num <- paste0(pretty_num,units::make_unit_label("", amt, parse=FALSE))
     }
     # remove units added space if any
