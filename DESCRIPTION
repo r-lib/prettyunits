@@ -15,6 +15,6 @@ Suggests:
     codetools,
     covr,
     testthat
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1.9001
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
