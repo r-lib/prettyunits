@@ -1,6 +1,10 @@
 
 format_time <- local({
 
+  assert_diff_time <- function(x) {
+    stopifnot(inherits(x, "difftime"))
+  }
+
   parse_ms <- function(ms) {
     stopifnot(is.numeric(ms))
 
@@ -50,11 +54,11 @@ format_time <- local({
         }
 
         ## handle non-NAs
-        (
-          (if (pieces[1]) pieces[1] %+% "d " else "") %+%
-          (if (pieces[2]) pieces[2] %+% "h " else "") %+%
-          (if (pieces[3]) pieces[3] %+% "m " else "") %+%
-          (if (pieces[4]) pieces[4] %+% "s " else "")
+        paste0(
+          if (pieces[1]) paste0(pieces[1], "d "),
+          if (pieces[2]) paste0(pieces[2], "h "),
+          if (pieces[3]) paste0(pieces[3], "m "),
+          if (pieces[4]) paste0(pieces[4], "s ")
         )
       }
       approx <- trim(apply(parsed, 2, merge_pieces))
