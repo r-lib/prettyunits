@@ -8,4 +8,4 @@
 #'  - Quantities: '1239437' -> '1.24 M'.
 #' @docType package
 #' @name prettyunits
-NULL
+"_PACKAGE"

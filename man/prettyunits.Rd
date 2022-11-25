@@ -3,6 +3,7 @@
 \docType{package}
 \name{prettyunits}
 \alias{prettyunits}
+\alias{prettyunits-package}
 \title{Prettier formatting of quantities}
 \description{
 Render quantities with a pretty, human-readable formatting.
