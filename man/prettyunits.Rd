@@ -14,3 +14,20 @@ Render quantities with a pretty, human-readable formatting.
 \item Quantities: '1239437' -> '1.24 M'.
 }
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/gaborcsardi/prettyunits}
+  \item Report bugs at \url{https://github.com/gaborcsardi/prettyunits/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Gabor Csardi \email{csardi.gabor@gmail.com}
+
+Other contributors:
+\itemize{
+  \item Christophe Regouby \email{christophe.regouby@free.fr} [contributor]
+}
+
+}

@@ -34,7 +34,7 @@ test_that("pretty_num converts properly", {
   expect_equal(pretty_num(1001), '1.00 k')
   expect_equal(pretty_num(1000 * 1000 - 1), '1.00 M')
   expect_equal(pretty_num(1e16), '10 P')
-  expect_equal(pretty_num(1e30), '1000000 Y')
+  expect_equal(pretty_num(1e36), '1000000 Q')
   
 })
 
@@ -49,7 +49,7 @@ test_that("pretty_num converts units properly", {
   expect_equal(pretty_num(units::set_units(1001,kg)), '1.00 [t]')
   expect_equal(pretty_num(units::set_units(1000 * 1000 - 1,m)), '1.00 [Mm]')
   expect_equal(pretty_num(units::set_units(1e10,Hz)), '10 [GHz]')
-  expect_equal(pretty_num(units::set_units(1e30,g)), '1000000 [Yg]')
+  expect_equal(pretty_num(units::set_units(1e36,g)), '1000000 Q [g]')
   
 })
 

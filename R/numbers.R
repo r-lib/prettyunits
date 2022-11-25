@@ -13,8 +13,8 @@ format_num <- local({
   }
 
   compute_num <- function(number, smallest_prefix = "y") {
-    prefixes0 <- c("y","z","a","f","p","n","\xC2\xB5","m","", "k", "M", "G", "T", "P", "E", "Z", "Y")
-    zeroshif0 <- 9L
+    prefixes0 <- c("q","r","y","z","a","f","p","n","\xC2\xB5","m","", "k", "M", "G", "T", "P", "E", "Z", "Y", "R", "Q")
+    zeroshif0 <- 11L
     
     stopifnot(
       is.numeric(number),
@@ -24,10 +24,10 @@ format_num <- local({
       smallest_prefix %in% prefixes0
     )
     
-    limits0 <- c( 999950 * 1000 ^ (seq_len(length(prefixes0) ) - (zeroshif0+1L)))
+    limits0 <- c( 999950 * 1000 ^ (seq_len(length(prefixes0) ) - (zeroshif0 + 1L)))
     nrow0 <- length(limits0)
     low <- match(smallest_prefix, prefixes0)
-    zeroshift <- zeroshif0 +1L - low
+    zeroshift <- zeroshif0 + 1L - low
     prefixes <- prefixes0[low:length(prefixes0)]
     limits <- limits0[low:nrow0]
     nrow <- length(limits)
@@ -39,30 +39,30 @@ format_num <- local({
       nrow = nrow,
       ncol = length(number)
     )
-    mat2 <- matrix(mat < limits, nrow  = nrow, ncol = length(number))
-    exponent <- nrow - colSums(mat2) - (zeroshift -1L)
+    mat2 <- matrix(mat < limits, nrow = nrow, ncol = length(number))
+    exponent <- nrow - colSums(mat2) - (zeroshift - 1L)
     ## enforce exponent to be in range of prefixes limits
     in_range <- function(exponent) {
-        max(min(exponent,nrow-zeroshift, na.rm = FALSE),1L-zeroshift, na.rm = TRUE)
+        max(min(exponent,nrow - zeroshift, na.rm = FALSE),1L - zeroshift, na.rm = TRUE)
     }
     if (length(exponent)) {
       exponent <- sapply(exponent, in_range)
     }
     prefix <- prefixes[exponent + zeroshift]
     # Zero number
-    prefix[as.numeric(number)==0] <- ""
+    prefix[as.numeric(number) == 0] <- ""
 
     ## Change unit with majority prefix if convertible and exponent accordingly
     if (inherits(number,"units")) {
       # test if numerator is not linear unit and exit with error
-      if (max(table(attr(number,"units")$numerator)>1 )) {
+      if (max(table(attr(number,"units")$numerator) > 1)) {
         stop("pretty_num() doesn't handle non-linear units")
       }
       number_unit <- units::deparse_unit(number)
-      prefix_table <- sort(table(prefix[prefix !=""]),decreasing = T)
-      majority_prefix <- ifelse(length(prefix_table) && prefix_table[1] >= sum(prefix_table)/2, as.character(names(prefix_table[1])), "")
+      prefix_table <- sort(table(prefix[prefix != ""]),decreasing = T)
+      majority_prefix <- ifelse(length(prefix_table) && prefix_table[1] >= sum(prefix_table) / 2, as.character(names(prefix_table[1])), "")
       majority_unit <- paste0(majority_prefix, number_unit)
-      if (number_unit != majority_unit && units:::ud_are_convertible(number_unit, majority_unit)) {
+      if (number_unit != majority_unit && units::ud_are_convertible(number_unit, majority_unit)) {
         # change unit to majority_unit
         units(number) <- majority_unit
         # shift exponent and prefix in_range accordingly
@@ -78,7 +78,7 @@ format_num <- local({
     amount <- number / 1000 ^ exponent
 
     # Zero number, with set_units to copy the units from number to 0
-    amount[as.numeric(number)==0] <- ifelse(inherits(number,"units"), units::set_units(0, number_unit, mode = "standard"), 0)
+    amount[as.numeric(number) == 0] <- ifelse(inherits(number,"units"), units::set_units(0, number_unit, mode = "standard"), 0)
 
     ## NA and NaN number
     amount[is.na(number)] <- NA_real_
@@ -108,11 +108,11 @@ format_num <- local({
     res[!int] <- sprintf("%.2f", ifelse(szs$negative[!int], -1, 1) * amt[!int])
     sep <- ifelse(is.na(res), NA_character_, sep)
     pretty_num <- paste0(res, sep, szs$prefix)
-    if(inherits(number,"units")){
-      pretty_num <- paste0(pretty_num,units::make_unit_label("", amt, parse=FALSE))
+    if (inherits(number, "units")) {
+      pretty_num <- paste0(pretty_num, units::make_unit_label("", amt, parse = FALSE))
     }
     # remove units added space if any
-    sub(paste0("(?<=\\d",sep,")\\s")[1],"", format(pretty_num, justify = "right"), perl=TRUE)
+    sub(paste0("(?<=\\d",sep,")\\s")[1], "", format(pretty_num, justify = "right"), perl = TRUE)
   }
 
   pretty_num_nopad <- function(number, sep) {
