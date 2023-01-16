@@ -3,13 +3,21 @@
 \docType{package}
 \name{prettyunits}
 \alias{prettyunits}
+\alias{prettyunits-package}
 \title{Prettier formatting of quantities}
 \description{
 Render quantities with a pretty, human-readable formatting.
 \itemize{
-\item Time intervals: '1337000' -> '15d 11h 23m 20s'.
-\item Vague time intervals: '2674000' -> 'about a month ago'.
-\item Bytes: '1337' -> '1.34 kB'.
-\item Quantities: '1239437' -> '1.24 M'.
+  \item Time intervals: '1337000' -> '15d 11h 23m 20s'.
+  \item Vague time intervals: '2674000' -> 'about a month ago'.
+  \item Bytes: '1337' -> '1.34 kB'.
+  \item Quantities: '1239437' -> '1.24 M'.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/gaborcsardi/prettyunits}
+  \item Report bugs at \url{https://github.com/gaborcsardi/prettyunits/issues}
+}
+
 }
