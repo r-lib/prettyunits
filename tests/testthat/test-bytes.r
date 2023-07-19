@@ -8,6 +8,7 @@ test_that("sizes.R is standalone", {
   funobjs <- mget(funs, stenv)
   for (f in funobjs) expect_identical(environmentName(topenv(f)), "base")
 
+  skip_if_not_installed("codetools")
   expect_message(
     mapply(codetools::checkUsage, funobjs, funs,
            MoreArgs = list(report = message)),
