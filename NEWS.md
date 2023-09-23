@@ -1,12 +1,11 @@
 
 # development version
 
-* `pretty_dt()`, `pretty_ms()` and `pretty_sec()` now handle `NA` values
-  properly, and return `NA_character_` for them (#10, @petermeissner).
-* `pretty_round()` and `pretty_signif()` preserve the requested number of digits
-  as character strings (#14, @billdenney).
-* Add `pretty_p_value()` to convert p-values to character strings where small
-  values are shown like "<0.0001" (#13, @billdenney)
+* New `pretty_round()` and `pretty_signif()` functions preserve the requested
+  number of digits as character strings (#14, @billdenney).
+
+* New `pretty_p_value()` function to convert p-values to character strings
+  where small values are shown like "<0.0001" (#13, @billdenney).
 
 # 1.1.1
 
