@@ -6,5 +6,16 @@
 \alias{prettyunits-package}
 \title{Prettier formatting of quantities}
 \description{
-Prettier formatting of quantities
+Pretty, human readable formatting of quantities.
+    Time intervals: '1337000' -> '15d 11h 23m 20s'.
+    Vague time intervals: '2674000' -> 'about a month ago'.
+    Bytes: '1337' -> '1.34 kB'.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/gaborcsardi/prettyunits}
+  \item Report bugs at \url{https://github.com/gaborcsardi/prettyunits/issues}
+}
+
 }

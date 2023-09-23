@@ -28,7 +28,11 @@ test_that("vague_dt works", {
     expect_equal(short,   case[[4]], info = paste(case[[1]], case[[2]], "short"))
     expect_equal(terse,   case[[5]], info = paste(case[[1]], case[[2]], "terse"))
   })
-  
+
+  expect_equal(
+    vague_dt(as.difftime(numeric(), units = "secs")),
+    character()
+  )
 })
 
 test_that("time_ago works", {
@@ -42,5 +46,9 @@ test_that("time_ago works", {
     expect_equal(short,   case[[4]], info = paste(case[[1]], case[[2]], "short"))
     expect_equal(terse,   case[[5]], info = paste(case[[1]], case[[2]], "terse"))
   })
-  
+
+  expect_equal(
+    time_ago(c(Sys.time() - 60, Sys.time() - 3600)),
+    c("about a minute ago", "about an hour ago")
+  )
 })
