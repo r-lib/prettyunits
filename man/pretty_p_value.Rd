@@ -10,7 +10,7 @@ pretty_p_value(x, minval = 1e-04)
 \item{x}{A numeric vector}
 
 \item{minval}{The minimum p-value to show (lower values will show as
-`paste0("<", minval)`)}
+\code{paste0("<", minval)})}
 }
 \value{
 A character vector of p-value representations
