@@ -28,7 +28,16 @@
     <loc>/reference/pretty_ms.html</loc>
   </url>
   <url>
+    <loc>/reference/pretty_p_value.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pretty_round.html</loc>
+  </url>
+  <url>
     <loc>/reference/pretty_sec.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pretty_signif.html</loc>
   </url>
   <url>
     <loc>/reference/prettyunits.html</loc>
