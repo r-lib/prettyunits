@@ -7,18 +7,18 @@
 pretty_p_value(x, minval = 1e-04)
 }
 \arguments{
-\item{x}{A numeric vector}
+\item{x}{A numeric vector.}
 
 \item{minval}{The minimum p-value to show (lower values will show as
-\code{paste0("<", minval)})}
+\code{paste0("<", minval)}).}
 }
 \value{
-A character vector of p-value representations
+A character vector of p-value representations.
 }
 \description{
 p-values in a human-readable string
 }
 \examples{
 pretty_p_value(c(1, 0, NA, 0.01, 0.0000001))
-pretty_p_value(c(1, 0, NA, 0.01, 0.0000001), minval=0.05)
+pretty_p_value(c(1, 0, NA, 0.01, 0.0000001), minval = 0.05)
 }

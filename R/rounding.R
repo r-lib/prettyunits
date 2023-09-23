@@ -1,26 +1,30 @@
+
 #' Round a value to a defined number of digits printing out trailing zeros, if
-#' applicable.
+#' applicable
 #'
-#' @details Values that are not standard numbers like \code{Inf}, \code{NA}, and
-#'   \code{NaN} are returned as \code{"Inf"}, \code{"NA"}, and \code{"NaN"}.
+#' @details Values that are not standard numbers like `Inf`, `NA`, and
+#'   `NaN` are returned as `"Inf"`, `"NA"`, and `"NaN"`.
 #'
-#' @param x The number to round
+#' @param x The number to round.
 #' @param ... Arguments passed to methods.
-#' @param digits integer indicating the number of decimal places
-#' @param sci_range See help for \code{\link{pretty_signif}} (and you likely want
-#'   to round with \code{pretty_signif} if you want to use this argument)
+#' @param digits integer indicating the number of decimal places.
+#' @param sci_range See help for [pretty_signif()] (and you likely want
+#'   to round with [pretty_signif()] if you want to use this argument).
 #' @param sci_sep The separator to use for scientific notation strings
 #'   (typically this will be either "e" or "x10^" for computer- or
 #'   human-readable output).
-#' @return A string with the value
-#' @seealso \code{\link{round}}, \code{\link{pretty_signif}}
+#' @return A string with the value.
+#' @seealso [round()], [pretty_signif()].
 #' @export
+
 pretty_round <- function(x, ...)
   UseMethod("pretty_round")
 
 #' @rdname pretty_round
 #' @export
-pretty_round.default <- function(x, digits=0, sci_range=Inf, sci_sep="e", ...) {
+
+pretty_round.default <- function(x, digits = 0, sci_range = Inf,
+                                 sci_sep="e", ...) {
   if (length(digits) == 1) {
     mask_na <- is.na(x)
     mask_aschar <- is.nan(x) | is.infinite(x)
@@ -67,6 +71,7 @@ pretty_round.default <- function(x, digits=0, sci_range=Inf, sci_sep="e", ...) {
 
 #' @rdname pretty_signif
 #' @export
+
 pretty_round.data.frame <- function(x, ...) {
   ret <-
     lapply(
@@ -86,24 +91,25 @@ pretty_round.data.frame <- function(x, ...) {
 }
 
 #' Round a value to a defined number of significant digits printing out trailing
-#' zeros, if applicable.
+#' zeros, if applicable
 #'
-#' @details Values that are not standard numbers like \code{Inf}, \code{NA}, and
-#'   \code{NaN} are returned as \code{"Inf"}, \code{"NA"}, and \code{NaN}.
+#' @details Values that are not standard numbers like `Inf`, `NA`, and
+#'   `NaN` are returned as `"Inf"`, `"NA"`, and `NaN`.
 #'
-#' @param x The number to round
-#' @param digits integer indicating the number of significant digits
-#' @param sci_range integer (or \code{Inf}) indicating when to switch to
+#' @param x The number to round.
+#' @param digits integer indicating the number of significant digits.
+#' @param sci_range integer (or `Inf`) indicating when to switch to
 #'   scientific notation instead of floating point. Zero indicates always use
-#'   scientific; \code{Inf} indicates to never use scientific notation;
-#'   otherwise, scientific notation is used when \code{abs(log10(x)) > sci_range}.
+#'   scientific; `Inf` indicates to never use scientific notation;
+#'   otherwise, scientific notation is used when `abs(log10(x)) > sci_range`.
 #' @param sci_sep The separator to use for scientific notation strings
 #'   (typically this will be either "e" or "x10^" for computer- or
 #'   human-readable output).
 #' @param ... Arguments passed to methods.
-#' @return A string with the value
-#' @seealso \code{\link{signif}}, \code{\link{pretty_round}}
+#' @return A string with the value.
+#' @seealso [signif()], [pretty_round()].
 #' @export
+
 pretty_signif <- function(x, ...)
   UseMethod("pretty_signif")
 

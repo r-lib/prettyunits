@@ -6,7 +6,7 @@
 \alias{pretty_signif.data.frame}
 \alias{pretty_signif.default}
 \title{Round a value to a defined number of significant digits printing out trailing
-zeros, if applicable.}
+zeros, if applicable}
 \usage{
 \method{pretty_round}{data.frame}(x, ...)
 
@@ -17,11 +17,11 @@ pretty_signif(x, ...)
 \method{pretty_signif}{default}(x, digits = 6, sci_range = 6, sci_sep = "e", ...)
 }
 \arguments{
-\item{x}{The number to round}
+\item{x}{The number to round.}
 
 \item{...}{Arguments passed to methods.}
 
-\item{digits}{integer indicating the number of significant digits}
+\item{digits}{integer indicating the number of significant digits.}
 
 \item{sci_range}{integer (or \code{Inf}) indicating when to switch to
 scientific notation instead of floating point. Zero indicates always use
@@ -33,16 +33,16 @@ otherwise, scientific notation is used when \code{abs(log10(x)) > sci_range}.}
 human-readable output).}
 }
 \value{
-A string with the value
+A string with the value.
 }
 \description{
 Round a value to a defined number of significant digits printing out trailing
-zeros, if applicable.
+zeros, if applicable
 }
 \details{
 Values that are not standard numbers like \code{Inf}, \code{NA}, and
 \code{NaN} are returned as \code{"Inf"}, \code{"NA"}, and \code{NaN}.
 }
 \seealso{
-\code{\link{signif}}, \code{\link{pretty_round}}
+\code{\link[=signif]{signif()}}, \code{\link[=pretty_round]{pretty_round()}}.
 }

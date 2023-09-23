@@ -4,37 +4,37 @@
 \alias{pretty_round}
 \alias{pretty_round.default}
 \title{Round a value to a defined number of digits printing out trailing zeros, if
-applicable.}
+applicable}
 \usage{
 pretty_round(x, ...)
 
 \method{pretty_round}{default}(x, digits = 0, sci_range = Inf, sci_sep = "e", ...)
 }
 \arguments{
-\item{x}{The number to round}
+\item{x}{The number to round.}
 
 \item{...}{Arguments passed to methods.}
 
-\item{digits}{integer indicating the number of decimal places}
+\item{digits}{integer indicating the number of decimal places.}
 
-\item{sci_range}{See help for \code{\link{pretty_signif}} (and you likely want
-to round with \code{pretty_signif} if you want to use this argument)}
+\item{sci_range}{See help for \code{\link[=pretty_signif]{pretty_signif()}} (and you likely want
+to round with \code{\link[=pretty_signif]{pretty_signif()}} if you want to use this argument).}
 
 \item{sci_sep}{The separator to use for scientific notation strings
 (typically this will be either "e" or "x10^" for computer- or
 human-readable output).}
 }
 \value{
-A string with the value
+A string with the value.
 }
 \description{
 Round a value to a defined number of digits printing out trailing zeros, if
-applicable.
+applicable
 }
 \details{
 Values that are not standard numbers like \code{Inf}, \code{NA}, and
 \code{NaN} are returned as \code{"Inf"}, \code{"NA"}, and \code{"NaN"}.
 }
 \seealso{
-\code{\link{round}}, \code{\link{pretty_signif}}
+\code{\link[=round]{round()}}, \code{\link[=pretty_signif]{pretty_signif()}}.
 }
