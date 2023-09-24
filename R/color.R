@@ -11,12 +11,12 @@
 pretty_color <- function(color) {
   stopifnot(length(color) == 1)
   if (is.na(color)) {
-    structure(NA_character_, alt=NA_character_)
+    structure(NA_character_, alt = NA_character_)
   } else {
     if (is.factor(color)) color <- as.character(color)
     stopifnot(is.character(color))
     color_rgb <- col2rgb(color)
-    color_lab <- convertColor(t(color_rgb), from="sRGB", to="Lab", scale.in=256)
+    color_lab <- convertColor(t(color_rgb), from = "sRGB", to = "Lab", scale.in = 256)
     dist <- color_diff_cie76(
       color_lab,
       as.matrix(color_reference[, c("L", "a", "b")])
@@ -32,7 +32,7 @@ pretty_color <- function(color) {
 pretty_colour <- pretty_color
 
 #' Color names, hexadecimal, and CIE Lab colorspace representations
-#' 
+#'
 #' \describe{
 #'   \item{hex}{hexadecimal color representation (without the # at the beginning)}
 #'   \item{L,a,b}{CIE Lab colorspace representation of `hex`}
