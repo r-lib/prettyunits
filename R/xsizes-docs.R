@@ -13,6 +13,8 @@
 #'   The `"6"` style is useful if it is important that the output always
 #'   has the same width (number of characters), e.g. in progress bars.
 #'   See some examples below.
+#' @param sep A character scalar to separate amount and unit. Not NA_character_.
+#'   defaults to non-breaking space
 #' @return Character vector, the formatted sizes.
 #'   For `compute_bytes`, a data frame with columns `amount`, `unit`,
 #'   `negative`.
@@ -23,6 +25,7 @@
 #' pretty_bytes(bytes)
 #' pretty_bytes(bytes, style = "nopad")
 #' pretty_bytes(bytes, style = "6")
+#' pretty_bytes(bytes, sep = " ")
 
 pretty_bytes <- format_bytes$pretty_bytes
 

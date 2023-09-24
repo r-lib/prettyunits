@@ -2,7 +2,8 @@
 # development version
 
 * New `pretty_num()` function with all the [BIPM](https://www.bipm.org)
-  agreed unit prefix (#26, @cregouby).
+  agreed unit prefix. it handles numeric values and vector, as well as
+  `units` class entries  (#26, @cregouby).
 
 * New `pretty_round()` and `pretty_signif()` functions preserve the requested
   number of digits as character strings (#14, @billdenney).
@@ -12,6 +13,9 @@
 
 * New `pretty_color()` functionm converts a color to a named color
   (#12, @billdenney).
+
+* `sep ` argument now allows to switch to non-breaking space separator 
+  according to BIPM SI Brochure recommendation.
 
 # 1.1.1
 

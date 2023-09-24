@@ -35,6 +35,16 @@ test_that("pretty_bytes converts properly", {
 
 })
 
+test_that("pretty_bytes allows alternative separator character", {
+  
+  expect_equal(pretty_bytes(0, sep = " "), '0 B')
+  expect_equal(pretty_bytes(10, sep = "\xE2\x80\xAF"), '10\xE2\x80\xAFB')
+  expect_equal(pretty_bytes(999, sep = "_"), '999_B')
+  expect_equal(pretty_bytes(1001, sep = ""), '1.00kB')
+  expect_error(pretty_bytes(1001, sep = NA_character_), '!is.na.*is not TRUE')
+  
+})
+
 test_that("pretty_bytes handles NA and NaN", {
 
   expect_equal(pretty_bytes(NA_real_), "NA B")
@@ -47,20 +57,25 @@ test_that("pretty_bytes handles NA and NaN", {
 })
 
 test_that("pretty_bytes handles vectors", {
-
+  
   expect_equal(pretty_bytes(1:10), paste(format(1:10), "B"))
-  v <- c(NA, 1, 1e4, 1e6, NaN, 1e5)
-
-  expect_equal(pretty_bytes(v),
-    c("  NA B", "   1 B", " 10 kB", "  1 MB", " NaN B", "100 kB"))
 
   expect_equal(pretty_bytes(numeric()), character())
+})
+
+test_that("pretty_bytes handles alternative separator", {
+  
+  v <- c(NA, 1, 1e4, 1e6, NaN, 1e5)
+  expect_equal(pretty_bytes(v, sep = "\xC2\xA0"),
+               c("  NA\xC2\xA0B", "   1\xC2\xA0B", " 10\xC2\xA0kB", "  1\xC2\xA0MB", " NaN\xC2\xA0B", "100\xC2\xA0kB"))
+  
+  expect_error(pretty_bytes(v, sep= NA_character_),".*is.na.*is not TRUE")
 })
 
 test_that("pretty_bytes nopad style", {
 
   v <- c(NA, 1, 1e4, 1e6, NaN, 1e5)
-  expect_equal(pretty_bytes(v, style = "nopad"),
+  expect_equal(pretty_bytes(v, style = "nopad", sep = " "),
     c("NA B", "1 B", "10 kB", "1 MB", "NaN B", "100 kB"))
   expect_equal(pretty_bytes(numeric(), style = "nopad"), character())
 })
@@ -74,7 +89,7 @@ test_that("pretty_bytes handles negative values", {
 
 test_that("always two fraction digits", {
   expect_equal(
-    pretty_bytes(c(5.6, 5, NA) * 1000 * 1000),
+    pretty_bytes(c(5.6, 5, NA) * 1000 * 1000, sep = " "),
     c("5.60 MB", "   5 MB", "   NA B")
   )
 })
@@ -102,7 +117,7 @@ test_that("6 width style", {
     " NA kB" = NA                       # 19
   )
 
-  expect_equal(pretty_bytes(unname(cases), style = "6"), names(cases))
+  expect_equal(pretty_bytes(unname(cases), style = "6", sep = " "), names(cases))
 })
 
 test_that("No fractional bytes (#23)", {
@@ -118,5 +133,5 @@ test_that("No fractional bytes (#23)", {
     "    NA B" = NA                    # 9
   )
 
-  expect_equal(pretty_bytes(unname(cases)), names(cases))
+  expect_equal(pretty_bytes(unname(cases), sep = " "), names(cases))
 })

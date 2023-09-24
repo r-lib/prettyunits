@@ -14,6 +14,7 @@ Description: Pretty, human readable formatting of quantities.
     p-values: '0.00001' -> '<0.0001'.
     Colors: '#FF0000' -> 'red'.
     Quantities: '1239437' -> '1.24 M'.
+    Units: 123943 [m]' -> '123.94 [km]'.
 License: MIT + file LICENSE
 URL: https://github.com/r-lib/prettyunits
 BugReports: https://github.com/r-lib/prettyunits/issues
@@ -22,7 +23,8 @@ Depends:
 Suggests:
     codetools,
     covr,
-    testthat
+    testthat,
+    units
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
