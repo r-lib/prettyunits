@@ -31,6 +31,7 @@ format_num <- local({
     zeroshift <- zeroshif0 +1L - low
     prefixes <- prefixes0[low:length(prefixes0)]
     limits <- limits[low:nrow]
+    nrow <- nrow - low + 1
 
     neg <- number < 0 & !is.na(number)
     number <- abs(number)
