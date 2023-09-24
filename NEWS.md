@@ -1,5 +1,4 @@
-
-# development version
+# prettyunits 1.2.0
 
 * New `pretty_num()` function with all the [BIPM](https://www.bipm.org)
   agreed unit prefix (#26, @cregouby).
@@ -13,12 +12,12 @@
 * New `pretty_color()` functionm converts a color to a named color
   (#12, @billdenney).
 
-# 1.1.1
+# prettyunits 1.1.1
 
 * Fix spurious zero fractions in `pretty_bytes()` when formatting
   vectors of sizes (#23).
 
-# 1.1.0
+# prettyunits 1.1.0
 
 * `pretty_dt()`, `pretty_ms()` and `pretty_sec()` now handle `NA` values
   properly, and return `NA_character_` for them (#10, @petermeissner).
@@ -33,18 +32,18 @@
 * The new low level `compute_bytes()` function can be used to create
   custom formatters for bytes.
 
-# 1.0.2
+# prettyunits 1.0.2
 
 * `pretty_bytes()` always uses two fraction digits for non-integers.
   This looks nicer in a progress bar, as the width of string does not
   change so much.
 
-# 1.0.1
+# prettyunits 1.0.1
 
 First version with a NEWS file.
 
 * Get rid of `R CMD check` notes.
 
-# 1.0.0
+# prettyunits 1.0.0
 
 Last version without a NEWS file.
