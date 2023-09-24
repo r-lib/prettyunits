@@ -13,7 +13,7 @@ format_num <- local({
   }
 
   compute_num <- function(number, smallest_prefix = "y") {
-    prefixes0 <- c("q","r","y","z","a","f","p","n","\xC2\xB5","m","", "k", "M", "G", "T", "P", "E", "Z", "Y", "R", "Q")
+    prefixes0 <- c("q","r","y","z","a","f","p","n","u","m","", "k", "M", "G", "T", "P", "E", "Z", "Y", "R", "Q")
     zeroshif0 <- 11L
     
     stopifnot(
@@ -30,9 +30,9 @@ format_num <- local({
     zeroshift <- zeroshif0 + 1L - low
     prefixes <- prefixes0[low:length(prefixes0)]
     limits <- limits0[low:nrow0]
-    nrow <- length(limits)
-    
-    neg <- number != abs(number) & !is.na(number)
+    nrow <- nrow0 - low + 1
+    neg <- number < 0 & !is.na(number)
+
     number <- abs(number)
     mat <- matrix(
       rep(number, each = nrow),
@@ -99,7 +99,7 @@ format_num <- local({
 
     ## String creation. Tests on amt shall be compliant with units::
     res <- character(length(amt))
-    int <- is.na(amt) | abs(as.numeric(amt) - as.numeric(round(amt))) < 1e-7
+    int <- is.na(amt) | abs(amt - as.integer(amt)) <= .Machine$double.eps
     res[int] <- format(
       ifelse(szs$negative[int], -1, 1) * as.numeric(amt[int]),
       scientific = FALSE

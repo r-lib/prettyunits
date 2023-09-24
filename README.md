@@ -1,17 +1,22 @@
 
 
 
-[![Linux Build Status](https://travis-ci.org/r-lib/prettyunits.svg?branch=master)](https://travis-ci.org/r-lib/prettyunits)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/r-lib/prettyunits?svg=true)](https://ci.appveyor.com/project/gaborcsardi/prettyunits)
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/r-lib/prettyunits/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r-lib/prettyunits/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/r-lib/prettyunits/branch/main/graph/badge.svg)](https://app.codecov.io/gh/r-lib/prettyunits?branch=main)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/prettyunits)](https://CRAN.R-project.org/package=prettyunits)
+<!-- badges: end -->
 
 # prettyunits
 
-The `prettyunits` package formats quantities in human readable form. Currently
-- time units 
-- information (i.e. bytes) 
-- linear quantities (i.e. like quantities representing distance, but not surface or volume)
-are supported.
+The `prettyunits` package formats quantities in human readable form.
+* Time intervals: '1337000' -> '15d 11h 23m 20s'.
+* Vague time intervals: '2674000' -> 'about a month ago'.
+* Bytes: '1337' -> '1.34 kB'.
+* Rounding: '99' with 3 significant digits -> '99.0'
+* p-values: '0.00001' -> '<0.0001'.
+* Colors: '#FF0000' -> 'red'.
+* Quantities: '1239437' -> '1.24 M'.
 
 ## Installation
 
@@ -93,10 +98,19 @@ uls()
 ```
 
 ```
-##>  d mode        user group     size            modified       name
-##>     644 gaborcsardi staff 440.00 B 2019-03-25 10:25:08    NEWS.md
-##>     644 gaborcsardi staff  4.65 kB 2017-12-15 11:00:16  README.md
-##>     644 gaborcsardi staff  2.95 kB 2019-03-27 09:58:43 README.Rmd
+##>  d mode        user group    size            modified        name
+##>     644 gaborcsardi staff   232 B 2023-09-24 11:37:28 codecov.yml
+##>  d  755 gaborcsardi staff         2023-09-24 11:37:28    data-raw
+##>     644 gaborcsardi staff 1.12 kB 2023-09-24 11:38:40 DESCRIPTION
+##>     644 gaborcsardi staff    42 B 2022-06-17 13:59:46     LICENSE
+##>     644 gaborcsardi staff   111 B 2023-09-23 16:44:21    Makefile
+##>  d  755 gaborcsardi staff         2023-09-24 11:37:28         man
+##>     644 gaborcsardi staff   523 B 2023-09-24 11:37:28   NAMESPACE
+##>     644 gaborcsardi staff 1.66 kB 2023-09-24 11:41:10     NEWS.md
+##>  d  755 gaborcsardi staff         2023-09-24 11:50:18           R
+##>     644 gaborcsardi staff 5.36 kB 2023-09-24 11:46:30   README.md
+##>     644 gaborcsardi staff 5.37 kB 2023-09-24 11:50:48  README.Rmd
+##>  d  755 gaborcsardi staff         2022-06-17 13:59:46       tests
 ```
 
 ## Quantities
@@ -124,7 +138,7 @@ pretty_num(1333.37e-9)
 ```
 
 ```
-##> [1] "1.33 µ"
+##> [1] "1.33 u"
 ```
 Be aware that the result is wrong in case of surface or volumes, and for any non-linear quantity.
 
@@ -132,6 +146,24 @@ Here is a simple example of how to prettify a entire tibble
 
 ```r
 library(tidyverse)
+```
+
+```
+##> ── Attaching core tidyverse packages ─────────────────────────────────────────────────────────────────────────── tidyverse 2.0.0 ──
+##> ✔ dplyr     1.1.2     ✔ readr     2.1.4
+##> ✔ forcats   1.0.0     ✔ stringr   1.5.0
+##> ✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+##> ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+##> ✔ purrr     1.0.1     
+##> ── Conflicts ───────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+##> ✖ tidyr::extract()   masks magrittr::extract()
+##> ✖ dplyr::filter()    masks stats::filter()
+##> ✖ dplyr::lag()       masks stats::lag()
+##> ✖ purrr::set_names() masks magrittr::set_names()
+##> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+```
+
+```r
 tdf <- tribble( ~name, ~`size in m`, ~`speed in m/s`,
                 "land snail", 0.075, 0.001,
                 "photon", NA,  299792458,
@@ -140,7 +172,7 @@ tdf %>% mutate(across(where(is.numeric), pretty_num))
 ```
 
 ```
-##> # A tibble: 3 x 3
+##> # A tibble: 3 × 3
 ##>   name          `size in m` `speed in m/s`
 ##>   <chr>         <chr>       <chr>         
 ##> 1 land snail    "   75 m"   "     1 m"    
@@ -154,7 +186,7 @@ pretty_num(1333.37e-9 , sep = "\xC2\xA0")
 ```
 
 ```
-##> [1] "1.33 µ"
+##> [1] "1.33 u"
 ```
 
 
@@ -220,136 +252,3 @@ tdf %>% mutate(across(where(is.numeric), pretty_num))
 ##> 2 photon        "    NA  [m]" "299.79 M [m/s]"
 ##> 3 African plate "10.55 M [m]" "   681 p [m/s]"
 ```
-
-## Time intervals
-
-`pretty_ms` formats a time interval given in milliseconds. `pretty_sec` does
-the same for seconds, and `pretty_dt` for `difftime` objects. The optional
-`compact` argument turns on a compact, approximate format.
-
-
-```r
-pretty_ms(c(1337, 13370, 133700, 1337000, 1337000000))
-```
-
-```
-##> [1] "1.3s"            "13.4s"           "2m 13.7s"        "22m 17s"         "15d 11h 23m 20s"
-```
-
-```r
-pretty_ms(c(1337, 13370, 133700, 1337000, 1337000000),
-  compact = TRUE)
-```
-
-```
-##> [1] "~1.3s"  "~13.4s" "~2m"    "~22m"   "~15d"
-```
-
-```r
-pretty_sec(c(1337, 13370, 133700, 1337000, 13370000))
-```
-
-```
-##> [1] "22m 17s"          "3h 42m 50s"       "1d 13h 8m 20s"    "15d 11h 23m 20s"  "154d 17h 53m 20s"
-```
-
-```r
-pretty_sec(c(1337, 13370, 133700, 1337000, 13370000),
-  compact = TRUE)
-```
-
-```
-##> [1] "~22m"  "~3h"   "~1d"   "~15d"  "~154d"
-```
-
-## Vague time intervals
-
-`vague_dt` and `time_ago` formats time intervals using a vague format,
-omitting smaller units. They both have three formats: `default`, `short` and `terse`.
-`vague_dt` takes a `difftime` object, and `time_ago` works relatively to the
-specified date.
-
-
-```r
-vague_dt(format = "short", as.difftime(30, units = "secs"))
-```
-
-```
-##> [1] "<1 min"
-```
-
-```r
-vague_dt(format = "short", as.difftime(14, units = "mins"))
-```
-
-```
-##> [1] "14 min"
-```
-
-```r
-vague_dt(format = "short", as.difftime(5, units = "hours"))
-```
-
-```
-##> [1] "5 hours"
-```
-
-```r
-vague_dt(format = "short", as.difftime(25, units = "hours"))
-```
-
-```
-##> [1] "1 day"
-```
-
-```r
-vague_dt(format = "short", as.difftime(5, units = "days"))
-```
-
-```
-##> [1] "5 day"
-```
-
-
-```r
-now <- Sys.time()
-time_ago(now)
-```
-
-```
-##> [1] "moments ago"
-```
-
-```r
-time_ago(now - as.difftime(30, units = "secs"))
-```
-
-```
-##> [1] "less than a minute ago"
-```
-
-```r
-time_ago(now - as.difftime(14, units = "mins"))
-```
-
-```
-##> [1] "14 minutes ago"
-```
-
-```r
-time_ago(now - as.difftime(5, units = "hours"))
-```
-
-```
-##> [1] "5 hours ago"
-```
-
-```r
-time_ago(now - as.difftime(25, units = "hours"))
-```
-
-```
-##> [1] "a day ago"
-```
-
-

@@ -6,17 +6,22 @@ knitr::opts_chunk$set(
   error = FALSE)
 ```
 
-[![Linux Build Status](https://travis-ci.org/r-lib/prettyunits.svg?branch=master)](https://travis-ci.org/r-lib/prettyunits)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/r-lib/prettyunits?svg=true)](https://ci.appveyor.com/project/gaborcsardi/prettyunits)
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/r-lib/prettyunits/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r-lib/prettyunits/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/r-lib/prettyunits/branch/main/graph/badge.svg)](https://app.codecov.io/gh/r-lib/prettyunits?branch=main)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/prettyunits)](https://CRAN.R-project.org/package=prettyunits)
+<!-- badges: end -->
 
 # prettyunits
 
-The `prettyunits` package formats quantities in human readable form. Currently
-- time units 
-- information (i.e. bytes) 
-- linear quantities (i.e. like quantities representing distance, but not surface or volume)
-are supported.
+The `prettyunits` package formats quantities in human readable form.
+* Time intervals: '1337000' -> '15d 11h 23m 20s'.
+* Vague time intervals: '2674000' -> 'about a month ago'.
+* Bytes: '1337' -> '1.34 kB'.
+* Rounding: '99' with 3 significant digits -> '99.0'
+* p-values: '0.00001' -> '<0.0001'.
+* Colors: '#FF0000' -> 'red'.
+* Quantities: '1239437' -> '1.24 M'.
 
 ## Installation
 
@@ -158,4 +163,30 @@ time_ago(now - as.difftime(5, units = "hours"))
 time_ago(now - as.difftime(25, units = "hours"))
 ```
 
+## Rounding
 
+`pretty_round()` and `pretty_signif()` preserve trailing zeros.
+
+```{r}
+pretty_round(1, digits=6)
+pretty_signif(c(99, 0.9999), digits=3)
+```
+
+## p-values
+
+`pretty_p_value()` rounds small p-values to indicate less than significance
+level for small values.
+
+```{r}
+pretty_p_value(c(0.05, 0.0000001, NA))
+```
+
+## Colors
+
+`pretty_color` converts colors from other representations to human-readable
+names.
+
+```{r}
+pretty_color("black")
+pretty_color("#123456")
+```
