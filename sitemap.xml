@@ -16,10 +16,16 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/color_reference.html</loc>
+  </url>
+  <url>
     <loc>/reference/index.html</loc>
   </url>
   <url>
     <loc>/reference/pretty_bytes.html</loc>
+  </url>
+  <url>
+    <loc>/reference/pretty_color.html</loc>
   </url>
   <url>
     <loc>/reference/pretty_dt.html</loc>
