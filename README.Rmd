@@ -14,8 +14,14 @@ knitr::opts_chunk$set(
 
 # prettyunits
 
-The `prettyunits` package formats quantities in human readable form. Currently
-time units and information (i.e. bytes) are supported.
+The `prettyunits` package formats quantities in human readable form.
+* Time intervals: '1337000' -> '15d 11h 23m 20s'.
+* Vague time intervals: '2674000' -> 'about a month ago'.
+* Bytes: '1337' -> '1.34 kB'.
+* Rounding: '99' with 3 significant digits -> '99.0'
+* p-values: '0.00001' -> '<0.0001'.
+* Colors: '#FF0000' -> 'red'.
+* Quantities: '1239437' -> '1.24 M'.
 
 ## Installation
 
@@ -25,7 +31,7 @@ You can install the package from CRAN:
 install.packages("prettyunits")
 ```
 
-```{r}
+```{r include=FALSE}
 library(prettyunits)
 library(magrittr)
 ```
@@ -59,6 +65,28 @@ uls <- function(path = ".") {
 }
 uls()
 ```
+
+## Quantities
+
+`pretty_num` formats number related to linear quantities in a human readable way:
+```{r}
+pretty_num(1337)
+pretty_num(-133337)
+pretty_num(1333.37e-9)
+```
+Be aware that the result is wrong in case of surface or volumes, and for any non-linear quantity.
+
+Here is a simple example of how to prettify a entire tibble
+```{r}
+library(tidyverse)
+tdf <- tribble( ~name, ~`size in m`, ~`speed in m/s`,
+                "land snail", 0.075, 0.001,
+                "photon", NA,  299792458,
+                "African plate", 10546330, 0.000000000681)
+tdf %>% mutate(across(where(is.numeric), pretty_num))
+```
+
+
 
 ## Time intervals
 
@@ -126,5 +154,4 @@ names.
 ```{r}
 pretty_color("black")
 pretty_color("#123456")
-pretty_color("#123456", color_set="complete")
 ```

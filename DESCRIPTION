@@ -3,7 +3,8 @@ Title: Pretty, Human Readable Formatting of Quantities
 Version: 1.1.1.9000
 Authors@R: c(
   person("Gabor", "Csardi", email="csardi.gabor@gmail.com", role=c("aut", "cre")),
-  person("Bill", "Denney", email="wdenney@humanpredictions.com", role=c("ctb"), comment=c(ORCID="0000-0002-5759-428X"))
+  person("Bill", "Denney", email="wdenney@humanpredictions.com", role=c("ctb"), comment=c(ORCID="0000-0002-5759-428X")),
+  person("Christophe", "Regouby", email="christophe.regouby@free.fr", role=c("ctb"))
   )
 Description: Pretty, human readable formatting of quantities.
     Time intervals: '1337000' -> '15d 11h 23m 20s'.
@@ -12,6 +13,7 @@ Description: Pretty, human readable formatting of quantities.
     Rounding: '99' with 3 significant digits -> '99.0'
     p-values: '0.00001' -> '<0.0001'.
     Colors: '#FF0000' -> 'red'.
+    Quantities: '1239437' -> '1.24 M'.
 License: MIT + file LICENSE
 LazyData: true
 URL: https://github.com/gaborcsardi/prettyunits

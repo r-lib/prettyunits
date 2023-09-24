@@ -6,7 +6,15 @@
 \alias{prettyunits-package}
 \title{Prettier formatting of quantities}
 \description{
-Pretty, human readable formatting of quantities. Time intervals: '1337000' -> '15d 11h 23m 20s'. Vague time intervals: '2674000' -> 'about a month ago'. Bytes: '1337' -> '1.34 kB'. Rounding: '99' with 3 significant digits -> '99.0' p-values: '0.00001' -> '<0.0001'. Colors: '#FF0000' -> 'red'.
+Render quantities with a pretty, human-readable formatting.
+\itemize{
+\item Time intervals: '1337000' -> '15d 11h 23m 20s'.
+\item Vague time intervals: '2674000' -> 'about a month ago'.
+\item Bytes: '1337' -> '1.34 kB'.
+\item p-values: '0.00001' -> '<0.0001'.
+\item Colors: '#FF0000' -> 'red'.
+\item Quantities: '1239437' -> '1.24 M'.
+}
 }
 \seealso{
 Useful links:
@@ -22,6 +30,7 @@ Useful links:
 Other contributors:
 \itemize{
   \item Bill Denney \email{wdenney@humanpredictions.com} (\href{https://orcid.org/0000-0002-5759-428X}{ORCID}) [contributor]
+  \item Christophe Regouby \email{christophe.regouby@free.fr} [contributor]
 }
 
 }

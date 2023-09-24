@@ -1,6 +1,9 @@
 
 # development version
 
+* `pretty_num()` is added with all the [BIPM](https://www.bipm.org) agreed
+  unit prefix (#26, @cregouby).
+
 * New `pretty_round()` and `pretty_signif()` functions preserve the requested
   number of digits as character strings (#14, @billdenney).
 

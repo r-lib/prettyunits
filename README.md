@@ -9,8 +9,14 @@
 
 # prettyunits
 
-The `prettyunits` package formats quantities in human readable form. Currently
-time units and information (i.e. bytes) are supported.
+The `prettyunits` package formats quantities in human readable form.
+* Time intervals: '1337000' -> '15d 11h 23m 20s'.
+* Vague time intervals: '2674000' -> 'about a month ago'.
+* Bytes: '1337' -> '1.34 kB'.
+* Rounding: '99' with 3 significant digits -> '99.0'
+* p-values: '0.00001' -> '<0.0001'.
+* Colors: '#FF0000' -> 'red'.
+* Quantities: '1239437' -> '1.24 M'.
 
 ## Installation
 
@@ -22,10 +28,6 @@ install.packages("prettyunits")
 ```
 
 
-```r
-library(prettyunits)
-library(magrittr)
-```
 
 ## Bytes
 
@@ -92,21 +94,89 @@ uls()
 ```
 
 ```
-##>  d mode        user group      size            modified        name
-##>     644 gaborcsardi staff     232 B 2023-09-23 16:44:21 codecov.yml
-##>  d  755 gaborcsardi staff           2023-09-23 16:37:05    data-raw
-##>     644 gaborcsardi staff     954 B 2023-09-24 09:28:34 DESCRIPTION
-##>     644 gaborcsardi staff      42 B 2022-06-17 13:59:46     LICENSE
-##>     644 gaborcsardi staff     111 B 2023-09-23 16:44:21    Makefile
-##>  d  755 gaborcsardi staff           2023-09-23 16:44:21         man
-##>     644 gaborcsardi staff     484 B 2023-09-23 16:44:21   NAMESPACE
-##>     644 gaborcsardi staff   1.35 kB 2023-09-24 09:29:10     NEWS.md
-##>  d  755 gaborcsardi staff           2023-09-23 16:44:21           R
-##>     644 gaborcsardi staff 638.78 kB 2023-09-24 09:30:30 README.html
-##>     644 gaborcsardi staff   3.99 kB 2023-09-23 16:44:21   README.md
-##>     644 gaborcsardi staff   3.50 kB 2023-09-24 09:29:46  README.Rmd
-##>  d  755 gaborcsardi staff           2022-06-17 13:59:46       tests
+##>  d mode        user group    size            modified        name
+##>     644 gaborcsardi staff   232 B 2023-09-24 10:37:41 codecov.yml
+##>  d  755 gaborcsardi staff         2023-09-24 10:37:41    data-raw
+##>     644 gaborcsardi staff 1.06 kB 2023-09-24 10:40:32 DESCRIPTION
+##>     644 gaborcsardi staff    42 B 2022-06-17 13:59:46     LICENSE
+##>     644 gaborcsardi staff   111 B 2023-09-23 16:44:21    Makefile
+##>  d  755 gaborcsardi staff         2023-09-24 10:37:59         man
+##>     644 gaborcsardi staff   523 B 2023-09-24 10:39:58   NAMESPACE
+##>     644 gaborcsardi staff 1.46 kB 2023-09-24 10:42:01     NEWS.md
+##>  d  755 gaborcsardi staff         2023-09-24 11:25:00           R
+##>     644 gaborcsardi staff 7.90 kB 2023-09-24 11:27:42   README.md
+##>     644 gaborcsardi staff 4.31 kB 2023-09-24 11:28:23  README.Rmd
+##>  d  755 gaborcsardi staff         2022-06-17 13:59:46       tests
 ```
+
+## Quantities
+
+`pretty_num` formats number related to linear quantities in a human readable way:
+
+```r
+pretty_num(1337)
+```
+
+```
+##> [1] "1.34 k"
+```
+
+```r
+pretty_num(-133337)
+```
+
+```
+##> [1] "-133.34 k"
+```
+
+```r
+pretty_num(1333.37e-9)
+```
+
+```
+##> [1] "1.33 u"
+```
+Be aware that the result is wrong in case of surface or volumes, and for any non-linear quantity.
+
+Here is a simple example of how to prettify a entire tibble
+
+```r
+library(tidyverse)
+```
+
+```
+##> ── Attaching core tidyverse packages ─────────────────────────────────────────────────────────────────────────── tidyverse 2.0.0 ──
+##> ✔ dplyr     1.1.2     ✔ readr     2.1.4
+##> ✔ forcats   1.0.0     ✔ stringr   1.5.0
+##> ✔ ggplot2   3.4.2     ✔ tibble    3.2.1
+##> ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+##> ✔ purrr     1.0.1     
+##> ── Conflicts ───────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+##> ✖ tidyr::extract()   masks magrittr::extract()
+##> ✖ dplyr::filter()    masks stats::filter()
+##> ✖ dplyr::lag()       masks stats::lag()
+##> ✖ purrr::set_names() masks magrittr::set_names()
+##> ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+```
+
+```r
+tdf <- tribble( ~name, ~`size in m`, ~`speed in m/s`,
+                "land snail", 0.075, 0.001,
+                "photon", NA,  299792458,
+                "African plate", 10546330, 0.000000000681)
+tdf %>% mutate(across(where(is.numeric), pretty_num))
+```
+
+```
+##> # A tibble: 3 × 3
+##>   name          `size in m` `speed in m/s`
+##>   <chr>         <chr>       <chr>         
+##> 1 land snail    "   75 m"   "     1 m"    
+##> 2 photon        "    NA "   "299.79 M"    
+##> 3 African plate "10.55 M"   "   681 p"
+```
+
+
 
 ## Time intervals
 
@@ -287,10 +357,6 @@ pretty_color("black")
 ```
 
 ```
-##> Loading required namespace: spacesXYZ
-```
-
-```
 ##> [1] "black"
 ##> attr(,"alt")
 ##> [1] "black" "gray0" "grey0" "Black"
@@ -298,16 +364,6 @@ pretty_color("black")
 
 ```r
 pretty_color("#123456")
-```
-
-```
-##> [1] "black"
-##> attr(,"alt")
-##> [1] "black" "gray0" "grey0" "Black"
-```
-
-```r
-pretty_color("#123456", color_set="complete")
 ```
 
 ```
