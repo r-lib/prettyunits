@@ -14,7 +14,7 @@ format_num <- local({
   }
 
   compute_num <- function(number, smallest_prefix = "y") {
-    prefixes0 <- c("y","z","a","f","p","n","\xC2\xB5","m","", "k", "M", "G", "T", "P", "E", "Z", "Y")
+    prefixes0 <- c("y","z","a","f","p","n","u","m","", "k", "M", "G", "T", "P", "E", "Z", "Y")
     zeroshif0 <- 9L
     
     stopifnot(
