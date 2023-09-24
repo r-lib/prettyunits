@@ -6,9 +6,11 @@ knitr::opts_chunk$set(
   error = FALSE)
 ```
 
-[![Linux Build Status](https://travis-ci.org/r-lib/prettyunits.svg?branch=master)](https://travis-ci.org/r-lib/prettyunits)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/r-lib/prettyunits?svg=true)](https://ci.appveyor.com/project/gaborcsardi/prettyunits)
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/r-lib/prettyunits/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r-lib/prettyunits/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/r-lib/prettyunits/branch/main/graph/badge.svg)](https://app.codecov.io/gh/r-lib/prettyunits?branch=main)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/prettyunits)](https://CRAN.R-project.org/package=prettyunits)
+<!-- badges: end -->
 
 # prettyunits
 
@@ -123,4 +125,31 @@ time_ago(now - as.difftime(5, units = "hours"))
 time_ago(now - as.difftime(25, units = "hours"))
 ```
 
+## Rounding
 
+`pretty_round()` and `pretty_signif()` preserve trailing zeros.
+
+```{r}
+pretty_round(1, digits=6)
+pretty_signif(c(99, 0.9999), digits=3)
+```
+
+## p-values
+
+`pretty_p_value()` rounds small p-values to indicate less than significance
+level for small values.
+
+```{r}
+pretty_p_value(c(0.05, 0.0000001, NA))
+```
+
+## Colors
+
+`pretty_color` converts colors from other representations to human-readable
+names.
+
+```{r}
+pretty_color("black")
+pretty_color("#123456")
+pretty_color("#123456", color_set="complete")
+```

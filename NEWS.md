@@ -1,7 +1,17 @@
 
 # development version
 
-* `pretty_num()` is added with all the [BIPM](https://www.bipm.org) agreed unit prefix 
+* `pretty_num()` is added with all the [BIPM](https://www.bipm.org) agreed
+  unit prefix (#26, @cregouby).
+
+* New `pretty_round()` and `pretty_signif()` functions preserve the requested
+  number of digits as character strings (#14, @billdenney).
+
+* New `pretty_p_value()` function to convert p-values to character strings
+  where small values are shown like "<0.0001" (#13, @billdenney).
+
+* New `pretty_color()` functionm converts a color to a named color
+  (#12, @billdenney).
 
 # 1.1.1
 

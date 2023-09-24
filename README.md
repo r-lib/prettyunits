@@ -1,9 +1,11 @@
 
 
 
-[![Linux Build Status](https://travis-ci.org/r-lib/prettyunits.svg?branch=master)](https://travis-ci.org/r-lib/prettyunits)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/r-lib/prettyunits?svg=true)](https://ci.appveyor.com/project/gaborcsardi/prettyunits)
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/r-lib/prettyunits/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r-lib/prettyunits/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/r-lib/prettyunits/branch/main/graph/badge.svg)](https://app.codecov.io/gh/r-lib/prettyunits?branch=main)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/prettyunits)](https://CRAN.R-project.org/package=prettyunits)
+<!-- badges: end -->
 
 # prettyunits
 
@@ -93,10 +95,20 @@ uls()
 ```
 
 ```
-##>  d mode        user group     size            modified       name
-##>     644 gaborcsardi staff 440.00 B 2019-03-25 10:25:08    NEWS.md
-##>     644 gaborcsardi staff  4.65 kB 2017-12-15 11:00:16  README.md
-##>     644 gaborcsardi staff  2.95 kB 2019-03-27 09:58:43 README.Rmd
+##>  d mode        user group      size            modified        name
+##>     644 gaborcsardi staff     232 B 2023-09-23 16:44:21 codecov.yml
+##>  d  755 gaborcsardi staff           2023-09-23 16:37:05    data-raw
+##>     644 gaborcsardi staff     954 B 2023-09-24 09:28:34 DESCRIPTION
+##>     644 gaborcsardi staff      42 B 2022-06-17 13:59:46     LICENSE
+##>     644 gaborcsardi staff     111 B 2023-09-23 16:44:21    Makefile
+##>  d  755 gaborcsardi staff           2023-09-23 16:44:21         man
+##>     644 gaborcsardi staff     484 B 2023-09-23 16:44:21   NAMESPACE
+##>     644 gaborcsardi staff   1.35 kB 2023-09-24 09:29:10     NEWS.md
+##>  d  755 gaborcsardi staff           2023-09-23 16:44:21           R
+##>     644 gaborcsardi staff 638.78 kB 2023-09-24 09:30:30 README.html
+##>     644 gaborcsardi staff   3.99 kB 2023-09-23 16:44:21   README.md
+##>     644 gaborcsardi staff   3.50 kB 2023-09-24 09:29:46  README.Rmd
+##>  d  755 gaborcsardi staff           2022-06-17 13:59:46       tests
 ```
 
 ## Quantities
@@ -180,8 +192,8 @@ pretty_sec(c(1337, 13370, 133700, 1337000, 13370000))
 ```
 
 ```
-##> [1] "22m 17s"          "3h 42m 50s"       "1d 13h 8m 20s"   
-##> [4] "15d 11h 23m 20s"  "154d 17h 53m 20s"
+##> [1] "22m 17s"          "3h 42m 50s"       "1d 13h 8m 20s"    "15d 11h 23m 20s" 
+##> [5] "154d 17h 53m 20s"
 ```
 
 ```r
@@ -283,4 +295,77 @@ time_ago(now - as.difftime(25, units = "hours"))
 ##> [1] "a day ago"
 ```
 
+## Rounding
 
+`pretty_round()` and `pretty_signif()` preserve trailing zeros.
+
+
+```r
+pretty_round(1, digits=6)
+```
+
+```
+##> [1] "1.000000"
+```
+
+```r
+pretty_signif(c(99, 0.9999), digits=3)
+```
+
+```
+##> [1] "99.0" "1.00"
+```
+
+## p-values
+
+`pretty_p_value()` rounds small p-values to indicate less than significance
+level for small values.
+
+
+```r
+pretty_p_value(c(0.05, 0.0000001, NA))
+```
+
+```
+##> [1] "0.0500"  "<0.0001" NA
+```
+
+## Colors
+
+`pretty_color` converts colors from other representations to human-readable
+names.
+
+
+```r
+pretty_color("black")
+```
+
+```
+##> Loading required namespace: spacesXYZ
+```
+
+```
+##> [1] "black"
+##> attr(,"alt")
+##> [1] "black" "gray0" "grey0" "Black"
+```
+
+```r
+pretty_color("#123456")
+```
+
+```
+##> [1] "black"
+##> attr(,"alt")
+##> [1] "black" "gray0" "grey0" "Black"
+```
+
+```r
+pretty_color("#123456", color_set="complete")
+```
+
+```
+##> [1] "Prussian Blue"
+##> attr(,"alt")
+##> [1] "Prussian Blue"
+```
