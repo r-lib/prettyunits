@@ -5,7 +5,6 @@
 #'   `NaN` are returned as `"Inf"`, `"NA"`, and `"NaN"`.
 #'
 #' @param x The number to round.
-#' @param ... Arguments passed to methods.
 #' @param digits integer indicating the number of decimal places.
 #' @param sci_range See help for [pretty_signif()] (and you likely want
 #'   to round with [pretty_signif()] if you want to use this argument).
@@ -16,15 +15,7 @@
 #' @seealso [round()], [pretty_signif()].
 #' @export
 
-pretty_round <- function(x, ...) {
-  UseMethod("pretty_round")
-}
-
-#' @rdname pretty_round
-#' @export
-
-pretty_round.default <- function(x, digits = 0, sci_range = Inf,
-                                 sci_sep = "e", ...) {
+pretty_round <- function(x, digits = 0, sci_range = Inf, sci_sep = "e") {
   if (length(digits) == 1) {
     mask_na <- is.na(x)
     mask_aschar <- is.nan(x) | is.infinite(x)
@@ -70,27 +61,6 @@ pretty_round.default <- function(x, digits = 0, sci_range = Inf,
   }
 }
 
-#' @rdname pretty_signif
-#' @export
-
-pretty_round.data.frame <- function(x, ...) {
-  ret <-
-    lapply(
-      X = x,
-      function(y) {
-        if (is.numeric(y) & !is.factor(y)) {
-          pretty_round(x = y, ...)
-        } else {
-          y
-        }
-      }
-    )
-  ret <- as.data.frame(ret, stringsAsFactors = FALSE)
-  rownames(ret) <- rownames(x)
-  colnames(ret) <- colnames(x)
-  ret
-}
-
 #' Round a value to a defined number of significant digits printing out trailing
 #' zeros, if applicable
 #'
@@ -106,41 +76,11 @@ pretty_round.data.frame <- function(x, ...) {
 #' @param sci_sep The separator to use for scientific notation strings
 #'   (typically this will be either "e" or "x10^" for computer- or
 #'   human-readable output).
-#' @param ... Arguments passed to methods.
 #' @return A string with the value.
 #' @seealso [signif()], [pretty_round()].
 #' @export
 
-pretty_signif <- function(x, ...) {
-  UseMethod("pretty_signif")
-}
-
-#' @rdname pretty_signif
-#' @export
-pretty_signif.data.frame <- function(x, ...) {
-  ret <-
-    lapply(
-      X = x,
-      function(y) {
-        if (is.numeric(y) & !is.factor(y)) {
-          pretty_signif(x = y, ...)
-        } else {
-          y
-        }
-      }
-    )
-  ret <- as.data.frame(ret, stringsAsFactors = FALSE)
-  rownames(ret) <- rownames(x)
-  colnames(ret) <- colnames(x)
-  ret
-}
-
-#' @rdname pretty_signif
-#' @export
-pretty_signif.default <- function(x, digits = 6, sci_range = 6, sci_sep = "e", ...) {
-  if (length(list(...))) {
-    stop("Additional, unsupported arguments were passed")
-  }
+pretty_signif <- function(x, digits = 6, sci_range = 6, sci_sep = "e") {
   mask_na <- is.na(x)
   mask_aschar <- is.nan(x) | is.infinite(x)
   mask_manip <- !(mask_na | mask_aschar)

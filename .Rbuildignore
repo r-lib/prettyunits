@@ -10,3 +10,5 @@
 ^revdep$
 ^\.github$
 ^codecov\.yml$
+^README[.]html$
+^revdep$

@@ -82,36 +82,4 @@ test_that("Significance", {
   expect_equal(pretty_signif(c(1e7, 1e10), digits=3),
                c("1.00e7", "1.00e10"),
                info="Different numbers of digits for rounding work with pretty_signif")
-  
-  # Data Frames
-  expect_equal(pretty_signif(data.frame(A=c(0, 1.111111),
-                                       B=factor(LETTERS[1:2]),
-                                       C=LETTERS[1:2],
-                                       stringsAsFactors=FALSE),
-                            digits=3),
-               data.frame(A=c("0.000", "1.11"),
-                          B=factor(LETTERS[1:2]),
-                          C=LETTERS[1:2],
-                          stringsAsFactors=FALSE),
-               check.attributes=FALSE,
-               info="Data frame significance is calculated correctly")
-  expect_equal(pretty_signif(data.frame(A=c(0, 1.111111),
-                                       B=factor(LETTERS[1:2]),
-                                       C=LETTERS[1:2],
-                                       stringsAsFactors=FALSE),
-                            digits=4),
-               data.frame(A=c("0.0000", "1.111"),
-                          B=factor(LETTERS[1:2]),
-                          C=LETTERS[1:2],
-                          stringsAsFactors=FALSE),
-               check.attributes=FALSE,
-               info="Data frame digits are respected")
-})
-
-test_that("pretty_signif stops when bad arguments are passed", {
-  expect_error(
-    pretty_signif(1, foo=1),
-    regexp="Additional, unsupported arguments were passed",
-    fixed=TRUE
-  )
 })

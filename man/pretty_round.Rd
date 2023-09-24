@@ -2,18 +2,13 @@
 % Please edit documentation in R/rounding.R
 \name{pretty_round}
 \alias{pretty_round}
-\alias{pretty_round.default}
 \title{Round a value to a defined number of digits printing out trailing zeros, if
 applicable}
 \usage{
-pretty_round(x, ...)
-
-\method{pretty_round}{default}(x, digits = 0, sci_range = Inf, sci_sep = "e", ...)
+pretty_round(x, digits = 0, sci_range = Inf, sci_sep = "e")
 }
 \arguments{
 \item{x}{The number to round.}
-
-\item{...}{Arguments passed to methods.}
 
 \item{digits}{integer indicating the number of decimal places.}
 

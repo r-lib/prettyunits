@@ -19,8 +19,8 @@ Render quantities with a pretty, human-readable formatting.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/gaborcsardi/prettyunits}
-  \item Report bugs at \url{https://github.com/gaborcsardi/prettyunits/issues}
+  \item \url{https://github.com/r-lib/prettyunits}
+  \item Report bugs at \url{https://github.com/r-lib/prettyunits/issues}
 }
 
 }
