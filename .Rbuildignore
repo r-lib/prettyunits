@@ -4,6 +4,7 @@
 ^README.Rmd$
 ^.travis.yml$
 ^appveyor.yml$
+^data-raw$
 ^\.Rprofile$
 ^r-packages$
 ^revdep$

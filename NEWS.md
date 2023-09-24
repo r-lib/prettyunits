@@ -7,6 +7,9 @@
 * New `pretty_p_value()` function to convert p-values to character strings
   where small values are shown like "<0.0001" (#13, @billdenney).
 
+* New `pretty_color()` functionm converts a color to a named color
+  (#12, @billdenney).
+
 # 1.1.1
 
 * Fix spurious zero fractions in `pretty_bytes()` when formatting

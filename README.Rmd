@@ -117,3 +117,14 @@ level for small values.
 ```{r}
 pretty_p_value(c(0.05, 0.0000001, NA))
 ```
+
+## Colors
+
+`pretty_color` converts colors from other representations to human-readable
+names.
+
+```{r}
+pretty_color("black")
+pretty_color("#123456")
+pretty_color("#123456", color_set="complete")
+```
