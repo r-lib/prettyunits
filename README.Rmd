@@ -14,11 +14,14 @@ knitr::opts_chunk$set(
 
 # prettyunits
 
-The `prettyunits` package formats quantities in human readable form. Currently
-- time units 
-- information (i.e. bytes) 
-- linear quantities (i.e. like quantities representing distance, but not surface or volume)
-are supported.
+The `prettyunits` package formats quantities in human readable form.
+* Time intervals: '1337000' -> '15d 11h 23m 20s'.
+* Vague time intervals: '2674000' -> 'about a month ago'.
+* Bytes: '1337' -> '1.34 kB'.
+* Rounding: '99' with 3 significant digits -> '99.0'
+* p-values: '0.00001' -> '<0.0001'.
+* Colors: '#FF0000' -> 'red'.
+* Quantities: '1239437' -> '1.24 M'.
 
 ## Installation
 
@@ -151,5 +154,4 @@ names.
 ```{r}
 pretty_color("black")
 pretty_color("#123456")
-pretty_color("#123456", color_set="complete")
 ```
