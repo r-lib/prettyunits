@@ -2,36 +2,27 @@
 #'
 #' @param color A scalar color that is usable as an input to `col2rgb()`
 #'   (assumed to be in the sRGB color space).
-#' @param color_set Should the returned color names come from a "simple" smaller
-#'   set or a longer, more "complete" set?
 #' @return A character string that is the closest named colors to the input
 #'   color.  The output will have an attribute of alternate color names (named
 #'   "alt").
 #' @export
 #' @importFrom grDevices col2rgb convertColor
 
-pretty_color <- function(color, color_set=c("simple", "complete")) {
+pretty_color <- function(color) {
   stopifnot(length(color) == 1)
   if (is.na(color)) {
     structure(NA_character_, alt=NA_character_)
   } else {
-    color_set <- match.arg(color_set)
     if (is.factor(color)) color <- as.character(color)
     stopifnot(is.character(color))
     color_rgb <- col2rgb(color)
     color_lab <- convertColor(t(color_rgb), from="sRGB", to="Lab", scale.in=256)
-    color_reference_set <-
-      if (color_set == "simple") {
-        color_reference[color_reference$basic | color_reference$roygbiv, ]
-      } else {
-        color_reference
-      }
     dist <- color_diff_cie76(
       color_lab,
-      as.matrix(color_reference_set[, c("L", "a", "b")])
+      as.matrix(color_reference[, c("L", "a", "b")])
     )
-    ret <- color_reference_set$name[dist == min(dist)][1]
-    attr(ret, "alt") <- color_reference_set$name_alt[dist == min(dist)][[1]]
+    ret <- color_reference$name[dist == min(dist)][1]
+    attr(ret, "alt") <- color_reference$name_alt[dist == min(dist)][[1]]
     ret
   }
 }
@@ -50,7 +41,9 @@ pretty_colour <- pretty_color
 #'   \item{roygbiv,basic,html,R,pantone,x11,ntc}{Source dataset containing the color}
 #' }
 #' @source {https://github.com/colorjs/color-namer} and R `colors()`
-"color_reference"
+#' @keywords internal
+#' @name color_reference
+NULL
 
 color_diff_cie76 <- function(color, refs) {
   d <- t(refs) - c(color)
