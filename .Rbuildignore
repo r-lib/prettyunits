@@ -1,7 +1,12 @@
 ^\.travis\.yml$
 ^tags$
 ^Makefile$
-^README.md$
+^README.Rmd$
 ^.travis.yml$
 ^appveyor.yml$
 ^data-raw$
+^\.Rprofile$
+^r-packages$
+^revdep$
+^\.github$
+^codecov\.yml$

@@ -6,5 +6,22 @@
 \alias{prettyunits-package}
 \title{Prettier formatting of quantities}
 \description{
-Prettier formatting of quantities
+Pretty, human readable formatting of quantities. Time intervals: '1337000' -> '15d 11h 23m 20s'. Vague time intervals: '2674000' -> 'about a month ago'. Bytes: '1337' -> '1.34 kB'. Rounding: '99' with 3 significant digits -> '99.0' p-values: '0.00001' -> '<0.0001'.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/gaborcsardi/prettyunits}
+  \item Report bugs at \url{https://github.com/gaborcsardi/prettyunits/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Gabor Csardi \email{csardi.gabor@gmail.com}
+
+Other contributors:
+\itemize{
+  \item Bill Denney \email{wdenney@humanpredictions.com} (\href{https://orcid.org/0000-0002-5759-428X}{ORCID}) [contributor]
+}
+
 }

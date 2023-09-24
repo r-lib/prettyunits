@@ -1,6 +1,3 @@
----
-output: md_document
----
 
 ```{r, setup, echo = FALSE, message = FALSE}
 knitr::opts_chunk$set(
@@ -9,10 +6,11 @@ knitr::opts_chunk$set(
   error = FALSE)
 ```
 
-[![Linux Build Status](https://travis-ci.org/gaborcsardi/prettyunits.svg?branch=master)](https://travis-ci.org/gaborcsardi/prettyunits)
-[![Windows Build status](https://ci.appveyor.com/api/projects/status/github/gaborcsardi/prettyunits?svg=true)](https://ci.appveyor.com/project/gaborcsardi/prettyunits)
-[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/prettyunits)](http://cran.r-project.org/web/packages/prettyunits/index.html)
-
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/r-lib/prettyunits/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r-lib/prettyunits/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/r-lib/prettyunits/branch/main/graph/badge.svg)](https://app.codecov.io/gh/r-lib/prettyunits?branch=main)
+[![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/prettyunits)](https://CRAN.R-project.org/package=prettyunits)
+<!-- badges: end -->
 
 # prettyunits
 
@@ -54,16 +52,9 @@ uls <- function(path = ".") {
     lapply(file.info) %>%
     do.call(what = rbind)
   info$size <- pretty_bytes(info$size)
-  df <-
-    data.frame(
-      d = ifelse(info$isdir, "d", " "),
-      mode = as.character(info$mode),
-      user = ifelse(is.null(info$uname), "", info$uname),
-      group = ifelse(is.null(info$grname), "", info$grname),
-      size = ifelse(info$isdir, "", info$size),
-      modified = info$mtime,
-      name = files
-    )
+  df <- data.frame(d = ifelse(info$isdir, "d", " "),
+	mode = as.character(info$mode), user = info$uname, group = info$grname,
+    size = ifelse(info$isdir, "", info$size), modified = info$mtime, name = files)
   print(df, row.names = FALSE)
 }
 uls()
@@ -107,6 +98,24 @@ time_ago(now - as.difftime(30, units = "secs"))
 time_ago(now - as.difftime(14, units = "mins"))
 time_ago(now - as.difftime(5, units = "hours"))
 time_ago(now - as.difftime(25, units = "hours"))
+```
+
+## Rounding
+
+`pretty_round()` and `pretty_signif()` preserve trailing zeros.
+
+```{r}
+pretty_round(1, digits=6)
+pretty_signif(c(99, 0.9999), digits=3)
+```
+
+## p-values
+
+`pretty_p_value()` rounds small p-values to indicate less than significance
+level for small values.
+
+```{r}
+pretty_p_value(c(0.05, 0.0000001, NA))
 ```
 
 ## Colors

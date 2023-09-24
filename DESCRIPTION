@@ -1,15 +1,17 @@
 Package: prettyunits
 Title: Pretty, Human Readable Formatting of Quantities
-Version: 1.0.2.9000
+Version: 1.1.1.9000
 Authors@R: c(
   person("Gabor", "Csardi", email="csardi.gabor@gmail.com", role=c("aut", "cre")),
   person("Bill", "Denney", email="wdenney@humanpredictions.com", role=c("ctb"), comment=c(ORCID="0000-0002-5759-428X"))
   )
 Description: Pretty, human readable formatting of quantities.
-    Time intervals: 1337000 -> 15d 11h 23m 20s.
-    Vague time intervals: 2674000 -> about a month ago.
-    Bytes: 1337 -> 1.34 kB.
-    Colors: #FF0000 -> red.
+    Time intervals: '1337000' -> '15d 11h 23m 20s'.
+    Vague time intervals: '2674000' -> 'about a month ago'.
+    Bytes: '1337' -> '1.34 kB'.
+    Rounding: '99' with 3 significant digits -> '99.0'
+    p-values: '0.00001' -> '<0.0001'.
+    Colors: '#FF0000' -> 'red'.
 License: MIT + file LICENSE
 LazyData: true
 URL: https://github.com/gaborcsardi/prettyunits
@@ -17,8 +19,10 @@ BugReports: https://github.com/gaborcsardi/prettyunits/issues
 Depends:
     R(>= 2.10)
 Suggests:
+    codetools,
     covr,
     spacesXYZ,
     testthat
-RoxygenNote: 6.1.1
+RoxygenNote: 7.2.3
+Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
