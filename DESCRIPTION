@@ -21,7 +21,6 @@ Depends:
 Suggests:
     codetools,
     covr,
-    spacesXYZ,
     testthat
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)

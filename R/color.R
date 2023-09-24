@@ -9,8 +9,7 @@
 #'   "alt").
 #' @export
 #' @importFrom grDevices col2rgb convertColor
-# Maybe "importFrom spacesXYZ DeltaE" if we always want the (current) best color
-# distance formula.
+
 pretty_color <- function(color, color_set=c("simple", "complete")) {
   stopifnot(length(color) == 1)
   if (is.na(color)) {
@@ -27,22 +26,10 @@ pretty_color <- function(color, color_set=c("simple", "complete")) {
       } else {
         color_reference
       }
-    dist <-
-      if (requireNamespace("spacesXYZ")) {
-        spacesXYZ::DeltaE(
-          Lab1=color_lab,
-          Lab2=as.matrix(color_reference_set[, c("L", "a", "b")])
-        )
-      } else {
-        message("Install the spacesXYZ package for an improved color distance calculation.")
-        # This is the same as Delta E 1976, but it's simple enough to implement
-        # here
-        sqrt(
-          (color_lab[1] - color_reference_set$L)^2 +
-            (color_lab[2] - color_reference_set$a)^2 +
-            (color_lab[3] - color_reference_set$b)^2
-        )
-      }
+    dist <- color_diff_cie76(
+      color_lab,
+      as.matrix(color_reference_set[, c("L", "a", "b")])
+    )
     ret <- color_reference_set$name[dist == min(dist)][1]
     attr(ret, "alt") <- color_reference_set$name_alt[dist == min(dist)][[1]]
     ret
@@ -64,3 +51,8 @@ pretty_colour <- pretty_color
 #' }
 #' @source {https://github.com/colorjs/color-namer} and R `colors()`
 "color_reference"
+
+color_diff_cie76 <- function(color, refs) {
+  d <- t(refs) - c(color)
+  sqrt(colSums(d * d))
+}
