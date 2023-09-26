@@ -1,3 +1,5 @@
+# prettyunits (development version)
+
 # prettyunits 1.2.0
 
 * New `pretty_num()` function with all the [BIPM](https://www.bipm.org)

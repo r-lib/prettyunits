@@ -1,6 +1,6 @@
 Package: prettyunits
 Title: Pretty, Human Readable Formatting of Quantities
-Version: 1.2.0
+Version: 1.2.0.9000
 Authors@R: c(
   person("Gabor", "Csardi", email="csardi.gabor@gmail.com", role=c("aut", "cre")),
   person("Bill", "Denney", email="wdenney@humanpredictions.com", role=c("ctb"), comment=c(ORCID="0000-0002-5759-428X")),
