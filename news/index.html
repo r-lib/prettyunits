@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">prettyunits</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.0</span>
       </span>
     </div>
 
@@ -29,7 +29,7 @@
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul><ul class="nav navbar-nav navbar-right"><li>
-  <a href="https://github.com/gaborcsardi/prettyunits/" class="external-link">
+  <a href="https://github.com/r-lib/prettyunits/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -44,9 +44,41 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href="https://github.com/gaborcsardi/prettyunits/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/r-lib/prettyunits/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.2.0" id="prettyunits-120">prettyunits 1.2.0<small>2023-09-24</small><a class="anchor" aria-label="anchor" href="#prettyunits-120"></a></h2>
+<ul><li><p>New <code><a href="../reference/pretty_num.html">pretty_num()</a></code> function with all the <a href="https://www.bipm.org" class="external-link">BIPM</a> agreed unit prefix (<a href="https://github.com/r-lib/prettyunits/issues/26" class="external-link">#26</a>, <a href="https://github.com/cregouby" class="external-link">@cregouby</a>).</p></li>
+<li><p>New <code><a href="../reference/pretty_round.html">pretty_round()</a></code> and <code><a href="../reference/pretty_signif.html">pretty_signif()</a></code> functions preserve the requested number of digits as character strings (<a href="https://github.com/r-lib/prettyunits/issues/14" class="external-link">#14</a>, <a href="https://github.com/billdenney" class="external-link">@billdenney</a>).</p></li>
+<li><p>New <code><a href="../reference/pretty_p_value.html">pretty_p_value()</a></code> function to convert p-values to character strings where small values are shown like “&lt;0.0001” (<a href="https://github.com/r-lib/prettyunits/issues/13" class="external-link">#13</a>, <a href="https://github.com/billdenney" class="external-link">@billdenney</a>).</p></li>
+<li><p>New <code><a href="../reference/pretty_color.html">pretty_color()</a></code> functionm converts a color to a named color (<a href="https://github.com/r-lib/prettyunits/issues/12" class="external-link">#12</a>, <a href="https://github.com/billdenney" class="external-link">@billdenney</a>).</p></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.1.1" id="prettyunits-111">prettyunits 1.1.1<small>2020-01-24</small><a class="anchor" aria-label="anchor" href="#prettyunits-111"></a></h2>
+<ul><li>Fix spurious zero fractions in <code><a href="../reference/pretty_bytes.html">pretty_bytes()</a></code> when formatting vectors of sizes (<a href="https://github.com/r-lib/prettyunits/issues/23" class="external-link">#23</a>).</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.1.0" id="prettyunits-110">prettyunits 1.1.0<small>2020-01-09</small><a class="anchor" aria-label="anchor" href="#prettyunits-110"></a></h2>
+<ul><li><p><code><a href="../reference/pretty_dt.html">pretty_dt()</a></code>, <code><a href="../reference/pretty_ms.html">pretty_ms()</a></code> and <code><a href="../reference/pretty_sec.html">pretty_sec()</a></code> now handle <code>NA</code> values properly, and return <code>NA_character_</code> for them (<a href="https://github.com/r-lib/prettyunits/issues/10" class="external-link">#10</a>, <a href="https://github.com/petermeissner" class="external-link">@petermeissner</a>).</p></li>
+<li><p><code><a href="../reference/pretty_bytes.html">pretty_bytes()</a></code> now formats quantities just below the units better. E.g. 1MB - 1B is formatted as <code>"1 MB"</code> instead of <code>""1000 kB"</code> (<a href="https://github.com/r-lib/prettyunits/issues/18" class="external-link">#18</a>).</p></li>
+<li><p><code><a href="../reference/pretty_bytes.html">pretty_bytes()</a></code> now has multiple styles. In particular, a fixed width style is useful for progress bars. Another style avoids the left-padding with spaces.</p></li>
+<li><p>The new low level <code><a href="../reference/pretty_bytes.html">compute_bytes()</a></code> function can be used to create custom formatters for bytes.</p></li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.2" id="prettyunits-102">prettyunits 1.0.2<small>2015-07-13</small><a class="anchor" aria-label="anchor" href="#prettyunits-102"></a></h2>
+<ul><li>
+<code><a href="../reference/pretty_bytes.html">pretty_bytes()</a></code> always uses two fraction digits for non-integers. This looks nicer in a progress bar, as the width of string does not change so much.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.1" id="prettyunits-101">prettyunits 1.0.1<a class="anchor" aria-label="anchor" href="#prettyunits-101"></a></h2>
+<p>First version with a NEWS file.</p>
+<ul><li>Get rid of <code>R CMD check</code> notes.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.0.0" id="prettyunits-100">prettyunits 1.0.0<small>2014-10-13</small><a class="anchor" aria-label="anchor" href="#prettyunits-100"></a></h2>
+<p>Last version without a NEWS file.</p>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
