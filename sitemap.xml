@@ -1,60 +1,60 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/404.html</loc>
   </url>
   <url>
-    <loc>/LICENSE-text.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/index.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/color_reference.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/reference/color_reference.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/pretty_bytes.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/reference/pretty_bytes.html</loc>
   </url>
   <url>
-    <loc>/reference/pretty_color.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/reference/pretty_color.html</loc>
   </url>
   <url>
-    <loc>/reference/pretty_dt.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/reference/pretty_dt.html</loc>
   </url>
   <url>
-    <loc>/reference/pretty_ms.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/reference/pretty_ms.html</loc>
   </url>
   <url>
-    <loc>/reference/pretty_num.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/reference/pretty_num.html</loc>
   </url>
   <url>
-    <loc>/reference/pretty_p_value.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/reference/pretty_p_value.html</loc>
   </url>
   <url>
-    <loc>/reference/pretty_round.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/reference/pretty_round.html</loc>
   </url>
   <url>
-    <loc>/reference/pretty_sec.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/reference/pretty_sec.html</loc>
   </url>
   <url>
-    <loc>/reference/pretty_signif.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/reference/pretty_signif.html</loc>
   </url>
   <url>
-    <loc>/reference/prettyunits.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/reference/prettyunits.html</loc>
   </url>
   <url>
-    <loc>/reference/time_ago.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/reference/time_ago.html</loc>
   </url>
   <url>
-    <loc>/reference/vague_dt.html</loc>
+    <loc>http://r-lib.github.io/prettyunits/reference/vague_dt.html</loc>
   </url>
 </urlset>
