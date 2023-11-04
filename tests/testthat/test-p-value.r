@@ -1,5 +1,3 @@
-context("p-values")
-
 test_that("p-values work", {
   expect_equal(
     pretty_p_value(c(1, 0, NA, 0.01, 0.0000001)),

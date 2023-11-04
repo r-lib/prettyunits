@@ -22,8 +22,9 @@ Depends:
 Suggests:
     codetools,
     covr,
-    testthat
+    testthat (>= 3.0.0)
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
 Config/Needs/website: tidyverse/tidytemplate
+Config/testthat/edition: 3

@@ -1,6 +1,3 @@
-
-context("Pretty bytes")
-
 test_that("sizes.R is standalone", {
   stenv <- environment(format_bytes$pretty_bytes)
   objs <- ls(stenv, all.names = TRUE)

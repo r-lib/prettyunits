@@ -1,6 +1,3 @@
-
-context("Vague time intervals")
-
 ## Amount, unit, default result, short, terse
 all_tests <- list(
   list(  1,      "secs",  "moments ago",            "<1 min",   " 1s"),

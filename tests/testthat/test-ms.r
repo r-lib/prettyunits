@@ -1,6 +1,3 @@
-
-context("Pretty milliseconds")
-
 test_that("pretty_ms works", {
 
   expect_equal(pretty_ms(0), '0ms')
@@ -36,8 +33,6 @@ test_that("pretty_ms handles vectors", {
   expect_equal(pretty_ms(v), v2)
 })
 
-context("Pretty seconds")
-
 test_that("pretty_sec works", {
 
   expect_equal(pretty_sec(0 / 1000), '0ms')
@@ -72,8 +67,6 @@ test_that("pretty_sec handles vectors", {
 
   expect_equal(pretty_sec(v), v2)
 })
-
-context("Pretty dt")
 
 test_that("pretty_dt works", {
 

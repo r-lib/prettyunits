@@ -1,6 +1,3 @@
-
-context("Pretty numbers")
-
 test_that("sizes.R is standalone", {
   stenv <- environment(format_num$pretty_num)
   objs <- ls(stenv, all.names = TRUE)
