@@ -32,6 +32,7 @@ Other contributors:
 \itemize{
   \item Bill Denney \email{wdenney@humanpredictions.com} (\href{https://orcid.org/0000-0002-5759-428X}{ORCID}) [contributor]
   \item Christophe Regouby \email{christophe.regouby@free.fr} [contributor]
+  \item Posit Software, PBC [copyright holder, funder]
 }
 
 }

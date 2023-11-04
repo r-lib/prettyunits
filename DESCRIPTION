@@ -4,7 +4,8 @@ Version: 1.2.0.9000
 Authors@R: c(
   person("Gabor", "Csardi", email="csardi.gabor@gmail.com", role=c("aut", "cre")),
   person("Bill", "Denney", email="wdenney@humanpredictions.com", role=c("ctb"), comment=c(ORCID="0000-0002-5759-428X")),
-  person("Christophe", "Regouby", email="christophe.regouby@free.fr", role=c("ctb"))
+  person("Christophe", "Regouby", email="christophe.regouby@free.fr", role=c("ctb")),
+  person("Posit Software, PBC", role = c("cph", "fnd"))
   )
 Description: Pretty, human readable formatting of quantities.
     Time intervals: '1337000' -> '15d 11h 23m 20s'.
