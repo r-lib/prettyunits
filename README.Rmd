@@ -31,6 +31,12 @@ You can install the package from CRAN:
 install.packages("prettyunits")
 ```
 
+If you need the development version, install it from GitHub:
+
+```{r eval = FALSE}
+pak::pak("r-lib/prettyunits")
+```
+
 ```{r include=FALSE}
 library(prettyunits)
 library(magrittr)
