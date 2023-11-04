@@ -12,3 +12,6 @@
 ^codecov\.yml$
 ^README[.]html$
 ^revdep$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
