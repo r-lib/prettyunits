@@ -1,4 +1,3 @@
-
 #' Prettier formatting of quantities
 #'
 #' Render quantities with a pretty, human-readable formatting.
@@ -8,6 +7,9 @@
 #'  - p-values: '0.00001' -> '<0.0001'.
 #'  - Colors: '#FF0000' -> 'red'.
 #'  - Quantities: '1239437' -> '1.24 M'.
-#' @docType package
-#' @name prettyunits
+#' @keywords internal
 "_PACKAGE"
+
+## usethis namespace: start
+## usethis namespace: end
+NULL
