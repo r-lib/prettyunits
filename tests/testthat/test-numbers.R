@@ -22,7 +22,7 @@ test_that("pretty_num gives errors on invalid input", {
 
 test_that("pretty_num converts properly", {
 
-  expect_equal(pretty_num(1e-24), '1 y')
+  expect_equal(pretty_num(1e-30), '1 q')
   expect_equal(pretty_num(-1e-4), '-100.00 u')
   expect_equal(pretty_num(-0.01), '-10 m')
   expect_equal(pretty_num(0), '0 ')
@@ -31,7 +31,7 @@ test_that("pretty_num converts properly", {
   expect_equal(pretty_num(1001), '1.00 k')
   expect_equal(pretty_num(1000 * 1000 - 1), '1.00 M')
   expect_equal(pretty_num(1e16), '10 P')
-  expect_equal(pretty_num(1e30), '1000000 Y')
+  expect_equal(pretty_num(1e36), '1000000 Q')
 
 })
 
