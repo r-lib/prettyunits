@@ -1,5 +1,3 @@
-context("Pretty color")
-
 test_that("pretty_color works", {
   expect_equal(
     pretty_color("black"),

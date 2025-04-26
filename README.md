@@ -27,6 +27,13 @@ You can install the package from CRAN:
 install.packages("prettyunits")
 ```
 
+If you need the development version, install it from GitHub:
+
+
+```r
+pak::pak("r-lib/prettyunits")
+```
+
 
 ```r
 library(prettyunits)

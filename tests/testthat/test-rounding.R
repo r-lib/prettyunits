@@ -1,5 +1,3 @@
-context("Rounding to string values")
-
 test_that("Rounding", {
   expect_error(pretty_round(1, c(2, 3)),
                regexp="digits must either be a scalar or the same length as x")

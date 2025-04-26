@@ -7,7 +7,7 @@
 \usage{
 pretty_num(number, style = c("default", "nopad", "6"), sep = " ")
 
-compute_num(number, smallest_prefix = "y")
+compute_num(number, smallest_prefix = "q")
 }
 \arguments{
 \item{number}{Numeric vector, number related to a linear quantity.}

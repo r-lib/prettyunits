@@ -1,10 +1,12 @@
 Package: prettyunits
 Title: Pretty, Human Readable Formatting of Quantities
-Version: 1.1.1.9000
+Version: 1.2.0.9000
 Authors@R: c(
-  person("Gabor", "Csardi", email="csardi.gabor@gmail.com", role=c("aut", "cre")),
-  person("Bill", "Denney", email="wdenney@humanpredictions.com", role=c("ctb"), comment=c(ORCID="0000-0002-5759-428X")),
-  person("Christophe", "Regouby", email="christophe.regouby@free.fr", role=c("ctb"))
+    person("Gabor", "Csardi", , "csardi.gabor@gmail.com", role = c("aut", "cre")),
+    person("Bill", "Denney", , "wdenney@humanpredictions.com", role = "ctb",
+           comment = c(ORCID = "0000-0002-5759-428X")),
+    person("Christophe", "Regouby", , "christophe.regouby@free.fr", role = "ctb"),
+    person("Posit Software, PBC", role = c("cph", "fnd"))
   )
 Description: Pretty, human readable formatting of quantities.
     Time intervals: '1337000' -> '15d 11h 23m 20s'.
@@ -16,15 +18,18 @@ Description: Pretty, human readable formatting of quantities.
     Quantities: '1239437' -> '1.24 M'.
     Units: 123943 [m]' -> '123.94 [km]'.
 License: MIT + file LICENSE
-URL: https://github.com/r-lib/prettyunits
+URL: https://github.com/r-lib/prettyunits,
+    http://r-lib.github.io/prettyunits/
 BugReports: https://github.com/r-lib/prettyunits/issues
 Depends:
     R(>= 2.10)
 Suggests:
     codetools,
     covr,
-    testthat,
+    testthat (>= 3.0.0),
     units
-RoxygenNote: 7.2.3
-Roxygen: list(markdown = TRUE)
+Config/Needs/website: tidyverse/tidytemplate
+Config/testthat/edition: 3
 Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
