@@ -3,10 +3,14 @@
 * Add `"q"`, `"r"`, `"R"`, `"Q"` prefix from [BIPM](https://www.bipm.org) 
   to `pretty_num()` (#41, @cregouby)
 
+* `sep ` argument now allows to switch to non-breaking space separator 
+  according to BIPM SI Brochure recommendation.
+
 # prettyunits 1.2.0
 
 * New `pretty_num()` function with all the [BIPM](https://www.bipm.org)
-  agreed unit prefix (#26, @cregouby).
+  agreed unit prefix. it handles numeric values and vector, as well as
+  `units` class entries  (#26, @cregouby).
 
 * New `pretty_round()` and `pretty_signif()` functions preserve the requested
   number of digits as character strings (#14, @billdenney).

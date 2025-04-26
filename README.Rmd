@@ -41,12 +41,12 @@ If you need the development version, install it from GitHub:
 pak::pak("r-lib/prettyunits")
 ```
 
-```{r include=FALSE}
+## Bytes
+
+```{r}
 library(prettyunits)
 library(magrittr)
 ```
-
-## Bytes
 
 `pretty_bytes` formats number of bytes in a human readable way:
 
@@ -95,8 +95,43 @@ tdf <- tribble( ~name, ~`size in m`, ~`speed in m/s`,
                 "African plate", 10546330, 0.000000000681)
 tdf %>% mutate(across(where(is.numeric), pretty_num))
 ```
+You may want to use non-breakable space so that the unit prefix is never separated from the number in space constrained situation like text hover or text labels:
+```{r}
+pretty_num(1333.37e-9 , sep = "\xC2\xA0")
+```
 
 
+### Quantitiies of class `units`
+
+`pretty_num` loosely preserves units associated with a quantity: 
+```{r}
+library(units)
+l_cm <- set_units(1337129, cm)
+pretty_num(l_cm)
+```
+So it is up to you to turn the unit into the right [base-unit](https://en.wikipedia.org/wiki/SI_base_unit)
+
+If you do so, then the best prefix is potentially moved to the units : 
+```{r}
+pretty_num(l_cm %>% set_units(m))
+```
+
+If you try non-linear units, you should get an error:
+```
+surface <- set_units(1337129, "m2")
+pretty_num(surface)
+```
+```
+##> Error in compute_num(number) : pretty_num() doesn't handle non-linear units
+```
+
+This can be used for an entire data-frame as well
+```{r}
+names(tdf) <- c( "name", "size", "speed" )
+units(tdf$size) <- "m"
+units(tdf$speed) <- "m/s"
+tdf %>% mutate(across(where(is.numeric), pretty_num))
+```
 
 ## Time intervals
 

@@ -1,7 +1,7 @@
 
 format_bytes <- local({
 
-  pretty_bytes <- function(bytes, style = c("default", "nopad", "6")) {
+  pretty_bytes <- function(bytes, style = c("default", "nopad", "6"), sep = " ") {
 
     style <- switch(
       match.arg(style),
@@ -9,8 +9,8 @@ format_bytes <- local({
       "nopad" = pretty_bytes_nopad,
       "6" = pretty_bytes_6
     )
-
-    style(bytes)
+    stopifnot(!is.na(sep))
+    style(bytes, sep)
   }
 
   compute_bytes <- function(bytes, smallest_unit = "B") {
@@ -59,27 +59,27 @@ format_bytes <- local({
     )
   }
 
-  pretty_bytes_default <- function(bytes) {
+  pretty_bytes_default <- function(bytes, sep) {
     szs <- compute_bytes(bytes)
     amt <- szs$amount
 
     ## String. For fractions we always show two fraction digits
     res <- character(length(amt))
-    int <- is.na(amt) | amt == as.integer(amt)
+    int <- is.na(amt) | abs(amt - as.integer(amt)) < 1e-7
     res[int] <- format(
       ifelse(szs$negative[int], -1, 1) * amt[int],
       scientific = FALSE
     )
     res[!int] <- sprintf("%.2f", ifelse(szs$negative[!int], -1, 1) * amt[!int])
 
-    format(paste(res, szs$unit), justify = "right")
+    format(paste(res, szs$unit, sep = sep), justify = "right")
   }
 
-  pretty_bytes_nopad <- function(bytes) {
-    sub("^\\s+", "", pretty_bytes_default(bytes))
+  pretty_bytes_nopad <- function(bytes, sep) {
+    sub("^\\s+", "", pretty_bytes_default(bytes, sep))
   }
 
-  pretty_bytes_6 <- function(bytes) {
+  pretty_bytes_6 <- function(bytes, sep) {
     szs <- compute_bytes(bytes, smallest_unit = "kB")
     amt <- szs$amount
 
@@ -100,7 +100,7 @@ format_bytes <- local({
     famt[l100] <- sprintf(" %.0f", amt[l100])
     famt[b100] <- sprintf("%.0f", amt[b100])
 
-    paste0(famt, " ", szs$unit)
+    paste0(famt, sep, szs$unit)
   }
 
   structure(

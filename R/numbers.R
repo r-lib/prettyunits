@@ -1,7 +1,6 @@
-
 format_num <- local({
 
-  pretty_num <- function(number, style = c("default", "nopad", "6")) {
+  pretty_num <- function(number, style = c("default", "nopad", "6"), sep = " ") {
 
     style <- switch(
       match.arg(style),
@@ -9,8 +8,8 @@ format_num <- local({
       "nopad" = pretty_num_nopad,
       "6" = pretty_num_6
     )
-
-    style(number)
+    stopifnot(!is.na(sep))
+    style(number, sep)
   }
 
   compute_num <- function(number, smallest_prefix = "q") {
@@ -26,15 +25,15 @@ format_num <- local({
       smallest_prefix %in% prefixes0
     )
     
-    limits <- c( 999950 * 1000 ^ (seq_len(length(prefixes0) ) - (zeroshif0 + 1L)))
-    nrow <- length(limits)
+    limits0 <- c( 999950 * 1000 ^ (seq_len(length(prefixes0) ) - (zeroshif0 + 1L)))
+    nrow0 <- length(limits)
     low <- match(smallest_prefix, prefixes0)
     zeroshift <- zeroshif0 + 1L - low
     prefixes <- prefixes0[low:length(prefixes0)]
-    limits <- limits[low:nrow]
-    nrow <- nrow - low + 1
-
+    limits <- limits0[low:nrow0]
+    nrow <- nrow0 - low + 1
     neg <- number < 0 & !is.na(number)
+
     number <- abs(number)
     mat <- matrix(
       rep(number, each = nrow),
@@ -49,51 +48,80 @@ format_num <- local({
     if (length(exponent)) {
       exponent <- sapply(exponent, in_range)
     }
-    res <- number / 1000 ^ exponent
     prefix <- prefixes[exponent + zeroshift]
+    # Zero number
+    prefix[as.numeric(number) == 0] <- ""
 
-    ## Zero number
-    res[number == 0] <- 0
-    prefix[number == 0] <- prefixes[zeroshift]
+    ## Change unit with majority prefix if convertible and exponent accordingly
+    if (inherits(number,"units")) {
+      # test if numerator is not linear unit and exit with error
+      if (max(table(attr(number,"units")$numerator) > 1)) {
+        stop("pretty_num() doesn't handle non-linear units")
+      }
+      number_unit <- units::deparse_unit(number)
+      prefix_table <- sort(table(prefix[prefix != ""]),decreasing = T)
+      majority_prefix <- ifelse(length(prefix_table) && prefix_table[1] >= sum(prefix_table) / 2, as.character(names(prefix_table[1])), "")
+      majority_unit <- paste0(majority_prefix, number_unit)
+      if (number_unit != majority_unit && units::ud_are_convertible(number_unit, majority_unit)) {
+        # change unit to majority_unit
+        units(number) <- majority_unit
+        # shift exponent and prefix in_range accordingly
+        exponent <- exponent - (match(majority_prefix, prefixes) - zeroshift)
+        if (length(exponent)) {
+          exponent <- sapply(exponent, in_range)
+        }
+        prefix <- prefixes[exponent + zeroshift]
+        number_unit <- units::deparse_unit(number)
+      }
+    }
+    
+    amount <- number / 1000 ^ exponent
+
+    # Zero number, with set_units to copy the units from number to 0
+    amount[as.numeric(number) == 0] <- ifelse(inherits(number,"units"), units::set_units(0, number_unit, mode = "standard"), 0)
 
     ## NA and NaN number
-    res[is.na(number)] <- NA_real_
-    res[is.nan(number)] <- NaN
+    amount[is.na(number)] <- NA_real_
+    amount[is.nan(number)] <- NaN
     prefix[is.na(number)] <- "" # prefixes0[low] is meaningless    # Includes NaN as well
 
     data.frame(
       stringsAsFactors = FALSE,
-      amount = res,
+      amount = amount,
       prefix = prefix,
       negative = neg
     )
   }
 
-  pretty_num_default <- function(number) {
+  pretty_num_default <- function(number, sep) {
     szs <- compute_num(number)
     amt <- szs$amount
-    sep <- " "
 
-    ## String. For fractions we always show two fraction digits
+    ## String creation. Tests on amt shall be compliant with units::
     res <- character(length(amt))
     int <- is.na(amt) | abs(amt - as.integer(amt)) <= .Machine$double.eps
     res[int] <- format(
-      ifelse(szs$negative[int], -1, 1) * amt[int],
+      ifelse(szs$negative[int], -1, 1) * as.numeric(amt[int]),
       scientific = FALSE
     )
+    # For fractions we always show two fraction digits. 
     res[!int] <- sprintf("%.2f", ifelse(szs$negative[!int], -1, 1) * amt[!int])
-
-    format(paste(res, szs$prefix,sep = sep), justify = "right")
+    sep <- ifelse(is.na(res), NA_character_, sep)
+    pretty_num <- paste0(res, sep, szs$prefix)
+    if (inherits(number, "units")) {
+      pretty_num <- paste0(pretty_num, units::make_unit_label("", amt, parse = FALSE))
+    }
+    # remove units added space if any
+    sub(paste0("(?<=\\d",sep,")\\s")[1], "", format(pretty_num, justify = "right"), perl = TRUE)
   }
 
-  pretty_num_nopad <- function(number) {
-    sub("^\\s+", "", pretty_num_default(number))
+  pretty_num_nopad <- function(number, sep) {
+    sub("^\\s+", "", pretty_num_default(number, sep))
   }
 
-  pretty_num_6 <- function(number) {
+  pretty_num_6 <- function(number, sep) {
     szs <- compute_num(number, smallest_prefix = "y")
     amt <- round(szs$amount,2)
-    sep <- " "
 
     na   <- is.na(amt)
     nan  <- is.nan(amt)

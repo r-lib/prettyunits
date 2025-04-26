@@ -35,6 +35,10 @@ pak::pak("r-lib/prettyunits")
 ```
 
 
+```r
+library(prettyunits)
+library(magrittr)
+```
 
 ## Bytes
 
@@ -102,17 +106,17 @@ uls()
 
 ```
 ##>  d mode        user group    size            modified        name
-##>     644 gaborcsardi staff   232 B 2023-09-24 10:37:41 codecov.yml
-##>  d  755 gaborcsardi staff         2023-09-24 10:37:41    data-raw
-##>     644 gaborcsardi staff 1.06 kB 2023-09-24 10:40:32 DESCRIPTION
+##>     644 gaborcsardi staff   232 B 2023-09-24 11:37:28 codecov.yml
+##>  d  755 gaborcsardi staff         2023-09-24 11:37:28    data-raw
+##>     644 gaborcsardi staff 1.12 kB 2023-09-24 11:38:40 DESCRIPTION
 ##>     644 gaborcsardi staff    42 B 2022-06-17 13:59:46     LICENSE
 ##>     644 gaborcsardi staff   111 B 2023-09-23 16:44:21    Makefile
-##>  d  755 gaborcsardi staff         2023-09-24 10:37:59         man
-##>     644 gaborcsardi staff   523 B 2023-09-24 10:39:58   NAMESPACE
-##>     644 gaborcsardi staff 1.46 kB 2023-09-24 10:42:01     NEWS.md
-##>  d  755 gaborcsardi staff         2023-09-24 11:25:00           R
-##>     644 gaborcsardi staff 7.90 kB 2023-09-24 11:27:42   README.md
-##>     644 gaborcsardi staff 4.31 kB 2023-09-24 11:28:23  README.Rmd
+##>  d  755 gaborcsardi staff         2023-09-24 11:37:28         man
+##>     644 gaborcsardi staff   523 B 2023-09-24 11:37:28   NAMESPACE
+##>     644 gaborcsardi staff 1.66 kB 2023-09-24 11:41:10     NEWS.md
+##>  d  755 gaborcsardi staff         2023-09-24 11:50:18           R
+##>     644 gaborcsardi staff 5.36 kB 2023-09-24 11:46:30   README.md
+##>     644 gaborcsardi staff 5.37 kB 2023-09-24 11:50:48  README.Rmd
 ##>  d  755 gaborcsardi staff         2022-06-17 13:59:46       tests
 ```
 
@@ -182,199 +186,76 @@ tdf %>% mutate(across(where(is.numeric), pretty_num))
 ##> 2 photon        "    NA "   "299.79 M"    
 ##> 3 African plate "10.55 M"   "   681 p"
 ```
-
-
-
-## Time intervals
-
-`pretty_ms` formats a time interval given in milliseconds. `pretty_sec` does
-the same for seconds, and `pretty_dt` for `difftime` objects. The optional
-`compact` argument turns on a compact, approximate format.
-
+You may want to use non-breakable space so that the unit prefix is never separated from the number in space constrained situation like text hover or text labels:
 
 ```r
-pretty_ms(c(1337, 13370, 133700, 1337000, 1337000000))
+pretty_num(1333.37e-9 , sep = "\xC2\xA0")
 ```
 
 ```
-##> [1] "1.3s"            "13.4s"           "2m 13.7s"        "22m 17s"        
-##> [5] "15d 11h 23m 20s"
+##> [1] "1.33 u"
 ```
 
-```r
-pretty_ms(c(1337, 13370, 133700, 1337000, 1337000000),
-  compact = TRUE)
-```
 
-```
-##> [1] "~1.3s"  "~13.4s" "~2m"    "~22m"   "~15d"
-```
+### Quantitiies of class `units`
+
+`pretty_num` loosely preserves units associated with a quantity: 
 
 ```r
-pretty_sec(c(1337, 13370, 133700, 1337000, 13370000))
+library(units)
 ```
 
 ```
-##> [1] "22m 17s"          "3h 42m 50s"       "1d 13h 8m 20s"    "15d 11h 23m 20s" 
-##> [5] "154d 17h 53m 20s"
+##> Warning: package 'units' was built under R version 3.6.2
+```
+
+```
+##> udunits system database from /Library/Frameworks/R.framework/Versions/3.6/Resources/library/units/share/udunits
 ```
 
 ```r
-pretty_sec(c(1337, 13370, 133700, 1337000, 13370000),
-  compact = TRUE)
+l_cm <- set_units(1337129, cm)
+pretty_num(l_cm)
 ```
 
 ```
-##> [1] "~22m"  "~3h"   "~1d"   "~15d"  "~154d"
+##> [1] "1.34 M [cm]"
 ```
+So it is up to you to turn the unit into the right [base-unit](https://en.wikipedia.org/wiki/SI_base_unit)
 
-## Vague time intervals
-
-`vague_dt` and `time_ago` formats time intervals using a vague format,
-omitting smaller units. They both have three formats: `default`, `short` and `terse`.
-`vague_dt` takes a `difftime` object, and `time_ago` works relatively to the
-specified date.
-
+If you do so, then the best prefix is potentially moved to the units : 
 
 ```r
-vague_dt(format = "short", as.difftime(30, units = "secs"))
+pretty_num(l_cm %>% set_units(m))
 ```
 
 ```
-##> [1] "<1 min"
+##> [1] "13.37 [km]"
 ```
 
-```r
-vague_dt(format = "short", as.difftime(14, units = "mins"))
+If you try non-linear units, you should get an error:
+```
+surface <- set_units(1337129, "m2")
+pretty_num(surface)
+```
+```
+##> Error in compute_num(number) : pretty_num() doesn't handle non-linear units
 ```
 
-```
-##> [1] "14 min"
-```
-
-```r
-vague_dt(format = "short", as.difftime(5, units = "hours"))
-```
-
-```
-##> [1] "5 hours"
-```
+This can be used for an entire data-frame as well
 
 ```r
-vague_dt(format = "short", as.difftime(25, units = "hours"))
+names(tdf) <- c( "name", "size", "speed" )
+units(tdf$size) <- "m"
+units(tdf$speed) <- "m/s"
+tdf %>% mutate(across(where(is.numeric), pretty_num))
 ```
 
 ```
-##> [1] "1 day"
-```
-
-```r
-vague_dt(format = "short", as.difftime(5, units = "days"))
-```
-
-```
-##> [1] "5 day"
-```
-
-
-```r
-now <- Sys.time()
-time_ago(now)
-```
-
-```
-##> [1] "moments ago"
-```
-
-```r
-time_ago(now - as.difftime(30, units = "secs"))
-```
-
-```
-##> [1] "less than a minute ago"
-```
-
-```r
-time_ago(now - as.difftime(14, units = "mins"))
-```
-
-```
-##> [1] "14 minutes ago"
-```
-
-```r
-time_ago(now - as.difftime(5, units = "hours"))
-```
-
-```
-##> [1] "5 hours ago"
-```
-
-```r
-time_ago(now - as.difftime(25, units = "hours"))
-```
-
-```
-##> [1] "a day ago"
-```
-
-## Rounding
-
-`pretty_round()` and `pretty_signif()` preserve trailing zeros.
-
-
-```r
-pretty_round(1, digits=6)
-```
-
-```
-##> [1] "1.000000"
-```
-
-```r
-pretty_signif(c(99, 0.9999), digits=3)
-```
-
-```
-##> [1] "99.0" "1.00"
-```
-
-## p-values
-
-`pretty_p_value()` rounds small p-values to indicate less than significance
-level for small values.
-
-
-```r
-pretty_p_value(c(0.05, 0.0000001, NA))
-```
-
-```
-##> [1] "0.0500"  "<0.0001" NA
-```
-
-## Colors
-
-`pretty_color` converts colors from other representations to human-readable
-names.
-
-
-```r
-pretty_color("black")
-```
-
-```
-##> [1] "black"
-##> attr(,"alt")
-##> [1] "black" "gray0" "grey0" "Black"
-```
-
-```r
-pretty_color("#123456")
-```
-
-```
-##> [1] "Prussian Blue"
-##> attr(,"alt")
-##> [1] "Prussian Blue"
+##> # A tibble: 3 x 3
+##>   name          size          speed           
+##>   <chr>         <chr>         <chr>           
+##> 1 land snail    "   75 m [m]" "     1 m [m/s]"
+##> 2 photon        "    NA  [m]" "299.79 M [m/s]"
+##> 3 African plate "10.55 M [m]" "   681 p [m/s]"
 ```

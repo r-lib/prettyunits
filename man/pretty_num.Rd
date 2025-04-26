@@ -5,7 +5,7 @@
 \alias{compute_num}
 \title{Linear quantities in a human readable string}
 \usage{
-pretty_num(number, style = c("default", "nopad", "6"))
+pretty_num(number, style = c("default", "nopad", "6"), sep = " ")
 
 compute_num(number, smallest_prefix = "q")
 }
@@ -23,7 +23,11 @@ has the same width (number of characters), e.g. in progress bars.
 See some examples below.
 }}
 
-\item{smallest_prefix}{A character scalar, the smallest prefix to use.}
+\item{sep}{A character scalar to separate amount and prefix. Not NA_character_.
+defaults to space}
+
+\item{smallest_prefix}{A character scalar, the smallest prefix to use,
+within \code{c("y","z","a","f","p","n","\\xC2\\xB5","m","", "k", "M", "G", "T", "P", "E", "Z", "Y")}}
 }
 \value{
 Character vector, the formatted sizes.
@@ -31,7 +35,7 @@ For \code{compute_num}, a data frame with columns \code{amount}, \code{prefix},
 \code{negative}.
 }
 \description{
-Use \code{pretty_num()} to format numbers \code{compute_num()} is the underlying
+Use \code{pretty_num()} to format numbers. \code{compute_num()} is the underlying
 engine that may be useful for custom formatting.
 }
 \examples{
@@ -39,4 +43,5 @@ numbers <- c(1337, 1.3333e-5, 13333337, 1333333337, 133333333337)
 pretty_num(numbers)
 pretty_num(numbers, style = "nopad")
 pretty_num(numbers, style = "6")
+pretty_num(numbers, sep = "\xC2\xA0")
 }
