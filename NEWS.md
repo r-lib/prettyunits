@@ -1,5 +1,8 @@
 # prettyunits (development version)
 
+* Add `"q"`, `"r"`, `"R"`, `"Q"` prefix from [BIPM](https://www.bipm.org) 
+  to `pretty_num()` (#41, @cregouby)
+
 # prettyunits 1.2.0
 
 * New `pretty_num()` function with all the [BIPM](https://www.bipm.org)
@@ -25,7 +28,7 @@
   properly, and return `NA_character_` for them (#10, @petermeissner).
 
 * `pretty_bytes()` now formats quantities just below the units better.
-  E.g. 1MB - 1B is formatted as `"1 MB"` instead of `""1000 kB"` (#18).
+  E.g. 1MB - 1B is formatted as `"1 MB"` instead of `"1000 kB"` (#18).
 
 * `pretty_bytes()` now has multiple styles. In particular, a fixed width
   style is useful for progress bars. Another style avoids the left-padding

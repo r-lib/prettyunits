@@ -13,9 +13,10 @@ format_num <- local({
     style(number)
   }
 
-  compute_num <- function(number, smallest_prefix = "y") {
-    prefixes0 <- c("y","z","a","f","p","n","u","m","", "k", "M", "G", "T", "P", "E", "Z", "Y")
-    zeroshif0 <- 9L
+  compute_num <- function(number, smallest_prefix = "q") {
+    prefixes0 <- c("q", "r", "y", "z", "a", "f", "p", "n", "u", "m", "", 
+                   "k", "M", "G", "T", "P", "E", "Z", "Y", "R", "Q")
+    zeroshif0 <- 11L
     
     stopifnot(
       is.numeric(number),
@@ -25,10 +26,10 @@ format_num <- local({
       smallest_prefix %in% prefixes0
     )
     
-    limits <- c( 999950 * 1000 ^ (seq_len(length(prefixes0) ) - (zeroshif0+1L)))
+    limits <- c( 999950 * 1000 ^ (seq_len(length(prefixes0) ) - (zeroshif0 + 1L)))
     nrow <- length(limits)
     low <- match(smallest_prefix, prefixes0)
-    zeroshift <- zeroshif0 +1L - low
+    zeroshift <- zeroshif0 + 1L - low
     prefixes <- prefixes0[low:length(prefixes0)]
     limits <- limits[low:nrow]
     nrow <- nrow - low + 1
@@ -41,9 +42,9 @@ format_num <- local({
       ncol = length(number)
     )
     mat2 <- matrix(mat < limits, nrow  = nrow, ncol = length(number))
-    exponent <- nrow - colSums(mat2) - (zeroshift -1L)
+    exponent <- nrow - colSums(mat2) - (zeroshift - 1L)
     in_range <- function(exponent) {
-        max(min(exponent,nrow-zeroshift, na.rm = FALSE),1L-zeroshift, na.rm = TRUE)
+        max(min(exponent,nrow - zeroshift, na.rm = FALSE),1L - zeroshift, na.rm = TRUE)
     }
     if (length(exponent)) {
       exponent <- sapply(exponent, in_range)
