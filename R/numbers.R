@@ -1,8 +1,5 @@
-
 format_num <- local({
-
   pretty_num <- function(number, style = c("default", "nopad", "6")) {
-
     style <- switch(
       match.arg(style),
       "default" = pretty_num_default,
@@ -14,9 +11,27 @@ format_num <- local({
   }
 
   compute_num <- function(number, smallest_prefix = "y") {
-    prefixes0 <- c("y","z","a","f","p","n","u","m","", "k", "M", "G", "T", "P", "E", "Z", "Y")
+    prefixes0 <- c(
+      "y",
+      "z",
+      "a",
+      "f",
+      "p",
+      "n",
+      "u",
+      "m",
+      "",
+      "k",
+      "M",
+      "G",
+      "T",
+      "P",
+      "E",
+      "Z",
+      "Y"
+    )
     zeroshif0 <- 9L
-    
+
     stopifnot(
       is.numeric(number),
       is.character(smallest_prefix),
@@ -24,11 +39,11 @@ format_num <- local({
       !is.na(smallest_prefix),
       smallest_prefix %in% prefixes0
     )
-    
-    limits <- c( 999950 * 1000 ^ (seq_len(length(prefixes0) ) - (zeroshif0+1L)))
+
+    limits <- c(999950 * 1000^(seq_len(length(prefixes0)) - (zeroshif0 + 1L)))
     nrow <- length(limits)
     low <- match(smallest_prefix, prefixes0)
-    zeroshift <- zeroshif0 +1L - low
+    zeroshift <- zeroshif0 + 1L - low
     prefixes <- prefixes0[low:length(prefixes0)]
     limits <- limits[low:nrow]
     nrow <- nrow - low + 1
@@ -40,15 +55,19 @@ format_num <- local({
       nrow = nrow,
       ncol = length(number)
     )
-    mat2 <- matrix(mat < limits, nrow  = nrow, ncol = length(number))
-    exponent <- nrow - colSums(mat2) - (zeroshift -1L)
+    mat2 <- matrix(mat < limits, nrow = nrow, ncol = length(number))
+    exponent <- nrow - colSums(mat2) - (zeroshift - 1L)
     in_range <- function(exponent) {
-        max(min(exponent,nrow-zeroshift, na.rm = FALSE),1L-zeroshift, na.rm = TRUE)
+      max(
+        min(exponent, nrow - zeroshift, na.rm = FALSE),
+        1L - zeroshift,
+        na.rm = TRUE
+      )
     }
     if (length(exponent)) {
       exponent <- sapply(exponent, in_range)
     }
-    res <- number / 1000 ^ exponent
+    res <- number / 1000^exponent
     prefix <- prefixes[exponent + zeroshift]
 
     ## Zero number
@@ -82,7 +101,7 @@ format_num <- local({
     )
     res[!int] <- sprintf("%.2f", ifelse(szs$negative[!int], -1, 1) * amt[!int])
 
-    format(paste(res, szs$prefix,sep = sep), justify = "right")
+    format(paste(res, szs$prefix, sep = sep), justify = "right")
   }
 
   pretty_num_nopad <- function(number) {
@@ -91,16 +110,16 @@ format_num <- local({
 
   pretty_num_6 <- function(number) {
     szs <- compute_num(number, smallest_prefix = "y")
-    amt <- round(szs$amount,2)
+    amt <- round(szs$amount, 2)
     sep <- " "
 
-    na   <- is.na(amt)
-    nan  <- is.nan(amt)
-    neg  <- !na & !nan & szs$negative
-    l10p  <- !na & !nan & !neg & amt < 10
+    na <- is.na(amt)
+    nan <- is.nan(amt)
+    neg <- !na & !nan & szs$negative
+    l10p <- !na & !nan & !neg & amt < 10
     l100p <- !na & !nan & !neg & amt >= 10 & amt < 100
     b100p <- !na & !nan & !neg & amt >= 100
-    l10n  <- !na & !nan & neg & amt < 10
+    l10n <- !na & !nan & neg & amt < 10
     l100n <- !na & !nan & neg & amt >= 10 & amt < 100
     b100n <- !na & !nan & neg & amt >= 100
 
@@ -114,13 +133,13 @@ format_num <- local({
     famt[l100n] <- sprintf(" -%.0f", amt[l100n])
     famt[b100n] <- sprintf("-%.0f", amt[b100n])
 
-    sub(" $","  ",paste0(famt, sep, szs$prefix))
+    sub(" $", "  ", paste0(famt, sep, szs$prefix))
   }
 
   structure(
     list(
-      .internal     = environment(),
-      pretty_num  = pretty_num,
+      .internal = environment(),
+      pretty_num = pretty_num,
       compute_num = compute_num
     ),
     class = c("standalone_num", "standalone")

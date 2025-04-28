@@ -1,4 +1,3 @@
-
 #' Human readable format of the time interval since a time point
 #'
 #' It calls \code{\link{vague_dt}} to do the actual formatting.

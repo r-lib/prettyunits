@@ -1,9 +1,8 @@
-
 #' Bytes in a human readable string
 #'
 #' Use `pretty_bytes()` to format bytes. `compute_bytes()` is the underlying
 #' engine that may be useful for custom formatting.
-#' 
+#'
 #' @param bytes Numeric vector, number of bytes.
 #' @param style Formatting style:
 #'   * `"default"` is the original `pretty_bytes` formatting, and it always

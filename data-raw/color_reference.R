@@ -26,13 +26,12 @@ color_ref_files <- list.files(path = "color_reference/", full.names = TRUE)
 color_ref_files <-
   setNames(
     object = color_ref_files,
-    nm =
-      gsub(
-        x = basename(color_ref_files),
-        pattern = ".js",
-        replacement = "",
-        fixed = TRUE
-      )
+    nm = gsub(
+      x = basename(color_ref_files),
+      pattern = ".js",
+      replacement = "",
+      fixed = TRUE
+    )
   )
 color_reference_list <-
   lapply(
@@ -77,7 +76,9 @@ color_reference_name_hex_all <- Reduce(f = full_join, x = color_reference_list)
 
 # Preference order for choosing alternate names
 alt_name_order <- c("roygbiv", "basic", "html", "R", "pantone", "x11", "ntc")
-if (length(missing_names <- setdiff(names(color_reference_list), alt_name_order))) {
+if (
+  length(missing_names <- setdiff(names(color_reference_list), alt_name_order))
+) {
   stop(
     "alt_name_order needs additional names in it: ",
     paste(missing_names, collapse = ", ")
@@ -93,23 +94,21 @@ color_reference_prep <-
   nest() %>%
   mutate(
     # All available names
-    name_alt =
-      purrr::map(
-        .x = data,
-        .f = function(x) unique(na.omit(unlist(x)))
-      ),
+    name_alt = purrr::map(
+      .x = data,
+      .f = function(x) unique(na.omit(unlist(x)))
+    ),
     # The preferred name
-    name =
-      purrr::map_chr(
-        .x = name_alt,
-        .f = function(x) x[1]
-      ),
+    name = purrr::map_chr(
+      .x = name_alt,
+      .f = function(x) x[1]
+    ),
     # Which color sources have the name in them?
-    containing_set =
-      purrr::map(
-        .x = data,
-        .f = function(x) as.data.frame(lapply(X = x, FUN = function(y) any(!is.na(y))))
-      )
+    containing_set = purrr::map(
+      .x = data,
+      .f = function(x)
+        as.data.frame(lapply(X = x, FUN = function(y) any(!is.na(y))))
+    )
   ) %>%
   select(-data, hex, name, name_alt, containing_set) %>%
   unnest(containing_set)
@@ -120,7 +119,9 @@ color_reference <-
     as.data.frame(
       convertColor(
         t(col2rgb(paste0("#", color_reference_prep$hex))),
-        from = "sRGB", to = "Lab", scale.in = 256
+        from = "sRGB",
+        to = "Lab",
+        scale.in = 256
       )
     )
   ) %>%
