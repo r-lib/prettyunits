@@ -1,8 +1,7 @@
 test_that("Rounding", {
-  expect_error(
-    pretty_round(1, c(2, 3)),
-    regexp = "digits must either be a scalar or the same length as x"
-  )
+  expect_snapshot(error = TRUE, {
+    pretty_round(1, c(2, 3))
+  })
   expect_equal(pretty_round(11), "11")
   expect_equal(pretty_round(5), "5")
   expect_equal(pretty_round(0.05), "0")

@@ -17,10 +17,12 @@ test_that("sizes.R is standalone", {
 })
 
 test_that("pretty_bytes gives errors on invalid input", {
-  expect_error(pretty_bytes(''), 'is.numeric.*is not TRUE')
-  expect_error(pretty_bytes('1'), 'is.numeric.*is not TRUE')
-  expect_error(pretty_bytes(TRUE), 'is.numeric.*is not TRUE')
-  expect_error(pretty_bytes(list(1, 2, 3)), 'is.numeric.*is not TRUE')
+  expect_snapshot(error = TRUE, {
+    pretty_bytes('')
+    pretty_bytes('1')
+    pretty_bytes(TRUE)
+    pretty_bytes(list(1, 2, 3))
+  })
 })
 
 test_that("pretty_bytes converts properly", {
@@ -36,8 +38,10 @@ test_that("pretty_bytes converts properly", {
 test_that("pretty_bytes handles NA and NaN", {
   expect_equal(pretty_bytes(NA_real_), "NA B")
   expect_equal(pretty_bytes(NA_integer_), "NA B")
-  expect_error(pretty_bytes(NA_character_), 'is.numeric.*is not TRUE')
-  expect_error(pretty_bytes(NA), 'is.numeric.*is not TRUE')
+  expect_snapshot(error = TRUE, {
+    pretty_bytes(NA_character_)
+    pretty_bytes(NA)
+  })
 
   expect_equal(pretty_bytes(NaN), "NaN B")
 })
