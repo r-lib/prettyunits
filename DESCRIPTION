@@ -6,7 +6,8 @@ Authors@R: c(
     person("Bill", "Denney", , "wdenney@humanpredictions.com", role = "ctb",
            comment = c(ORCID = "0000-0002-5759-428X")),
     person("Christophe", "Regouby", , "christophe.regouby@free.fr", role = "ctb"),
-    person("Posit Software, PBC", role = c("cph", "fnd"), comment = c(ROR = "03wc8by49"))
+    person("Posit Software, PBC", role = c("cph", "fnd"),
+           comment = c(ROR = "03wc8by49"))
   )
 Description: Pretty, human readable formatting of quantities.  Time
     intervals: '1337000' -> '15d 11h 23m 20s'.  Vague time intervals:
@@ -26,7 +27,7 @@ Suggests:
     testthat (>= 3.0.0)
 Config/Needs/website: tidyverse/tidytemplate
 Config/testthat/edition: 3
+Config/usethis/last-upkeep: 2025-04-26
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-Config/usethis/last-upkeep: 2025-04-26
