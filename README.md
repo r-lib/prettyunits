@@ -86,23 +86,23 @@ uls <- function(path = ".") {
 uls()
 ```
 
-    ##>  d mode        user group      size            modified         name
-    ##>     644 gaborcsardi staff     264 B 2025-04-26 17:24:48 _pkgdown.yml
-    ##>     644 gaborcsardi staff       0 B 2025-04-28 09:00:42     air.toml
-    ##>     644 gaborcsardi staff     232 B 2023-09-24 11:37:28  codecov.yml
-    ##>  d  755 gaborcsardi staff           2023-09-24 11:37:28     data-raw
-    ##>     644 gaborcsardi staff   1.26 kB 2025-04-28 09:00:33  DESCRIPTION
-    ##>     644 gaborcsardi staff      49 B 2025-04-26 17:24:48      LICENSE
-    ##>     644 gaborcsardi staff   1.08 kB 2025-04-26 17:24:48   LICENSE.md
-    ##>     644 gaborcsardi staff     111 B 2023-09-23 16:44:21     Makefile
-    ##>  d  755 gaborcsardi staff           2025-04-28 09:00:33          man
-    ##>     644 gaborcsardi staff     391 B 2025-04-26 17:24:39    NAMESPACE
-    ##>     644 gaborcsardi staff   1.55 kB 2025-04-28 09:00:33      NEWS.md
-    ##>  d  755 gaborcsardi staff           2025-04-28 09:00:33            R
-    ##>     644 gaborcsardi staff 641.02 kB 2023-09-24 12:15:16  README.html
-    ##>     644 gaborcsardi staff   7.88 kB 2025-04-28 09:00:22    README.md
-    ##>     644 gaborcsardi staff   4.46 kB 2025-04-28 09:02:10   README.Rmd
-    ##>  d  755 gaborcsardi staff           2025-04-26 17:24:48        tests
+    ##>  d mode        user group     size            modified         name
+    ##>     644 gaborcsardi staff    264 B 2025-04-26 17:24:48 _pkgdown.yml
+    ##>     644 gaborcsardi staff      0 B 2025-04-28 09:00:42     air.toml
+    ##>     644 gaborcsardi staff    232 B 2023-09-24 11:37:28  codecov.yml
+    ##>  d  755 gaborcsardi staff          2025-04-28 09:03:47     data-raw
+    ##>     644 gaborcsardi staff  1.30 kB 2025-04-28 09:04:57  DESCRIPTION
+    ##>     644 gaborcsardi staff     49 B 2025-04-26 17:24:48      LICENSE
+    ##>     644 gaborcsardi staff  1.08 kB 2025-04-26 17:24:48   LICENSE.md
+    ##>     644 gaborcsardi staff    111 B 2023-09-23 16:44:21     Makefile
+    ##>  d  755 gaborcsardi staff          2025-04-28 09:00:33          man
+    ##>     644 gaborcsardi staff    391 B 2025-04-26 17:24:39    NAMESPACE
+    ##>     644 gaborcsardi staff  1.55 kB 2025-04-28 09:00:33      NEWS.md
+    ##>  d  755 gaborcsardi staff          2025-04-28 09:00:33            R
+    ##>     644 gaborcsardi staff 40.66 kB 2025-04-28 09:06:22  README.html
+    ##>     644 gaborcsardi staff  8.16 kB 2025-04-28 09:06:19    README.md
+    ##>     644 gaborcsardi staff  4.48 kB 2025-04-28 09:06:08   README.Rmd
+    ##>  d  755 gaborcsardi staff          2025-04-26 17:24:48        tests
 
 ## Quantities
 
@@ -136,13 +136,13 @@ Here is a simple example of how to prettify a entire tibble
 library(tidyverse)
 ```
 
-    ##> ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+    ##> ── Attaching core tidyverse packages ───────────────────── tidyverse 2.0.0 ──
     ##> ✔ dplyr     1.1.4     ✔ readr     2.1.5
     ##> ✔ forcats   1.0.0     ✔ stringr   1.5.1
     ##> ✔ ggplot2   3.5.2     ✔ tibble    3.2.1
     ##> ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
     ##> ✔ purrr     1.0.4     
-    ##> ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+    ##> ── Conflicts ─────────────────────────────────────── tidyverse_conflicts() ──
     ##> ✖ tidyr::extract()   masks magrittr::extract()
     ##> ✖ dplyr::filter()    masks stats::filter()
     ##> ✖ dplyr::lag()       masks stats::lag()

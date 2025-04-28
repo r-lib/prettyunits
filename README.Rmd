@@ -2,7 +2,10 @@
 output: github_document
 ---
 
-```{r, setup, echo = FALSE, message = FALSE}
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
 knitr::opts_chunk$set(
   comment = "##>",
   tidy = FALSE,
@@ -31,17 +34,20 @@ The `prettyunits` package formats quantities in human readable form.
 
 You can install the package from CRAN:
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
 install.packages("prettyunits")
 ```
 
 If you need the development version, install it from GitHub:
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
 pak::pak("r-lib/prettyunits")
 ```
 
-```{r include=FALSE}
+```{r}
+#| include: false
 library(prettyunits)
 library(magrittr)
 ```
