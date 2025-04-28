@@ -32,13 +32,17 @@ pretty_round <- function(x, digits = 0, sci_range = Inf, sci_sep = "e") {
       xtmp <- round(x[mask_manip], digits)
       mask_sci <-
         xtmp != 0 &
-          abs(log10(abs(xtmp))) >= sci_range
+        abs(log10(abs(xtmp))) >= sci_range
       mask_no_sci <- !mask_sci
       if (any(mask_sci)) {
         logval <- floor(log10(abs(xtmp[mask_sci])))
         ret[mask_manip][mask_sci] <-
           paste0(
-            formatC(xtmp[mask_sci] / 10^logval, format = "f", digits = digits + logval),
+            formatC(
+              xtmp[mask_sci] / 10^logval,
+              format = "f",
+              digits = digits + logval
+            ),
             sci_sep,
             formatC(logval, format = "d")
           )
@@ -55,7 +59,13 @@ pretty_round <- function(x, digits = 0, sci_range = Inf, sci_sep = "e") {
     }
     ret
   } else if (length(x) == length(digits)) {
-    mapply(pretty_round, x, digits = digits, sci_range = sci_range, sci_sep = sci_sep)
+    mapply(
+      pretty_round,
+      x,
+      digits = digits,
+      sci_range = sci_range,
+      sci_sep = sci_sep
+    )
   } else {
     stop("digits must either be a scalar or the same length as x")
   }
@@ -116,9 +126,11 @@ pretty_signif <- function(x, digits = 6, sci_range = 6, sci_sep = "e") {
     mask.move.up <- toplog < newtoplog
     bottomlog[mask.move.up] <- bottomlog[mask.move.up] - 1
     ## Do the rounding
-    ret[mask_manip] <- pretty_round(xtmp,
+    ret[mask_manip] <- pretty_round(
+      xtmp,
       digits = bottomlog,
-      sci_range = sci_range, sci_sep = sci_sep
+      sci_range = sci_range,
+      sci_sep = sci_sep
     )
   }
   ret

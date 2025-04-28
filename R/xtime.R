@@ -1,4 +1,3 @@
-
 #' Pretty formatting of milliseconds
 #'
 #' @param ms Numeric vector of milliseconds

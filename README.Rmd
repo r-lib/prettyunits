@@ -2,7 +2,10 @@
 output: github_document
 ---
 
-```{r, setup, echo = FALSE, message = FALSE}
+```{r}
+#| label: setup
+#| echo: false
+#| message: false
 knitr::opts_chunk$set(
   comment = "##>",
   tidy = FALSE,
@@ -11,8 +14,8 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/r-lib/prettyunits/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r-lib/prettyunits/actions/workflows/R-CMD-check.yaml)
-[![Codecov test coverage](https://codecov.io/gh/r-lib/prettyunits/branch/main/graph/badge.svg)](https://app.codecov.io/gh/r-lib/prettyunits?branch=main)
 [![CRAN RStudio mirror downloads](http://cranlogs.r-pkg.org/badges/prettyunits)](https://CRAN.R-project.org/package=prettyunits)
+[![Codecov test coverage](https://codecov.io/gh/r-lib/prettyunits/graph/badge.svg)](https://app.codecov.io/gh/r-lib/prettyunits)
 <!-- badges: end -->
 
 # prettyunits
@@ -31,17 +34,20 @@ The `prettyunits` package formats quantities in human readable form.
 
 You can install the package from CRAN:
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
 install.packages("prettyunits")
 ```
 
 If you need the development version, install it from GitHub:
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
 pak::pak("r-lib/prettyunits")
 ```
 
-```{r include=FALSE}
+```{r}
+#| include: false
 library(prettyunits)
 library(magrittr)
 ```
@@ -64,8 +70,8 @@ nicely formatted file sizes:
 ```{r}
 uls <- function(path = ".") {
   files <- dir(path)
-  info <- files %>%
-    lapply(file.info) %>%
+  info <- files |>
+    lapply(file.info) |>
     do.call(what = rbind)
   info$size <- pretty_bytes(info$size)
   df <- data.frame(d = ifelse(info$isdir, "d", " "),
@@ -93,7 +99,7 @@ tdf <- tribble( ~name, ~`size in m`, ~`speed in m/s`,
                 "land snail", 0.075, 0.001,
                 "photon", NA,  299792458,
                 "African plate", 10546330, 0.000000000681)
-tdf %>% mutate(across(where(is.numeric), pretty_num))
+tdf |> mutate(across(where(is.numeric), pretty_num))
 ```
 
 

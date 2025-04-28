@@ -16,7 +16,12 @@ pretty_color <- function(color) {
     if (is.factor(color)) color <- as.character(color)
     stopifnot(is.character(color))
     color_rgb <- col2rgb(color)
-    color_lab <- convertColor(t(color_rgb), from = "sRGB", to = "Lab", scale.in = 256)
+    color_lab <- convertColor(
+      t(color_rgb),
+      from = "sRGB",
+      to = "Lab",
+      scale.in = 256
+    )
     dist <- color_diff_cie76(
       color_lab,
       as.matrix(color_reference[, c("L", "a", "b")])
