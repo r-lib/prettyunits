@@ -59,8 +59,8 @@ color_reference_list <-
           col = "color_def",
           into = c(source_name, "hex"),
           regex = "^['\"]?name['\"]?: *['\"]([A-Za-z0-9'/ \\(\\)]+)['\"] *, *['\"]?hex['\"]?: *['\"]#?([A-Fa-f0-9]{6})['\"] *$"
-        ) %>%
-        verify(!is.na(hex)) %>%
+        ) |>
+        verify(!is.na(hex)) |>
         mutate(hex = tolower(hex))
       extract_color
     }
@@ -86,12 +86,12 @@ if (
 }
 
 color_reference_prep <-
-  color_reference_name_hex_all %>%
+  color_reference_name_hex_all |>
   # Ensure that priority order of the "name" is in the order of alt_name_order.
-  select_at(.vars = c("hex", alt_name_order)) %>%
-  mutate(hex = gsub(x = hex, pattern = "#", replacement = "", fixed = TRUE)) %>%
-  group_by(hex) %>%
-  nest() %>%
+  select_at(.vars = c("hex", alt_name_order)) |>
+  mutate(hex = gsub(x = hex, pattern = "#", replacement = "", fixed = TRUE)) |>
+  group_by(hex) |>
+  nest() |>
   mutate(
     # All available names
     name_alt = purrr::map(
@@ -109,12 +109,12 @@ color_reference_prep <-
       .f = function(x)
         as.data.frame(lapply(X = x, FUN = function(y) any(!is.na(y))))
     )
-  ) %>%
-  select(-data, hex, name, name_alt, containing_set) %>%
+  ) |>
+  select(-data, hex, name, name_alt, containing_set) |>
   unnest(containing_set)
 
 color_reference <-
-  color_reference_prep %>%
+  color_reference_prep |>
   bind_cols(
     as.data.frame(
       convertColor(
@@ -124,7 +124,7 @@ color_reference <-
         scale.in = 256
       )
     )
-  ) %>%
+  ) |>
   select(hex, L, a, b, name, name_alt, everything())
 
 usethis::use_data(color_reference, overwrite = TRUE, internal = TRUE)

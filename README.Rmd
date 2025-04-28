@@ -64,8 +64,8 @@ nicely formatted file sizes:
 ```{r}
 uls <- function(path = ".") {
   files <- dir(path)
-  info <- files %>%
-    lapply(file.info) %>%
+  info <- files |>
+    lapply(file.info) |>
     do.call(what = rbind)
   info$size <- pretty_bytes(info$size)
   df <- data.frame(d = ifelse(info$isdir, "d", " "),
@@ -93,7 +93,7 @@ tdf <- tribble( ~name, ~`size in m`, ~`speed in m/s`,
                 "land snail", 0.075, 0.001,
                 "photon", NA,  299792458,
                 "African plate", 10546330, 0.000000000681)
-tdf %>% mutate(across(where(is.numeric), pretty_num))
+tdf |> mutate(across(where(is.numeric), pretty_num))
 ```
 
 
