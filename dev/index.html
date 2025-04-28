@@ -52,7 +52,16 @@
 <div class="section level1">
 <div class="page-header"><h1 id="prettyunits">prettyunits<a class="anchor" aria-label="anchor" href="#prettyunits"></a>
 </h1></div>
-<p>The <code>prettyunits</code> package formats quantities in human readable form. * Time intervals: ‘1337000’ -&gt; ‘15d 11h 23m 20s’. * Vague time intervals: ‘2674000’ -&gt; ‘about a month ago’. * Bytes: ‘1337’ -&gt; ‘1.34 kB’. * Rounding: ‘99’ with 3 significant digits -&gt; ‘99.0’ * p-values: ‘0.00001’ -&gt; ‘&lt;0.0001’. * Colors: ‘#FF0000’ -&gt; ‘red’. * Quantities: ‘1239437’ -&gt; ‘1.24 M’.</p>
+<p>The <code>prettyunits</code> package formats quantities in human readable form.</p>
+<ul>
+<li>Time intervals: ‘1337000’ -&gt; ‘15d 11h 23m 20s’.</li>
+<li>Vague time intervals: ‘2674000’ -&gt; ‘about a month ago’.</li>
+<li>Bytes: ‘1337’ -&gt; ‘1.34 kB’.</li>
+<li>Rounding: ‘99’ with 3 significant digits -&gt; ‘99.0’</li>
+<li>p-values: ‘0.00001’ -&gt; ‘&lt;0.0001’.</li>
+<li>Colors: ‘#FF0000’ -&gt; ‘red’.</li>
+<li>Quantities: ‘1239437’ -&gt; ‘1.24 M’.</li>
+</ul>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -69,25 +78,25 @@
 <p><code>pretty_bytes</code> formats number of bytes in a human readable way:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/pretty_bytes.html">pretty_bytes</a></span><span class="op">(</span><span class="fl">1337</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "1.34 kB"</span></span></code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="do">##&gt; [1] "1.34 kB"</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/pretty_bytes.html">pretty_bytes</a></span><span class="op">(</span><span class="fl">133337</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "133.34 kB"</span></span></code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="do">##&gt; [1] "133.34 kB"</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/pretty_bytes.html">pretty_bytes</a></span><span class="op">(</span><span class="fl">13333337</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "13.33 MB"</span></span></code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="do">##&gt; [1] "13.33 MB"</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/pretty_bytes.html">pretty_bytes</a></span><span class="op">(</span><span class="fl">1333333337</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "1.33 GB"</span></span></code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="do">##&gt; [1] "1.33 GB"</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/pretty_bytes.html">pretty_bytes</a></span><span class="op">(</span><span class="fl">133333333337</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "133.33 GB"</span></span></code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="do">##&gt; [1] "133.33 GB"</span></span></code></pre></div>
 <p>Here is a simple function that emulates the Unix <code>ls</code> command, with nicely formatted file sizes:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">uls</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">path</span> <span class="op">=</span> <span class="st">"."</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">dir</a></span><span class="op">(</span><span class="va">path</span><span class="op">)</span></span>
-<span>  <span class="va">info</span> <span class="op">&lt;-</span> <span class="va">files</span> <span class="op">%&gt;%</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">file.info</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="va">info</span> <span class="op">&lt;-</span> <span class="va">files</span> <span class="op">|&gt;</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">file.info</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span>what <span class="op">=</span> <span class="va">rbind</span><span class="op">)</span></span>
 <span>  <span class="va">info</span><span class="op">$</span><span class="va">size</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/pretty_bytes.html">pretty_bytes</a></span><span class="op">(</span><span class="va">info</span><span class="op">$</span><span class="va">size</span><span class="op">)</span></span>
 <span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>d <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">info</span><span class="op">$</span><span class="va">isdir</span>, <span class="st">"d"</span>, <span class="st">" "</span><span class="op">)</span>,</span>
@@ -96,19 +105,23 @@
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">df</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">uls</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt;  d mode        user group    size            modified        name</span></span>
-<span><span class="co">##&gt;     644 gaborcsardi staff   232 B 2023-09-24 10:37:41 codecov.yml</span></span>
-<span><span class="co">##&gt;  d  755 gaborcsardi staff         2023-09-24 10:37:41    data-raw</span></span>
-<span><span class="co">##&gt;     644 gaborcsardi staff 1.06 kB 2023-09-24 10:40:32 DESCRIPTION</span></span>
-<span><span class="co">##&gt;     644 gaborcsardi staff    42 B 2022-06-17 13:59:46     LICENSE</span></span>
-<span><span class="co">##&gt;     644 gaborcsardi staff   111 B 2023-09-23 16:44:21    Makefile</span></span>
-<span><span class="co">##&gt;  d  755 gaborcsardi staff         2023-09-24 10:37:59         man</span></span>
-<span><span class="co">##&gt;     644 gaborcsardi staff   523 B 2023-09-24 10:39:58   NAMESPACE</span></span>
-<span><span class="co">##&gt;     644 gaborcsardi staff 1.46 kB 2023-09-24 10:42:01     NEWS.md</span></span>
-<span><span class="co">##&gt;  d  755 gaborcsardi staff         2023-09-24 11:25:00           R</span></span>
-<span><span class="co">##&gt;     644 gaborcsardi staff 7.90 kB 2023-09-24 11:27:42   README.md</span></span>
-<span><span class="co">##&gt;     644 gaborcsardi staff 4.31 kB 2023-09-24 11:28:23  README.Rmd</span></span>
-<span><span class="co">##&gt;  d  755 gaborcsardi staff         2022-06-17 13:59:46       tests</span></span></code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="do">##&gt;  d mode        user group     size            modified         name</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a><span class="do">##&gt;     644 gaborcsardi staff    264 B 2025-04-26 17:24:48 _pkgdown.yml</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a><span class="do">##&gt;     644 gaborcsardi staff      0 B 2025-04-28 09:00:42     air.toml</span></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="do">##&gt;     644 gaborcsardi staff    232 B 2023-09-24 11:37:28  codecov.yml</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a><span class="do">##&gt;  d  755 gaborcsardi staff          2025-04-28 09:03:47     data-raw</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a><span class="do">##&gt;     644 gaborcsardi staff  1.30 kB 2025-04-28 09:04:57  DESCRIPTION</span></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="do">##&gt;     644 gaborcsardi staff     49 B 2025-04-26 17:24:48      LICENSE</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="do">##&gt;     644 gaborcsardi staff  1.08 kB 2025-04-26 17:24:48   LICENSE.md</span></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="do">##&gt;     644 gaborcsardi staff    111 B 2023-09-23 16:44:21     Makefile</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a><span class="do">##&gt;  d  755 gaborcsardi staff          2025-04-28 09:00:33          man</span></span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a><span class="do">##&gt;     644 gaborcsardi staff    391 B 2025-04-26 17:24:39    NAMESPACE</span></span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a><span class="do">##&gt;     644 gaborcsardi staff  1.55 kB 2025-04-28 09:00:33      NEWS.md</span></span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a><span class="do">##&gt;  d  755 gaborcsardi staff          2025-04-28 09:00:33            R</span></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="do">##&gt;     644 gaborcsardi staff 40.66 kB 2025-04-28 09:06:22  README.html</span></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a><span class="do">##&gt;     644 gaborcsardi staff  8.16 kB 2025-04-28 09:06:19    README.md</span></span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a><span class="do">##&gt;     644 gaborcsardi staff  4.48 kB 2025-04-28 09:06:08   README.Rmd</span></span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a><span class="do">##&gt;  d  755 gaborcsardi staff          2025-04-26 17:24:48        tests</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="quantities">Quantities<a class="anchor" aria-label="anchor" href="#quantities"></a>
@@ -116,41 +129,41 @@
 <p><code>pretty_num</code> formats number related to linear quantities in a human readable way:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/pretty_num.html">pretty_num</a></span><span class="op">(</span><span class="fl">1337</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "1.34 k"</span></span></code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="do">##&gt; [1] "1.34 k"</span></span></code></pre></div>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/pretty_num.html">pretty_num</a></span><span class="op">(</span><span class="op">-</span><span class="fl">133337</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "-133.34 k"</span></span></code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="do">##&gt; [1] "-133.34 k"</span></span></code></pre></div>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/pretty_num.html">pretty_num</a></span><span class="op">(</span><span class="fl">1333.37e-9</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "1.33 u"</span></span></code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="do">##&gt; [1] "1.33 u"</span></span></code></pre></div>
 <p>Be aware that the result is wrong in case of surface or volumes, and for any non-linear quantity.</p>
 <p>Here is a simple example of how to prettify a entire tibble</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; ── Attaching core tidyverse packages ─────────────────────────────────────────────────────────────────────────── tidyverse 2.0.0 ──</span></span>
-<span><span class="co">##&gt; ✔ dplyr     1.1.2     ✔ readr     2.1.4</span></span>
-<span><span class="co">##&gt; ✔ forcats   1.0.0     ✔ stringr   1.5.0</span></span>
-<span><span class="co">##&gt; ✔ ggplot2   3.4.2     ✔ tibble    3.2.1</span></span>
-<span><span class="co">##&gt; ✔ lubridate 1.9.2     ✔ tidyr     1.3.0</span></span>
-<span><span class="co">##&gt; ✔ purrr     1.0.1</span></span>
-<span><span class="co">##&gt; ── Conflicts ───────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
-<span><span class="co">##&gt; ✖ tidyr::extract()   masks magrittr::extract()</span></span>
-<span><span class="co">##&gt; ✖ dplyr::filter()    masks stats::filter()</span></span>
-<span><span class="co">##&gt; ✖ dplyr::lag()       masks stats::lag()</span></span>
-<span><span class="co">##&gt; ✖ purrr::set_names() masks magrittr::set_names()</span></span>
-<span><span class="co">##&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</span></span></code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="do">##&gt; ── Attaching core tidyverse packages ───────────────────── tidyverse 2.0.0 ──</span></span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a><span class="do">##&gt; ✔ dplyr     1.1.4     ✔ readr     2.1.5</span></span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a><span class="do">##&gt; ✔ forcats   1.0.0     ✔ stringr   1.5.1</span></span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="do">##&gt; ✔ ggplot2   3.5.2     ✔ tibble    3.2.1</span></span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a><span class="do">##&gt; ✔ lubridate 1.9.4     ✔ tidyr     1.3.1</span></span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a><span class="do">##&gt; ✔ purrr     1.0.4     </span></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a><span class="do">##&gt; ── Conflicts ─────────────────────────────────────── tidyverse_conflicts() ──</span></span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a><span class="do">##&gt; ✖ tidyr::extract()   masks magrittr::extract()</span></span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a><span class="do">##&gt; ✖ dplyr::filter()    masks stats::filter()</span></span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a><span class="do">##&gt; ✖ dplyr::lag()       masks stats::lag()</span></span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a><span class="do">##&gt; ✖ purrr::set_names() masks magrittr::set_names()</span></span>
+<span id="cb22-12"><a href="#cb22-12" tabindex="-1"></a><span class="do">##&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</span></span></code></pre></div>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tdf</span> <span class="op">&lt;-</span> <span class="fu">tribble</span><span class="op">(</span> <span class="op">~</span><span class="va">name</span>, <span class="op">~</span><span class="va">`size in m`</span>, <span class="op">~</span><span class="va">`speed in m/s`</span>,</span>
 <span>                <span class="st">"land snail"</span>, <span class="fl">0.075</span>, <span class="fl">0.001</span>,</span>
 <span>                <span class="st">"photon"</span>, <span class="cn">NA</span>,  <span class="fl">299792458</span>,</span>
 <span>                <span class="st">"African plate"</span>, <span class="fl">10546330</span>, <span class="fl">0.000000000681</span><span class="op">)</span></span>
-<span><span class="va">tdf</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>, <span class="va">pretty_num</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; # A tibble: 3 × 3</span></span>
-<span><span class="co">##&gt;   name          `size in m` `speed in m/s`</span></span>
-<span><span class="co">##&gt;   &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;</span></span>
-<span><span class="co">##&gt; 1 land snail    "   75 m"   "     1 m"</span></span>
-<span><span class="co">##&gt; 2 photon        "    NA "   "299.79 M"</span></span>
-<span><span class="co">##&gt; 3 African plate "10.55 M"   "   681 p"</span></span></code></pre>
+<span><span class="va">tdf</span> <span class="op">|&gt;</span> <span class="fu">mutate</span><span class="op">(</span><span class="fu">across</span><span class="op">(</span><span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>, <span class="va">pretty_num</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="do">##&gt; # A tibble: 3 × 3</span></span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a><span class="do">##&gt;   name          `size in m` `speed in m/s`</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a><span class="do">##&gt;   &lt;chr&gt;         &lt;chr&gt;       &lt;chr&gt;         </span></span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a><span class="do">##&gt; 1 land snail    "   75 m"   "     1 m"    </span></span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a><span class="do">##&gt; 2 photon        "    NA "   "299.79 M"    </span></span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a><span class="do">##&gt; 3 African plate "10.55 M"   "   681 p"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="time-intervals">Time intervals<a class="anchor" aria-label="anchor" href="#time-intervals"></a>
@@ -158,20 +171,20 @@
 <p><code>pretty_ms</code> formats a time interval given in milliseconds. <code>pretty_sec</code> does the same for seconds, and <code>pretty_dt</code> for <code>difftime</code> objects. The optional <code>compact</code> argument turns on a compact, approximate format.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/pretty_ms.html">pretty_ms</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1337</span>, <span class="fl">13370</span>, <span class="fl">133700</span>, <span class="fl">1337000</span>, <span class="fl">1337000000</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "1.3s"            "13.4s"           "2m 13.7s"        "22m 17s"</span></span>
-<span><span class="co">##&gt; [5] "15d 11h 23m 20s"</span></span></code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a><span class="do">##&gt; [1] "1.3s"            "13.4s"           "2m 13.7s"        "22m 17s"        </span></span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a><span class="do">##&gt; [5] "15d 11h 23m 20s"</span></span></code></pre></div>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/pretty_ms.html">pretty_ms</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1337</span>, <span class="fl">13370</span>, <span class="fl">133700</span>, <span class="fl">1337000</span>, <span class="fl">1337000000</span><span class="op">)</span>,</span>
 <span>  compact <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "~1.3s"  "~13.4s" "~2m"    "~22m"   "~15d"</span></span></code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="do">##&gt; [1] "~1.3s"  "~13.4s" "~2m"    "~22m"   "~15d"</span></span></code></pre></div>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/pretty_sec.html">pretty_sec</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1337</span>, <span class="fl">13370</span>, <span class="fl">133700</span>, <span class="fl">1337000</span>, <span class="fl">13370000</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "22m 17s"          "3h 42m 50s"       "1d 13h 8m 20s"    "15d 11h 23m 20s"</span></span>
-<span><span class="co">##&gt; [5] "154d 17h 53m 20s"</span></span></code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="do">##&gt; [1] "22m 17s"          "3h 42m 50s"       "1d 13h 8m 20s"    "15d 11h 23m 20s" </span></span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="do">##&gt; [5] "154d 17h 53m 20s"</span></span></code></pre></div>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/pretty_sec.html">pretty_sec</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1337</span>, <span class="fl">13370</span>, <span class="fl">133700</span>, <span class="fl">1337000</span>, <span class="fl">13370000</span><span class="op">)</span>,</span>
 <span>  compact <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "~22m"  "~3h"   "~1d"   "~15d"  "~154d"</span></span></code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" tabindex="-1"></a><span class="do">##&gt; [1] "~22m"  "~3h"   "~1d"   "~15d"  "~154d"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="vague-time-intervals">Vague time intervals<a class="anchor" aria-label="anchor" href="#vague-time-intervals"></a>
@@ -179,35 +192,35 @@
 <p><code>vague_dt</code> and <code>time_ago</code> formats time intervals using a vague format, omitting smaller units. They both have three formats: <code>default</code>, <code>short</code> and <code>terse</code>. <code>vague_dt</code> takes a <code>difftime</code> object, and <code>time_ago</code> works relatively to the specified date.</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/vague_dt.html">vague_dt</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"short"</span>, <span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">as.difftime</a></span><span class="op">(</span><span class="fl">30</span>, units <span class="op">=</span> <span class="st">"secs"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "&lt;1 min"</span></span></code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" tabindex="-1"></a><span class="do">##&gt; [1] "&lt;1 min"</span></span></code></pre></div>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/vague_dt.html">vague_dt</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"short"</span>, <span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">as.difftime</a></span><span class="op">(</span><span class="fl">14</span>, units <span class="op">=</span> <span class="st">"mins"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "14 min"</span></span></code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" tabindex="-1"></a><span class="do">##&gt; [1] "14 min"</span></span></code></pre></div>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/vague_dt.html">vague_dt</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"short"</span>, <span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">as.difftime</a></span><span class="op">(</span><span class="fl">5</span>, units <span class="op">=</span> <span class="st">"hours"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "5 hours"</span></span></code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" tabindex="-1"></a><span class="do">##&gt; [1] "5 hours"</span></span></code></pre></div>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/vague_dt.html">vague_dt</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"short"</span>, <span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">as.difftime</a></span><span class="op">(</span><span class="fl">25</span>, units <span class="op">=</span> <span class="st">"hours"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "1 day"</span></span></code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" tabindex="-1"></a><span class="do">##&gt; [1] "1 day"</span></span></code></pre></div>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/vague_dt.html">vague_dt</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"short"</span>, <span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">as.difftime</a></span><span class="op">(</span><span class="fl">5</span>, units <span class="op">=</span> <span class="st">"days"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "5 day"</span></span></code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" tabindex="-1"></a><span class="do">##&gt; [1] "5 day"</span></span></code></pre></div>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">now</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.time</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/time_ago.html">time_ago</a></span><span class="op">(</span><span class="va">now</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "moments ago"</span></span></code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" tabindex="-1"></a><span class="do">##&gt; [1] "moments ago"</span></span></code></pre></div>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/time_ago.html">time_ago</a></span><span class="op">(</span><span class="va">now</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">as.difftime</a></span><span class="op">(</span><span class="fl">30</span>, units <span class="op">=</span> <span class="st">"secs"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "less than a minute ago"</span></span></code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" tabindex="-1"></a><span class="do">##&gt; [1] "less than a minute ago"</span></span></code></pre></div>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/time_ago.html">time_ago</a></span><span class="op">(</span><span class="va">now</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">as.difftime</a></span><span class="op">(</span><span class="fl">14</span>, units <span class="op">=</span> <span class="st">"mins"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "14 minutes ago"</span></span></code></pre>
+<div class="sourceCode" id="cb48"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" tabindex="-1"></a><span class="do">##&gt; [1] "14 minutes ago"</span></span></code></pre></div>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/time_ago.html">time_ago</a></span><span class="op">(</span><span class="va">now</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">as.difftime</a></span><span class="op">(</span><span class="fl">5</span>, units <span class="op">=</span> <span class="st">"hours"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "5 hours ago"</span></span></code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" tabindex="-1"></a><span class="do">##&gt; [1] "5 hours ago"</span></span></code></pre></div>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/time_ago.html">time_ago</a></span><span class="op">(</span><span class="va">now</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/difftime.html" class="external-link">as.difftime</a></span><span class="op">(</span><span class="fl">25</span>, units <span class="op">=</span> <span class="st">"hours"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "a day ago"</span></span></code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" tabindex="-1"></a><span class="do">##&gt; [1] "a day ago"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="rounding">Rounding<a class="anchor" aria-label="anchor" href="#rounding"></a>
@@ -215,10 +228,10 @@
 <p><code><a href="reference/pretty_round.html">pretty_round()</a></code> and <code><a href="reference/pretty_signif.html">pretty_signif()</a></code> preserve trailing zeros.</p>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/pretty_round.html">pretty_round</a></span><span class="op">(</span><span class="fl">1</span>, digits<span class="op">=</span><span class="fl">6</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "1.000000"</span></span></code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" tabindex="-1"></a><span class="do">##&gt; [1] "1.000000"</span></span></code></pre></div>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/pretty_signif.html">pretty_signif</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">99</span>, <span class="fl">0.9999</span><span class="op">)</span>, digits<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "99.0" "1.00"</span></span></code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" tabindex="-1"></a><span class="do">##&gt; [1] "99.0" "1.00"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="p-values">p-values<a class="anchor" aria-label="anchor" href="#p-values"></a>
@@ -226,7 +239,7 @@
 <p><code><a href="reference/pretty_p_value.html">pretty_p_value()</a></code> rounds small p-values to indicate less than significance level for small values.</p>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/pretty_p_value.html">pretty_p_value</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.05</span>, <span class="fl">0.0000001</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "0.0500"  "&lt;0.0001" NA</span></span></code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" tabindex="-1"></a><span class="do">##&gt; [1] "0.0500"  "&lt;0.0001" NA</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="colors">Colors<a class="anchor" aria-label="anchor" href="#colors"></a>
@@ -234,14 +247,14 @@
 <p><code>pretty_color</code> converts colors from other representations to human-readable names.</p>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/pretty_color.html">pretty_color</a></span><span class="op">(</span><span class="st">"black"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "black"</span></span>
-<span><span class="co">##&gt; attr(,"alt")</span></span>
-<span><span class="co">##&gt; [1] "black" "gray0" "grey0" "Black"</span></span></code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" tabindex="-1"></a><span class="do">##&gt; [1] "black"</span></span>
+<span id="cb60-2"><a href="#cb60-2" tabindex="-1"></a><span class="do">##&gt; attr(,"alt")</span></span>
+<span id="cb60-3"><a href="#cb60-3" tabindex="-1"></a><span class="do">##&gt; [1] "black" "gray0" "grey0" "Black"</span></span></code></pre></div>
 <div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/pretty_color.html">pretty_color</a></span><span class="op">(</span><span class="st">"#123456"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##&gt; [1] "Prussian Blue"</span></span>
-<span><span class="co">##&gt; attr(,"alt")</span></span>
-<span><span class="co">##&gt; [1] "Prussian Blue"</span></span></code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" tabindex="-1"></a><span class="do">##&gt; [1] "Prussian Blue"</span></span>
+<span id="cb62-2"><a href="#cb62-2" tabindex="-1"></a><span class="do">##&gt; attr(,"alt")</span></span>
+<span id="cb62-3"><a href="#cb62-3" tabindex="-1"></a><span class="do">##&gt; [1] "Prussian Blue"</span></span></code></pre></div>
 </div>
 </div>
 
@@ -289,8 +302,8 @@
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://github.com/r-lib/prettyunits/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/r-lib/prettyunits/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://app.codecov.io/gh/r-lib/prettyunits?branch=main" class="external-link"><img src="https://codecov.io/gh/r-lib/prettyunits/branch/main/graph/badge.svg" alt="Codecov test coverage"></a></li>
 <li><a href="https://CRAN.R-project.org/package=prettyunits" class="external-link"><img src="http://cranlogs.r-pkg.org/badges/prettyunits" alt="CRAN RStudio mirror downloads"></a></li>
+<li><a href="https://app.codecov.io/gh/r-lib/prettyunits" class="external-link"><img src="https://codecov.io/gh/r-lib/prettyunits/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 
