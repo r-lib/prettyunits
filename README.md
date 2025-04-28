@@ -2,10 +2,10 @@
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/r-lib/prettyunits/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r-lib/prettyunits/actions/workflows/R-CMD-check.yaml)
-[![Codecov test
-coverage](https://codecov.io/gh/r-lib/prettyunits/branch/main/graph/badge.svg)](https://app.codecov.io/gh/r-lib/prettyunits?branch=main)
 [![CRAN RStudio mirror
 downloads](http://cranlogs.r-pkg.org/badges/prettyunits)](https://CRAN.R-project.org/package=prettyunits)
+[![Codecov test
+coverage](https://codecov.io/gh/r-lib/prettyunits/graph/badge.svg)](https://app.codecov.io/gh/r-lib/prettyunits)
 <!-- badges: end -->
 
 # prettyunits
