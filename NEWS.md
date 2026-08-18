@@ -4,7 +4,10 @@
   to `pretty_num()` (#41, @cregouby)
 
 * Fix edge cases in `pretty_round()` and `pretty_signif()` (#46, @billdenney):
-  zero-length input returns `character(0)` rather than `logical(0)` or `list()`.
+  zero-length input returns `character(0)` rather than `logical(0)` or `list()`;
+  `digits`, `sci_range`, and `sci_sep` are checked, and non-integer `digits` is
+  rounded to the nearest integer rather than being rounded and truncated
+  inconsistently.
 
 # prettyunits 1.2.0
 

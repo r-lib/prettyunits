@@ -127,3 +127,55 @@ test_that("Zero-length input returns a zero-length character vector", {
     fixed = TRUE
   )
 })
+
+test_that("Argument checking", {
+  expect_error(
+    pretty_round(1.234, NA),
+    "digits must be finite and numeric",
+    fixed = TRUE
+  )
+  expect_error(
+    pretty_round(1.234, Inf),
+    "digits must be finite and numeric",
+    fixed = TRUE
+  )
+  expect_error(
+    pretty_signif(1.234, NaN),
+    "digits must be finite and numeric",
+    fixed = TRUE
+  )
+  expect_error(
+    pretty_signif(1.234, "3"),
+    "digits must be finite and numeric",
+    fixed = TRUE
+  )
+  expect_error(
+    pretty_round(1.234, 2, sci_range = NA),
+    "sci_range must be a scalar, non-missing number",
+    fixed = TRUE
+  )
+  expect_error(
+    pretty_signif(1.234, 2, sci_range = c(1, 2)),
+    "sci_range must be a scalar, non-missing number",
+    fixed = TRUE
+  )
+  expect_error(
+    pretty_round(1.234, 2, sci_sep = NA),
+    "sci_sep must be a scalar, non-missing character string",
+    fixed = TRUE
+  )
+  expect_error(
+    pretty_signif(1.234, 2, sci_sep = c("e", "x10^")),
+    "sci_sep must be a scalar, non-missing character string",
+    fixed = TRUE
+  )
+  ## sci_range = Inf remains valid
+  expect_equal(pretty_signif(1e7, 3, sci_range = Inf), "10000000")
+})
+
+test_that("Non-integer digits are rounded to the nearest integer", {
+  expect_equal(pretty_round(1.234, 2.7), "1.234")
+  expect_equal(pretty_round(1.234, 2.2), "1.23")
+  expect_equal(pretty_signif(1.234, 2.7), "1.23")
+  expect_equal(pretty_signif(1.234, 2.2), "1.2")
+})

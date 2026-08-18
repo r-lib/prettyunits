@@ -10,7 +10,8 @@ pretty_round(x, digits = 0, sci_range = Inf, sci_sep = "e")
 \arguments{
 \item{x}{The number to round.}
 
-\item{digits}{integer indicating the number of decimal places.}
+\item{digits}{integer indicating the number of decimal places.  Non-integer
+values are rounded to the nearest integer.}
 
 \item{sci_range}{See help for \code{\link[=pretty_signif]{pretty_signif()}} (and you likely want
 to round with \code{\link[=pretty_signif]{pretty_signif()}} if you want to use this argument).}

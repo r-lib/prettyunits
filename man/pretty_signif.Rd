@@ -10,7 +10,8 @@ pretty_signif(x, digits = 6, sci_range = 6, sci_sep = "e")
 \arguments{
 \item{x}{The number to round.}
 
-\item{digits}{integer indicating the number of significant digits.}
+\item{digits}{integer indicating the number of significant digits.
+Non-integer values are rounded to the nearest integer.}
 
 \item{sci_range}{integer (or \code{Inf}) indicating when to switch to
 scientific notation instead of floating point. Zero indicates always use

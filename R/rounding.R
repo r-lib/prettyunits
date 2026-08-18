@@ -5,7 +5,8 @@
 #'   `NaN` are returned as `"Inf"`, `"NA"`, and `"NaN"`.
 #'
 #' @param x The number to round.
-#' @param digits integer indicating the number of decimal places.
+#' @param digits integer indicating the number of decimal places.  Non-integer
+#'   values are rounded to the nearest integer.
 #' @param sci_range See help for [pretty_signif()] (and you likely want
 #'   to round with [pretty_signif()] if you want to use this argument).
 #' @param sci_sep The separator to use for scientific notation strings
@@ -16,6 +17,8 @@
 #' @export
 
 pretty_round <- function(x, digits = 0, sci_range = Inf, sci_sep = "e") {
+  check_rounding_args(digits = digits, sci_range = sci_range, sci_sep = sci_sep)
+  digits <- round(digits)
   if (!(length(digits) == 1 || length(digits) == length(x))) {
     stop("digits must either be a scalar or the same length as x")
   }
@@ -84,6 +87,7 @@ pretty_round <- function(x, digits = 0, sci_range = Inf, sci_sep = "e") {
 #'
 #' @param x The number to round.
 #' @param digits integer indicating the number of significant digits.
+#'   Non-integer values are rounded to the nearest integer.
 #' @param sci_range integer (or `Inf`) indicating when to switch to
 #'   scientific notation instead of floating point. Zero indicates always use
 #'   scientific; `Inf` indicates to never use scientific notation;
@@ -96,6 +100,8 @@ pretty_round <- function(x, digits = 0, sci_range = Inf, sci_sep = "e") {
 #' @export
 
 pretty_signif <- function(x, digits = 6, sci_range = 6, sci_sep = "e") {
+  check_rounding_args(digits = digits, sci_range = sci_range, sci_sep = sci_sep)
+  digits <- round(digits)
   mask_na <- is.na(x)
   mask_aschar <- is.nan(x) | is.infinite(x)
   mask_manip <- !(mask_na | mask_aschar)
@@ -139,4 +145,17 @@ pretty_signif <- function(x, digits = 6, sci_range = 6, sci_sep = "e") {
     )
   }
   ret
+}
+
+## Argument checks shared by pretty_round() and pretty_signif()
+check_rounding_args <- function(digits, sci_range, sci_sep) {
+  if (!is.numeric(digits) || any(!is.finite(digits))) {
+    stop("digits must be finite and numeric")
+  }
+  if (!is.numeric(sci_range) || length(sci_range) != 1 || is.na(sci_range)) {
+    stop("sci_range must be a scalar, non-missing number")
+  }
+  if (!is.character(sci_sep) || length(sci_sep) != 1 || is.na(sci_sep)) {
+    stop("sci_sep must be a scalar, non-missing character string")
+  }
 }
