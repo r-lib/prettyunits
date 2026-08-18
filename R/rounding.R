@@ -53,13 +53,8 @@ pretty_round <- function(x, digits = 0, sci_range = Inf, sci_sep = "e") {
           )
       }
       if (any(mask_no_sci)) {
-        if (digits < 0) {
-          ret[mask_manip][mask_no_sci] <-
-            formatC(xtmp[mask_no_sci], format = "f", digits = 0)
-        } else {
-          ret[mask_manip][mask_no_sci] <-
-            formatC(xtmp[mask_no_sci], format = "f", digits = digits)
-        }
+        ret[mask_manip][mask_no_sci] <-
+          format_fixed(xtmp[mask_no_sci], digits = digits)
       }
     }
     restore_shape(ret, x)
@@ -180,14 +175,73 @@ restore_shape <- function(ret, x) {
   ret
 }
 
+## Significant decimal digits needed to reproduce any double
+max_digits <- 17
+
+## The fewest significant digits that reproduce x exactly
+signif_digits <- function(x) {
+  ret <- rep(max_digits, length(x))
+  for (d in (max_digits - 1):1) {
+    ret[as.numeric(sprintf("%.*e", d - 1, x)) == x] <- d
+  }
+  ret
+}
+
 ## Take the mantissa and the exponent from sprintf() rather than dividing by
 ## 10^logval, which underflows in the denormal range and can leave a mantissa
-## of 10 or more
+## of 10 or more.  Digits past the ones x determines are zeros rather than the
+## binary representation of x.
 format_sci <- function(x, digits, sci_sep) {
-  sci <- sprintf("%.*e", digits, x)
+  n_dec <- pmin(digits, signif_digits(x) - 1)
+  sci <- sprintf("%.*e", n_dec, x)
   paste0(
     sub("e.*$", "", sci),
+    ifelse(n_dec == 0 & digits > 0, ".", ""),
+    zeros(digits - n_dec),
     sci_sep,
     formatC(as.integer(sub("^.*e", "", sci)), format = "d")
   )
+}
+
+## sprintf() prints the exact decimal expansion of the double, which past
+## max_digits is the binary representation rather than zeros
+format_fixed <- function(x, digits) {
+  digits <- pmax(digits, 0)
+  exponent <- floor(log10(abs(x)))
+  mask_exact <- !is.finite(exponent) | exponent + 1 + digits <= max_digits
+  ret <- rep(NA_character_, length(x))
+  ret[mask_exact] <- sprintf("%.*f", digits, x[mask_exact])
+  ret[!mask_exact] <- expand_sci(x[!mask_exact], digits = digits)
+  ret
+}
+
+## Shift the decimal point of the digits x determines and pad with zeros
+expand_sci <- function(x, digits) {
+  sci <- sprintf("%.*e", signif_digits(x) - 1, x)
+  mantissa <- gsub("[-.]", "", sub("e.*$", "", sci))
+  int_len <- as.integer(sub("^.*e", "", sci)) + 1
+  int_part <-
+    ifelse(
+      int_len < 1,
+      "0",
+      paste0(substr(mantissa, 1, int_len), zeros(int_len - nchar(mantissa)))
+    )
+  frac_part <-
+    ifelse(
+      int_len < 1,
+      paste0(zeros(-int_len), mantissa),
+      substr(mantissa, int_len + 1, nchar(mantissa))
+    )
+  paste0(
+    ifelse(x < 0, "-", ""),
+    int_part,
+    ifelse(digits > 0, ".", ""),
+    frac_part,
+    zeros(digits - nchar(frac_part))
+  )
+}
+
+## A run of n zeros, vectorized over n
+zeros <- function(n) {
+  substr(rep(paste(rep("0", max(c(n, 0))), collapse = ""), length(n)), 1, n)
 }

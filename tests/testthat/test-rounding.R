@@ -274,11 +274,37 @@ test_that("The scientific notation mantissa is normalized", {
   expect_equal(pretty_signif(1e-319, 3, sci_range = 0), "1.00e-319")
   expect_equal(pretty_signif(-1e-320, 3, sci_range = 0), "-1.00e-320")
   ## The smallest denormal gave a mantissa of Inf
-  expect_equal(pretty_signif(5e-324, 3, sci_range = 0), "4.94e-324")
+  expect_equal(pretty_signif(5e-324, 3, sci_range = 0), "5.00e-324")
   ## 1 <= abs(mantissa) < 10 across the whole range of a double
   mantissa <- as.numeric(sub(
     "e.*$", "",
     pretty_signif(10^(-323:308), 3, sci_range = 0)
   ))
   expect_true(all(abs(mantissa) >= 1 & abs(mantissa) < 10))
+})
+
+test_that("Digits past the ones a double carries are zeros", {
+  ## formatC() printed the exact decimal expansion of the double instead
+  expect_equal(
+    pretty_signif(1.234, 30),
+    paste0("1.234", strrep("0", 26))
+  )
+  expect_equal(
+    pretty_round(1.234, 30, sci_range = 0),
+    paste0("1.234", strrep("0", 27), "e0")
+  )
+  expect_equal(
+    pretty_round(1e300, 3, sci_range = Inf),
+    paste0("1", strrep("0", 300), ".000")
+  )
+  ## formatC() warned "digits reduced to 324" and truncated
+  expect_equal(nchar(pretty_signif(1.234, 400)), 401L)
+  expect_silent(pretty_signif(1.234, 400))
+  ## Digits the double does carry are kept
+  expect_equal(pretty_signif(pi, 16), "3.141592653589793")
+  expect_equal(pretty_signif(pi, 17), "3.1415926535897931")
+  expect_equal(
+    pretty_signif(pi, 25),
+    paste0("3.141592653589793", strrep("0", 9))
+  )
 })

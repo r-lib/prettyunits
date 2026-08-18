@@ -13,7 +13,9 @@
   preserved, as `formatC()` does.  `pretty_round()` no longer fails when a
   scalar `digits` is given with more than one value in the scientific notation
   range, and normalizes the scientific notation mantissa so that denormal
-  values no longer format as, for example, `"10.02e-321"`.
+  values no longer format as, for example, `"10.02e-321"`.  Digits past the
+  ones a double carries are now zeros rather than the binary representation of
+  the value.
 
 # prettyunits 1.2.0
 
