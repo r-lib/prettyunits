@@ -4,6 +4,13 @@
 #' @details Values that are not standard numbers like `Inf`, `NA`, and
 #'   `NaN` are returned as `"Inf"`, `"NA"`, and `"NaN"`.
 #'
+#'   Rounding is done by [round()], so it is round-half-even rather than
+#'   round-half-up: `pretty_round(c(0.5, 1.5, 2.5, 3.5), 0)` gives `"0"`,
+#'   `"2"`, `"2"`, and `"4"`.
+#'
+#'   A negative value that rounds to zero keeps its sign, as [formatC()] does:
+#'   `pretty_round(-0.0001, 2)` gives `"-0.00"`.
+#'
 #' @param x The number to round.
 #' @param digits integer indicating the number of decimal places.  Non-integer
 #'   values are rounded to the nearest integer.
@@ -76,7 +83,10 @@ pretty_round <- function(x, digits = 0, sci_range = Inf, sci_sep = "e") {
 #' zeros, if applicable
 #'
 #' @details Values that are not standard numbers like `Inf`, `NA`, and
-#'   `NaN` are returned as `"Inf"`, `"NA"`, and `NaN`.
+#'   `NaN` are returned as `"Inf"`, `"NA"`, and `"NaN"`.
+#'
+#'   Rounding and the sign of a value that rounds to zero follow
+#'   [pretty_round()].
 #'
 #' @param x The number to round.
 #' @param digits integer indicating the number of significant digits.

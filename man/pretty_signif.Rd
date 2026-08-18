@@ -33,7 +33,10 @@ zeros, if applicable
 }
 \details{
 Values that are not standard numbers like \code{Inf}, \code{NA}, and
-\code{NaN} are returned as \code{"Inf"}, \code{"NA"}, and \code{NaN}.
+\code{NaN} are returned as \code{"Inf"}, \code{"NA"}, and \code{"NaN"}.
+
+Rounding and the sign of a value that rounds to zero follow
+\code{\link[=pretty_round]{pretty_round()}}.
 }
 \seealso{
 \code{\link[=signif]{signif()}}, \code{\link[=pretty_round]{pretty_round()}}.

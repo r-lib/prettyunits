@@ -319,3 +319,22 @@ test_that("sci_range is inclusive at the boundary", {
   expect_equal(pretty_signif(123456.05, 3, sci_range = 6), "123000")
   expect_equal(pretty_round(999999, 2, sci_range = 6), "999999.00")
 })
+
+test_that("Rounding is round-half-even", {
+  expect_equal(pretty_round(c(0.5, 1.5, 2.5, 3.5), 0), c("0", "2", "2", "4"))
+  expect_equal(pretty_signif(c(0.5, 1.5, 2.5, 3.5), 1), c("0.5", "2", "2", "4"))
+  ## 2.675 is below 2.675 as a double, so it rounds down
+  expect_equal(pretty_round(2.675, 2), "2.67")
+})
+
+test_that("A negative value that rounds to zero keeps its sign", {
+  expect_equal(
+    pretty_round(c(-0.4, -0.0001, -1e-20), 2),
+    c("-0.40", "-0.00", "-0.00")
+  )
+  expect_equal(pretty_round(-0.4, 0), "-0")
+  expect_equal(
+    pretty_signif(-1e-20, 2, sci_range = Inf),
+    "-0.000000000000000000010"
+  )
+})
