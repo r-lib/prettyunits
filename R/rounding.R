@@ -102,6 +102,10 @@ pretty_round <- function(x, digits = 0, sci_range = Inf, sci_sep = "e") {
 pretty_signif <- function(x, digits = 6, sci_range = 6, sci_sep = "e") {
   check_rounding_args(digits = digits, sci_range = sci_range, sci_sep = sci_sep)
   digits <- round(digits)
+  if (!(length(digits) == 1 || length(digits) == length(x))) {
+    stop("digits must either be a scalar or the same length as x")
+  }
+  digits <- rep_len(digits, length(x))
   mask_na <- is.na(x)
   mask_aschar <- is.nan(x) | is.infinite(x)
   mask_manip <- !(mask_na | mask_aschar)
@@ -115,9 +119,10 @@ pretty_signif <- function(x, digits = 6, sci_range = 6, sci_sep = "e") {
   }
   if (any(mask_manip)) {
     xtmp <- x[mask_manip]
+    digits_manip <- digits[mask_manip]
     toplog <- bottomlog <- rep(NA, length(xtmp))
     ## When 0 give the digits as the output
-    bottomlog[xtmp %in% 0] <- digits
+    bottomlog[xtmp %in% 0] <- digits_manip[xtmp %in% 0]
     ## Otherwise set it to digits orders of magnitude lower than the
     ## current value
     toplog <- log10(abs(xtmp))
@@ -126,7 +131,8 @@ pretty_signif <- function(x, digits = 6, sci_range = 6, sci_sep = "e") {
     mask.exact.log <- (toplog %% 1) %in% 0
     toplog[mask.exact.log] <- toplog[mask.exact.log] + 1
     toplog <- ceiling(toplog)
-    bottomlog[is.na(bottomlog)] <- digits - toplog[is.na(bottomlog)]
+    bottomlog[is.na(bottomlog)] <-
+      digits_manip[is.na(bottomlog)] - toplog[is.na(bottomlog)]
     ## Find times when rounding increases the toplog and shift up the
     ## bottomlog to a corresponding degree. e.g. x=0.9999 and digits=2
     ## should be 1.0 not 1.00.

@@ -7,7 +7,8 @@
   zero-length input returns `character(0)` rather than `logical(0)` or `list()`;
   `digits`, `sci_range`, and `sci_sep` are checked, and non-integer `digits` is
   rounded to the nearest integer rather than being rounded and truncated
-  inconsistently.
+  inconsistently; `pretty_signif()` checks the length of `digits` instead of
+  silently recycling it.
 
 # prettyunits 1.2.0
 

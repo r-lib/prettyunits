@@ -1,7 +1,9 @@
 test_that("Rounding", {
-  expect_snapshot(error = TRUE, {
-    pretty_round(1, c(2, 3))
-  })
+  expect_error(
+    pretty_round(1, c(2, 3)),
+    "digits must either be a scalar or the same length as x",
+    fixed = TRUE
+  )
   expect_equal(pretty_round(11), "11")
   expect_equal(pretty_round(5), "5")
   expect_equal(pretty_round(0.05), "0")
@@ -178,4 +180,26 @@ test_that("Non-integer digits are rounded to the nearest integer", {
   expect_equal(pretty_round(1.234, 2.2), "1.23")
   expect_equal(pretty_signif(1.234, 2.7), "1.23")
   expect_equal(pretty_signif(1.234, 2.2), "1.2")
+})
+
+test_that("pretty_signif() checks the length of digits", {
+  expect_error(
+    pretty_signif(1.234, c(2, 3)),
+    "digits must either be a scalar or the same length as x",
+    fixed = TRUE
+  )
+  expect_error(
+    pretty_signif(c(1.1, 2.2, 3.3), c(1, 2)),
+    "digits must either be a scalar or the same length as x",
+    fixed = TRUE
+  )
+  ## Each element gets its own number of significant digits
+  expect_equal(
+    pretty_signif(c(1.1, 2.2, 3.3), c(1, 2, 3)),
+    c("1", "2.2", "3.30")
+  )
+  ## Zero takes its digits from the matching element, not the first
+  expect_equal(pretty_signif(c(0, 1.234), c(2, 3)), c("0.00", "1.23"))
+  ## The magnitude bump is applied per element
+  expect_equal(pretty_signif(c(0.9999, 1e7), c(2, 3)), c("1.0", "1.00e7"))
 })
