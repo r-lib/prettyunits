@@ -251,3 +251,19 @@ test_that("names and dim of x are preserved", {
   expect_equal(dim(pretty_round(m, rep(2, 6))), c(2L, 3L))
   expect_equal(dim(pretty_signif(m, 2)), c(2L, 3L))
 })
+
+test_that("Scientific notation handles more than one value at a time", {
+  expect_equal(
+    pretty_round(c(1e7, 2e7), 3, sci_range = 5),
+    c("1.0000000000e7", "2.0000000000e7")
+  )
+  expect_equal(
+    pretty_round(c(1e7, 1e10), 3, sci_range = 5),
+    c("1.0000000000e7", "1.0000000000000e10"),
+    info = "Each element gets the decimals implied by its own magnitude"
+  )
+  expect_equal(
+    pretty_signif(c(1e7, 1e10), 3, sci_range = 5),
+    c("1.00e7", "1.00e10")
+  )
+})

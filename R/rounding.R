@@ -47,11 +47,7 @@ pretty_round <- function(x, digits = 0, sci_range = Inf, sci_sep = "e") {
         logval <- floor(log10(abs(xtmp[mask_sci])))
         ret[mask_manip][mask_sci] <-
           paste0(
-            formatC(
-              xtmp[mask_sci] / 10^logval,
-              format = "f",
-              digits = digits + logval
-            ),
+            sprintf("%.*f", digits + logval, xtmp[mask_sci] / 10^logval),
             sci_sep,
             formatC(logval, format = "d")
           )

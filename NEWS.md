@@ -10,7 +10,9 @@
   inconsistently; `pretty_signif()` checks the length of `digits` instead of
   silently recycling it, and treats `digits` smaller than 1 as 1 (with a
   warning) rather than returning `"0"`; and the `names` and `dim` of `x` are
-  preserved, as `formatC()` does.
+  preserved, as `formatC()` does.  `pretty_round()` no longer fails when a
+  scalar `digits` is given with more than one value in the scientific notation
+  range.
 
 # prettyunits 1.2.0
 
