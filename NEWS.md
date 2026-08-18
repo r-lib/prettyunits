@@ -9,7 +9,8 @@
   rounded to the nearest integer rather than being rounded and truncated
   inconsistently; `pretty_signif()` checks the length of `digits` instead of
   silently recycling it, and treats `digits` smaller than 1 as 1 (with a
-  warning) rather than returning `"0"`.
+  warning) rather than returning `"0"`; and the `names` and `dim` of `x` are
+  preserved, as `formatC()` does.
 
 # prettyunits 1.2.0
 

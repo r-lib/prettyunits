@@ -229,3 +229,25 @@ test_that("pretty_signif() treats digits smaller than 1 as 1", {
   ## pretty_round() still accepts negative digits
   expect_equal(pretty_round(123.456, -2), "100")
 })
+
+test_that("names and dim of x are preserved", {
+  expect_equal(
+    pretty_round(c(a = 1.2, b = 5.6), 2),
+    c(a = "1.20", b = "5.60"),
+    info = "Scalar digits keeps names"
+  )
+  expect_equal(
+    pretty_round(c(a = 1.2, b = 5.6), c(1, 2)),
+    c(a = "1.2", b = "5.60"),
+    info = "Vector digits keeps names"
+  )
+  expect_equal(
+    pretty_signif(c(a = 1.2, b = 5.6), 2),
+    c(a = "1.2", b = "5.6")
+  )
+  m <- matrix(1:6 / 7, nrow = 2, dimnames = list(c("r1", "r2"), NULL))
+  expect_equal(dim(pretty_round(m, 2)), c(2L, 3L))
+  expect_equal(dimnames(pretty_round(m, 2)), list(c("r1", "r2"), NULL))
+  expect_equal(dim(pretty_round(m, rep(2, 6))), c(2L, 3L))
+  expect_equal(dim(pretty_signif(m, 2)), c(2L, 3L))
+})

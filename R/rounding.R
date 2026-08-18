@@ -23,7 +23,7 @@ pretty_round <- function(x, digits = 0, sci_range = Inf, sci_sep = "e") {
     stop("digits must either be a scalar or the same length as x")
   }
   if (length(x) == 0) {
-    return(character(0))
+    return(restore_shape(character(0), x))
   }
   if (length(digits) == 1) {
     mask_na <- is.na(x)
@@ -66,16 +66,18 @@ pretty_round <- function(x, digits = 0, sci_range = Inf, sci_sep = "e") {
         }
       }
     }
-    ret
+    restore_shape(ret, x)
   } else {
-    mapply(
-      pretty_round,
-      x,
-      digits = digits,
-      sci_range = sci_range,
-      sci_sep = sci_sep,
-      USE.NAMES = FALSE
-    )
+    ret <-
+      mapply(
+        pretty_round,
+        x,
+        digits = digits,
+        sci_range = sci_range,
+        sci_sep = sci_sep,
+        USE.NAMES = FALSE
+      )
+    restore_shape(ret, x)
   }
 }
 
@@ -155,7 +157,7 @@ pretty_signif <- function(x, digits = 6, sci_range = 6, sci_sep = "e") {
       sci_sep = sci_sep
     )
   }
-  ret
+  restore_shape(ret, x)
 }
 
 ## Argument checks shared by pretty_round() and pretty_signif()
@@ -169,4 +171,15 @@ check_rounding_args <- function(digits, sci_range, sci_sep) {
   if (!is.character(sci_sep) || length(sci_sep) != 1 || is.na(sci_sep)) {
     stop("sci_sep must be a scalar, non-missing character string")
   }
+}
+
+## Give the result the names or dim of x, as formatC() does
+restore_shape <- function(ret, x) {
+  if (is.null(dim(x))) {
+    names(ret) <- names(x)
+  } else {
+    dim(ret) <- dim(x)
+    dimnames(ret) <- dimnames(x)
+  }
+  ret
 }
