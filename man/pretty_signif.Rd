@@ -11,7 +11,8 @@ pretty_signif(x, digits = 6, sci_range = 6, sci_sep = "e")
 \item{x}{The number to round.}
 
 \item{digits}{integer indicating the number of significant digits.
-Non-integer values are rounded to the nearest integer.}
+Non-integer values are rounded to the nearest integer, and as with
+\code{\link[=signif]{signif()}}, values smaller than 1 are treated as 1 (with a warning).}
 
 \item{sci_range}{integer (or \code{Inf}) indicating when to switch to
 scientific notation instead of floating point. Zero indicates always use

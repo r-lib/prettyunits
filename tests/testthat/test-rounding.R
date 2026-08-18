@@ -203,3 +203,29 @@ test_that("pretty_signif() checks the length of digits", {
   ## The magnitude bump is applied per element
   expect_equal(pretty_signif(c(0.9999, 1e7), c(2, 3)), c("1.0", "1.00e7"))
 })
+
+test_that("pretty_signif() treats digits smaller than 1 as 1", {
+  expect_warning(
+    expect_equal(pretty_signif(123.456, 0), "100"),
+    "digits values smaller than 1 are treated as 1",
+    fixed = TRUE
+  )
+  expect_warning(
+    expect_equal(pretty_signif(123.456, -1), "100"),
+    "digits values smaller than 1 are treated as 1",
+    fixed = TRUE
+  )
+  expect_warning(
+    expect_equal(pretty_signif(0.00123, 0), "0.001"),
+    "digits values smaller than 1 are treated as 1",
+    fixed = TRUE
+  )
+  ## Clamping is per element
+  expect_warning(
+    expect_equal(pretty_signif(c(123.456, 1.234), c(0, 3)), c("100", "1.23")),
+    "digits values smaller than 1 are treated as 1",
+    fixed = TRUE
+  )
+  ## pretty_round() still accepts negative digits
+  expect_equal(pretty_round(123.456, -2), "100")
+})

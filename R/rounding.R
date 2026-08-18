@@ -87,7 +87,8 @@ pretty_round <- function(x, digits = 0, sci_range = Inf, sci_sep = "e") {
 #'
 #' @param x The number to round.
 #' @param digits integer indicating the number of significant digits.
-#'   Non-integer values are rounded to the nearest integer.
+#'   Non-integer values are rounded to the nearest integer, and as with
+#'   [signif()], values smaller than 1 are treated as 1 (with a warning).
 #' @param sci_range integer (or `Inf`) indicating when to switch to
 #'   scientific notation instead of floating point. Zero indicates always use
 #'   scientific; `Inf` indicates to never use scientific notation;
@@ -104,6 +105,10 @@ pretty_signif <- function(x, digits = 6, sci_range = 6, sci_sep = "e") {
   digits <- round(digits)
   if (!(length(digits) == 1 || length(digits) == length(x))) {
     stop("digits must either be a scalar or the same length as x")
+  }
+  if (any(digits < 1)) {
+    warning("digits values smaller than 1 are treated as 1")
+    digits <- pmax(digits, 1)
   }
   digits <- rep_len(digits, length(x))
   mask_na <- is.na(x)
