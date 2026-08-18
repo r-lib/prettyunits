@@ -267,3 +267,18 @@ test_that("Scientific notation handles more than one value at a time", {
     c("1.00e7", "1.00e10")
   )
 })
+
+test_that("The scientific notation mantissa is normalized", {
+  ## Dividing by 10^logval underflows for denormals and left a mantissa >= 10
+  expect_equal(pretty_signif(1e-320, 3, sci_range = 0), "1.00e-320")
+  expect_equal(pretty_signif(1e-319, 3, sci_range = 0), "1.00e-319")
+  expect_equal(pretty_signif(-1e-320, 3, sci_range = 0), "-1.00e-320")
+  ## The smallest denormal gave a mantissa of Inf
+  expect_equal(pretty_signif(5e-324, 3, sci_range = 0), "4.94e-324")
+  ## 1 <= abs(mantissa) < 10 across the whole range of a double
+  mantissa <- as.numeric(sub(
+    "e.*$", "",
+    pretty_signif(10^(-323:308), 3, sci_range = 0)
+  ))
+  expect_true(all(abs(mantissa) >= 1 & abs(mantissa) < 10))
+})

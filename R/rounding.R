@@ -46,10 +46,10 @@ pretty_round <- function(x, digits = 0, sci_range = Inf, sci_sep = "e") {
       if (any(mask_sci)) {
         logval <- floor(log10(abs(xtmp[mask_sci])))
         ret[mask_manip][mask_sci] <-
-          paste0(
-            sprintf("%.*f", digits + logval, xtmp[mask_sci] / 10^logval),
-            sci_sep,
-            formatC(logval, format = "d")
+          format_sci(
+            xtmp[mask_sci],
+            digits = digits + logval,
+            sci_sep = sci_sep
           )
       }
       if (any(mask_no_sci)) {
@@ -178,4 +178,16 @@ restore_shape <- function(ret, x) {
     dimnames(ret) <- dimnames(x)
   }
   ret
+}
+
+## Take the mantissa and the exponent from sprintf() rather than dividing by
+## 10^logval, which underflows in the denormal range and can leave a mantissa
+## of 10 or more
+format_sci <- function(x, digits, sci_sep) {
+  sci <- sprintf("%.*e", digits, x)
+  paste0(
+    sub("e.*$", "", sci),
+    sci_sep,
+    formatC(as.integer(sub("^.*e", "", sci)), format = "d")
+  )
 }
