@@ -3,6 +3,9 @@
 * Add `"q"`, `"r"`, `"R"`, `"Q"` prefix from [BIPM](https://www.bipm.org) 
   to `pretty_num()` (#41, @cregouby)
 
+* Fix edge cases in `pretty_round()` and `pretty_signif()` (#46, @billdenney):
+  zero-length input returns `character(0)` rather than `logical(0)` or `list()`.
+
 # prettyunits 1.2.0
 
 * New `pretty_num()` function with all the [BIPM](https://www.bipm.org)

@@ -16,11 +16,17 @@
 #' @export
 
 pretty_round <- function(x, digits = 0, sci_range = Inf, sci_sep = "e") {
+  if (!(length(digits) == 1 || length(digits) == length(x))) {
+    stop("digits must either be a scalar or the same length as x")
+  }
+  if (length(x) == 0) {
+    return(character(0))
+  }
   if (length(digits) == 1) {
     mask_na <- is.na(x)
     mask_aschar <- is.nan(x) | is.infinite(x)
     mask_manip <- !(mask_na | mask_aschar)
-    ret <- rep(NA, length(x))
+    ret <- rep(NA_character_, length(x))
     ## Put in the special values
     if (any(mask_na)) {
       ret[mask_na] <- "NA"
@@ -58,16 +64,15 @@ pretty_round <- function(x, digits = 0, sci_range = Inf, sci_sep = "e") {
       }
     }
     ret
-  } else if (length(x) == length(digits)) {
+  } else {
     mapply(
       pretty_round,
       x,
       digits = digits,
       sci_range = sci_range,
-      sci_sep = sci_sep
+      sci_sep = sci_sep,
+      USE.NAMES = FALSE
     )
-  } else {
-    stop("digits must either be a scalar or the same length as x")
   }
 }
 
@@ -94,7 +99,7 @@ pretty_signif <- function(x, digits = 6, sci_range = 6, sci_sep = "e") {
   mask_na <- is.na(x)
   mask_aschar <- is.nan(x) | is.infinite(x)
   mask_manip <- !(mask_na | mask_aschar)
-  ret <- rep(NA, length(x))
+  ret <- rep(NA_character_, length(x))
   ## Put in the special values
   if (any(mask_na)) {
     ret[mask_na] <- "NA"

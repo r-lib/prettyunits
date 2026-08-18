@@ -114,3 +114,16 @@ test_that("Significance", {
     info = "Different numbers of digits for rounding work with pretty_signif"
   )
 })
+
+test_that("Zero-length input returns a zero-length character vector", {
+  expect_identical(pretty_round(numeric(0), 2), character(0))
+  expect_identical(pretty_round(numeric(0), numeric(0)), character(0))
+  expect_identical(pretty_round(NULL, 2), character(0))
+  expect_identical(pretty_signif(numeric(0), 3), character(0))
+  expect_identical(pretty_signif(NULL, 3), character(0))
+  expect_error(
+    pretty_round(numeric(0), c(1, 2)),
+    "digits must either be a scalar or the same length as x",
+    fixed = TRUE
+  )
+})
