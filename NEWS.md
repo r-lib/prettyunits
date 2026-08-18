@@ -15,7 +15,8 @@
   range, and normalizes the scientific notation mantissa so that denormal
   values no longer format as, for example, `"10.02e-321"`.  Digits past the
   ones a double carries are now zeros rather than the binary representation of
-  the value.
+  the value.  The `sci_range` documentation now matches the code, which
+  switches to scientific notation when `abs(log10(x)) >= sci_range`.
 
 # prettyunits 1.2.0
 

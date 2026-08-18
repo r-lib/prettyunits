@@ -85,7 +85,8 @@ pretty_round <- function(x, digits = 0, sci_range = Inf, sci_sep = "e") {
 #' @param sci_range integer (or `Inf`) indicating when to switch to
 #'   scientific notation instead of floating point. Zero indicates always use
 #'   scientific; `Inf` indicates to never use scientific notation;
-#'   otherwise, scientific notation is used when `abs(log10(x)) > sci_range`.
+#'   otherwise, scientific notation is used when `abs(log10(x)) >= sci_range`,
+#'   so an exact power of ten at the boundary is scientific.
 #' @param sci_sep The separator to use for scientific notation strings
 #'   (typically this will be either "e" or "x10^" for computer- or
 #'   human-readable output).

@@ -308,3 +308,14 @@ test_that("Digits past the ones a double carries are zeros", {
     paste0("3.141592653589793", strrep("0", 9))
   )
 })
+
+test_that("sci_range is inclusive at the boundary", {
+  ## An exact power of ten at abs(log10(x)) == sci_range is scientific
+  expect_equal(pretty_signif(1e6, 6), "1.00000e6")
+  expect_equal(pretty_signif(1e6, 3, sci_range = 6), "1.00e6")
+  expect_equal(pretty_signif(1e-6, 3, sci_range = 6), "1.00e-6")
+  expect_equal(pretty_round(1e6, 2, sci_range = 6), "1.00000000e6")
+  ## Just inside the boundary stays fixed
+  expect_equal(pretty_signif(123456.05, 3, sci_range = 6), "123000")
+  expect_equal(pretty_round(999999, 2, sci_range = 6), "999999.00")
+})

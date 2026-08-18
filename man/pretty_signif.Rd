@@ -17,7 +17,8 @@ Non-integer values are rounded to the nearest integer, and as with
 \item{sci_range}{integer (or \code{Inf}) indicating when to switch to
 scientific notation instead of floating point. Zero indicates always use
 scientific; \code{Inf} indicates to never use scientific notation;
-otherwise, scientific notation is used when \code{abs(log10(x)) > sci_range}.}
+otherwise, scientific notation is used when \code{abs(log10(x)) >= sci_range},
+so an exact power of ten at the boundary is scientific.}
 
 \item{sci_sep}{The separator to use for scientific notation strings
 (typically this will be either "e" or "x10^" for computer- or
