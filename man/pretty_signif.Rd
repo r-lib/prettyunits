@@ -10,12 +10,15 @@ pretty_signif(x, digits = 6, sci_range = 6, sci_sep = "e")
 \arguments{
 \item{x}{The number to round.}
 
-\item{digits}{integer indicating the number of significant digits.}
+\item{digits}{integer indicating the number of significant digits.
+Non-integer values are rounded to the nearest integer, and as with
+\code{\link[=signif]{signif()}}, values smaller than 1 are treated as 1 (with a warning).}
 
 \item{sci_range}{integer (or \code{Inf}) indicating when to switch to
 scientific notation instead of floating point. Zero indicates always use
 scientific; \code{Inf} indicates to never use scientific notation;
-otherwise, scientific notation is used when \code{abs(log10(x)) > sci_range}.}
+otherwise, scientific notation is used when \code{abs(log10(x)) >= sci_range},
+so an exact power of ten at the boundary is scientific.}
 
 \item{sci_sep}{The separator to use for scientific notation strings
 (typically this will be either "e" or "x10^" for computer- or
@@ -30,7 +33,10 @@ zeros, if applicable
 }
 \details{
 Values that are not standard numbers like \code{Inf}, \code{NA}, and
-\code{NaN} are returned as \code{"Inf"}, \code{"NA"}, and \code{NaN}.
+\code{NaN} are returned as \code{"Inf"}, \code{"NA"}, and \code{"NaN"}.
+
+Rounding and the sign of a value that rounds to zero follow
+\code{\link[=pretty_round]{pretty_round()}}.
 }
 \seealso{
 \code{\link[=signif]{signif()}}, \code{\link[=pretty_round]{pretty_round()}}.

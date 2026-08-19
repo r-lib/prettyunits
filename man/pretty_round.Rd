@@ -10,7 +10,8 @@ pretty_round(x, digits = 0, sci_range = Inf, sci_sep = "e")
 \arguments{
 \item{x}{The number to round.}
 
-\item{digits}{integer indicating the number of decimal places.}
+\item{digits}{integer indicating the number of decimal places.  Non-integer
+values are rounded to the nearest integer.}
 
 \item{sci_range}{See help for \code{\link[=pretty_signif]{pretty_signif()}} (and you likely want
 to round with \code{\link[=pretty_signif]{pretty_signif()}} if you want to use this argument).}
@@ -29,6 +30,13 @@ applicable
 \details{
 Values that are not standard numbers like \code{Inf}, \code{NA}, and
 \code{NaN} are returned as \code{"Inf"}, \code{"NA"}, and \code{"NaN"}.
+
+Rounding is done by \code{\link[=round]{round()}}, so it is round-half-even rather than
+round-half-up: \code{pretty_round(c(0.5, 1.5, 2.5, 3.5), 0)} gives \code{"0"},
+\code{"2"}, \code{"2"}, and \code{"4"}.
+
+A negative value that rounds to zero keeps its sign, as \code{\link[=formatC]{formatC()}} does:
+\code{pretty_round(-0.0001, 2)} gives \code{"-0.00"}.
 }
 \seealso{
 \code{\link[=round]{round()}}, \code{\link[=pretty_signif]{pretty_signif()}}.
