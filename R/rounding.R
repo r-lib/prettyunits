@@ -114,7 +114,7 @@ pretty_signif <- function(x, digits = 6, sci_range = 6, sci_sep = "e") {
     warning("digits values smaller than 1 are treated as 1")
     digits <- pmax(digits, 1)
   }
-  digits <- rep_len(digits, length(x))
+  digits <- rep(digits, length.out = length(x))
   mask_na <- is.na(x)
   mask_aschar <- is.nan(x) | is.infinite(x)
   mask_manip <- !(mask_na | mask_aschar)
