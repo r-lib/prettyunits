@@ -20,7 +20,7 @@ URL: https://github.com/r-lib/prettyunits,
     https://r-lib.github.io/prettyunits/
 BugReports: https://github.com/r-lib/prettyunits/issues
 Depends:
-    R(>= 2.10)
+    R (>= 4.1)
 Suggests:
     codetools,
     covr,
