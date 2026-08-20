@@ -28,11 +28,16 @@ Useful links:
 \author{
 \strong{Maintainer}: Gabor Csardi \email{csardi.gabor@gmail.com}
 
+Authors:
+\itemize{
+  \item Gabor Csardi \email{csardi.gabor@gmail.com}
+}
+
 Other contributors:
 \itemize{
   \item Bill Denney \email{wdenney@humanpredictions.com} (\href{https://orcid.org/0000-0002-5759-428X}{ORCID}) [contributor]
   \item Christophe Regouby \email{christophe.regouby@free.fr} [contributor]
-  \item Posit Software, PBC [copyright holder, funder]
+  \item Posit Software, PBC (\href{https://ror.org/03wc8by49}{ROR}) [copyright holder, funder]
 }
 
 }

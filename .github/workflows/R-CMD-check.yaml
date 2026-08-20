@@ -37,6 +37,10 @@ jobs:
           - {os: ubuntu-latest,  r: 'oldrel-3'}
           - {os: ubuntu-latest,  r: 'oldrel-4'}
 
+          # the minimum R version declared in DESCRIPTION; pinned rather
+          # than oldrel-N so it does not drift off the declared floor
+          - {os: ubuntu-latest,  r: '4.1'}
+
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes

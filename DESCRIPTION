@@ -17,10 +17,10 @@ Description: Pretty, human readable formatting of quantities.  Time
     '1.24 M'.
 License: MIT + file LICENSE
 URL: https://github.com/r-lib/prettyunits,
-    http://r-lib.github.io/prettyunits/
+    https://r-lib.github.io/prettyunits/
 BugReports: https://github.com/r-lib/prettyunits/issues
 Depends:
-    R(>= 2.10)
+    R (>= 4.1)
 Suggests:
     codetools,
     covr,
@@ -30,4 +30,4 @@ Config/testthat/edition: 3
 Config/usethis/last-upkeep: 2025-04-26
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+Config/roxygen2/version: 8.0.0
